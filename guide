@@ -25,7 +25,7 @@ int				closedir(DIR *dirp);
 	returning 0 on success
 }
 
-int chdir(corist char *path)
+int chdir(const char *path)
 {
 	Функция chdir() устанавливает в качестве текущего каталог, на который указывает параметр path.
 	Путь может включать в себя и спецификацию диска.
