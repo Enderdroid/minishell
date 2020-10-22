@@ -10,5 +10,6 @@ void				*ft_memset(void *destination, int c, size_t n);
 void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t num, size_t size);
 char				*ft_strdup(const char *str);
+int					ft_strcmp(const char *str1, const char *str2);
 
 #endif

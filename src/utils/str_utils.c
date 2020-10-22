@@ -30,6 +30,20 @@ size_t		ft_strlcpy(char *dst, const char *src, size_t size)
 	return (s_size);
 }
 
+int					ft_strcmp(const char *str1, const char *str2)
+{
+	unsigned char	*us1;
+	unsigned char	*us2;
+	size_t			i;
+
+	i = 0;
+	us1 = (unsigned char *)str1;
+	us2 = (unsigned char *)str2;
+	while (us1[i] == us2[i] && us1[i] && us2[i])
+		++i;
+	return (us1[i] - us2[i]);
+}
+
 //Переписать на возможность удаления (n >= 1) значных индексов
 int					ft_dellchar(char *s, char *i)
 {
