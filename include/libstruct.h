@@ -22,6 +22,7 @@ typedef	struct	s_data
 {
 	t_env	**env_arr;
 	t_u_env	*u_env;
+	int		cur_fd;
 }				t_data;
 
 #endif

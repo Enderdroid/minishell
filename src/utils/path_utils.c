@@ -2,14 +2,31 @@
 #include <dirent.h>
 
 
-void		add_folder(char *c_path, char *name)
+char		*add_to_folder(char *c_path, char *name, int slash)
 {
+	char	*buf;
+	char	*ret;
 
+	if (slash)
+	{
+		buf = ft_strjoin(c_path, "/");
+		ret = ft_strjoin(buf, name);
+		free (buf);
+	}
+	else
+		ret = ft_strjoin(c_path, name);
+	return (ret);
 }
 
-char		*s_in_path(/*u_env, */char *name)
+char		*s_in_path(char **path, char *name)
 {
+	int		i;
 
+	i = 0;
+	while(path[i])
+		if (folder_search(path[i], name))
+			return(add_to_folder(path[i], name, 1));
+	return (NULL);
 }
 
 int			folder_search(char *path, char *name)

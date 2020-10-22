@@ -11,5 +11,6 @@ void				ft_bzero(void *s, size_t n);
 void				*ft_calloc(size_t num, size_t size);
 char				*ft_strdup(const char *str);
 int					ft_strcmp(const char *str1, const char *str2);
-
+char				*ft_strjoin(char const *s1, char const *s2);
+size_t				ft_strlcat(char *dst, const char *src, size_t size);
 #endif
