@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 15:54:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/01 20:12:30 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/10/22 17:31:15 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int						ft_isdigit(int c);
 int						ft_isprint(int c);
 int						ft_isspace(int c);
 int						ft_memcmp(const void *str1, const void *str2, size_t n);
+int						ft_strcmp(char *str1, char *str2);
 int						ft_strncmp(const char *str1, const char *str2,\
 									size_t n);
 int						ft_tolower(int c);

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 16:01:44 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/14 22:15:43 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/10/23 21:32:43 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ enum TokenType{
 	C_DQUOTE = '\"',
 	C_SEMICOLON = ';',
 	C_WHITESPACE = ' ',
-	C_ESCAPESEQUENCE = '\\',
+	C_SLASH = '\\',
 	C_TAB = '\t',
 	C_NEWLINE = '\n',
 	C_GREATER = '>',
@@ -36,5 +36,7 @@ enum TokenType{
 
 	TOKEN	= -1,
 };
+
+char metachar[] = {'|', '&', ';', '(', ')', '<', '>', ' ', '\t', '\n'};
 
 #endif

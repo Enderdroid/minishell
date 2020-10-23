@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:28:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/14 22:30:21 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/10/18 15:13:25 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,12 @@ int	exit_custom_err(int error_num)
 	if (error_num == ERR_DEBUG)
 		write(1, "Error\nSomething went wrong\n", 27);
 	exit(-1);
+}
+
+int	parse_line_exit(char *line, int fd, int error_num)
+{
+	if (line)
+		free(line);
+	close(fd);
+	return ((free_and_exit(error_num)));
 }
