@@ -34,38 +34,34 @@ static int		check_token(char c, int p, char *str)
 	if (!fst)
 	{
 		fst = 7;}*/
-		t_vld	vld[] = {\
-					{';', ";|><", {";;", ";", ";", ";"} } , \
-					{'|', "|;><", {"||", "|", "|", "|"} }, \
-					{'>', "\n<;|", {"newline", "<", ";", "newline"} }, \
-					{'<', "\n>;|", {"newline", "<", ";", "newline"} }, \
-					{';', "~", {";"} } , \
-					{'|', "~", {"|"} } , \
-					{';', "\n", {";"} } , \
-					{'|', "\n", {"|"} } \
-					} ;
-	printf("? %c\n, %c\n!", c, str[p]);
-	printf("---%c\n %s\n", vld[1].after[1], vld[1].feedback[1]);
+		t_vld	vld[] = { {';', ";|><~\0", {";;", ";", ";", ";", ";", ";"} } , \
+					{'|', "|;><~\0", {"||", "|", "|", "|", "|", "|"} }, \
+					{'>', "<;|\0\0\0", {"newline", "<", ";", "newline"} }, \
+					{'<', ">;|\0\0\0", {"newline", "<", ";", "newline"} }, } ;
+
+	//printf("---%c\n %s\n", vld[1].after[1], vld[1].feedback[1]);
 //}
 
 	/*else
 	{
 		fst = 3;
-		t_vld	vld[] = { {';', {';', '|', '>', '<'}, {";;", ";|", "newline", "newline"} } , \
-				{'|', {';', '>', '<'}, {";", "newline", "newline"} }, \
-				{'>', {'\n', '<', ';', '|'}, {"newline", "<", ";", "newline"} }, \
-				{'<', {'\n', '>', ';', '|'}, {"newline", "<", ";", "newline"} }, } ;
+		t_vld	vld[] = { {';', ";|><", {";;", ";|", "newline", "newline"} } , \
+				{'|', ";><", {";", "newline", "newline"} }, \
+				{'>', "\n<;|", {"newline", "<", ";", "newline"} }, \
+				{'<', "\n>;|", {"newline", "<", ";", "newline"} }, } ;
 	}*/
 	i = -1;
-	while (++i < 7)
+	while (++i < 4)
 	{
 		int j = -1;
 		if (c == vld[i].c)
 		{
-			printf("!!%c\n %c\n!!", str[p], vld[i].after[0]);
-			while (vld[i].after[++j])
+		printf("!c=%c\nstr=%c\n!!", c, vld[i].c);
+			while (++j < 6)
+			//{	//printf("!c=%c\nstr=%c\na=%c\n!!", c, str[p], vld[i].after[j]);
 				if (vld[i].after[j] == str[p])
 					return (syntax_err_msg(vld[i].feedback[j]));
+			//}
 		}
 	}
 	return (1);
