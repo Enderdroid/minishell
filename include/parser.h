@@ -6,19 +6,31 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 16:01:44 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/23 21:32:43 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/10/25 20:31:10 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSER_H
 # define PARSER_H
 
-/*typedef struct	s_parser
-{
-	char		*id;
-	void		(*parse)(char **, t_scene *, int);
-}				t_parser;*/
+#include <unistd.h>
+#include <stdlib.h>
+#include "../libft/libft.h"
+#include "libstruct.h"
 
+int				input_is_valid(char *input);
+t_env			*parse_env(char **envp, int *size);
+t_u_env			parse_u_env(t_env *env, int size);
+void			parse_input(void);
+
+typedef struct	s_vld
+{
+	char			c;
+	char			*after;
+	const char		*feedback[50];
+}				t_vld;
+
+/*
 enum TokenType{
 	C_GENERAL = -1,
 	C_PIPE = '|',
@@ -38,5 +50,6 @@ enum TokenType{
 };
 
 char metachar[] = {'|', '&', ';', '(', ')', '<', '>', ' ', '\t', '\n'};
+*/
 
 #endif

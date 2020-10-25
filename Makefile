@@ -1,7 +1,10 @@
-NAME		=	miniRT
+NAME		=	minishell
 
 SRC_DIR		=	./src/
 SRC			=	parser.c\
+				validation.c\
+				get_next_line.c\
+				exit_parser.c\
 				main.c
 
 O_DIR		=	./bin
@@ -32,7 +35,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
-	@make fclean -C ./libft/
+#	@make fclean -C ./libft/
 	@echo "$(NAME) deleted"
 
 re: fclean all
