@@ -11,6 +11,8 @@ int				main(int ac, char **av, char** envp)
 	t_env *env = parse_env(envp, &size);
 	t_u_env path_env = parse_u_env(env, size);
 	parse_input();
+	//char *str = "c   ;";
+	//input_is_valid(str);
 	/*
 	i = -1;
 	while (++i < size)
