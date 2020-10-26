@@ -41,7 +41,15 @@ static int		check_token(char c, int p, char *str)
 {
 	int		i;
 	t_vld	*vld;
-
+//bash-3.2$ >|;
+//bash: syntax error near unexpected token `;'
+//newline or next token
+//bash-3.2$ >||||||;
+//bash: syntax error near unexpected token `||'
+//bash-3.2$ >>>>||||;
+//bash: syntax error near unexpected token `>>'
+//bash-3.2$ >>>|
+//bash: syntax error near unexpected token `>|'
 	if (!if_fst(str, p))
 	{
 		t_vld vld[4] = { {';', ";|><~\0", {";;", ";", ";", ";", ";", ";"} } , \
@@ -65,7 +73,7 @@ static int		check_token(char c, int p, char *str)
 	}
 	else
 	{
-		t_vld vld[4] = { {';', ";|><", {";;", ";|", "newline", "newline"} } , \
+		t_vld vld[4] = { {';', ";|><", {";;", "|", "newline", "newline"} } , \
 				{'|', ";><<", {";", "newline", "newline"} }, \
 				{'>', "<;|\0", {"<", ";", "newline", "newline"} }, \
 				{'<', ">;|\0", {"<", ";", "newline", "newline"} }, } ;
