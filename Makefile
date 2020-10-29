@@ -5,6 +5,8 @@ SRC			=	parser.c\
 				validation.c\
 				get_next_line.c\
 				exit_parser.c\
+				parser_utils.c\
+				parse_env\
 				main.c
 
 O_DIR		=	./bin

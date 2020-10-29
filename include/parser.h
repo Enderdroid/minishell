@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 16:01:44 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/25 20:31:10 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/10/29 22:34:18 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,23 @@ int				input_is_valid(char *input);
 t_env			*parse_env(char **envp, int *size);
 t_u_env			parse_u_env(t_env *env, int size);
 void			parse_input(void);
+int				not_shielded(char *input, int i);
+void			free_tokens(t_dlist **lst);
+
+int g_code;
 
 typedef struct	s_vld
 {
-	char			c;
-	char			*after;
-	const char		*feedback[50];
+	char		c;
+	char		*after;
+	const char	*feedback[50];
 }				t_vld;
 
+typedef struct	s_token
+{
+	int			id;
+	char		*str;
+}				t_token;
 /*
 enum TokenType{
 	C_GENERAL = -1,
@@ -48,8 +57,7 @@ enum TokenType{
 
 	TOKEN	= -1,
 };
-
-char metachar[] = {'|', '&', ';', '(', ')', '<', '>', ' ', '\t', '\n'};
 */
+char *METACHAR = "|;<> \t\n"; //&()
 
 #endif

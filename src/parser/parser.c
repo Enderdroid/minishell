@@ -6,67 +6,144 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/25 20:11:12 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/10/29 23:02:15 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/get_next_line.h"
 #include "../../include/parser.h"
 
-t_env			*parse_env(char **envp, int *size)
+char			*unshield(char *line) // take size == 3rd arg of substr
 {
-	t_env	*env;
-	char	**tmp;
-	int		i;
-
-	*size = 0;
-	while (envp[*size])
-		++(*size);
-	env = (t_env*)malloc(sizeof(t_env) * *size);
-	// if (!env)
-		// ERROR
-	i = -1;
-	while(envp[++i])
+	char *res;
+	int i;
+	int j;
+//if (*str == '$' && )
+//malloc protection for join and substr!
+	i = ft_strlen(line);
+	res = malloc(sizeof(char) * i); //ft_calloc
+	//if (!res)
+	//ERROR
+	ft_bzero(res, i);
+	i = 0;
+	j = 0;
+	while (line[i])
 	{
-		tmp = ft_split(envp[i], '=');
-		env[i].key = ft_strdup(tmp[0]);
-		env[i].value = ft_strdup(tmp[1]);
-		free_arr(tmp);
-		env[i].link = &(envp[i]);
+		if (line[i] == '\\')
+		{
+		//	if (line[i + 1] == '\0')
+			//ask for continue input
+			res[j++] = line[++i];
+		}
+		else
+			res[j++] = line[i++];
 	}
-	return (env);
+/*
+	char *res;
+	int end;
+	int start;
+	char *str;
+	char *tmp;
+
+	end = -1;
+	start = 0;
+	res = NULL;
+	while (line[++end])
+	{
+		if (line[end] == '\\')
+		str = ft_substr(str, start, end - 1 - start);
+		tmp = res;
+		res = ft_strjoin(tmp, str);
+		free(str);
+		if (tmp)
+			free(tmp);
+		start = ++end;
+	}
+	//if (line[end -1] == '\\')
+		//ask for continue input
+	str = ft_substr(str, start, end - 1 - start);
+	tmp = res;
+	res = ft_strjoin(tmp, str);
+	free(str);
+	if (tmp)
+		free(tmp);*/
+	free(line);
+	return (res);
 }
 
-t_u_env			parse_u_env(t_env *env, int size)
+/*
+//don't know what to do "$blabla\$blst" '$'
+char *change_dollars(char *line)
 {
-	t_u_env	path_env;
-	int		i;
+	int i;
 
-	path_env.l_pwd = NULL;
-	path_env.l_old_pwd = NULL;
-	path_env.l_path = NULL;
-	path_env.path_content = NULL;
 	i = -1;
-	while (++i < size)
+	while(line[++i])
 	{
-		if (ft_strcmp(env[i].key, "PWD") == 0)
-			path_env.l_pwd = &env[i];
-		if (ft_strcmp(env[i].key, "OLDPWD") == 0)
-			path_env.l_old_pwd = &env[i];
-		if (ft_strcmp(env[i].key, "PATH") == 0)
+		if (line[i] == '$' && not_shielded(line, i))
 		{
-			path_env.l_path = &env[i];
-			path_env.path_content = ft_split(env[i].value, ':');
+			//{}??
+			if (line[i + 1] == '_')
+			else if (line[i + 1] == ' ')
+			else if (!is_alpha(line[i + 1])
+				//empty;???
+			while(ft_isalpha(line[++i]))
 		}
 	}
-	return(path_env);
+}
+*/
+
+void to_lst(char *str, int id)
+{
+	t_token token;
+	t_dlist *lst;//where to create lst?
+
+	token.id = id;
+	token.str = str;
+	ft_dlstadd_back(&lst, ft_dlstnew(&token));
 }
 
 int				parse_line(char *line)
 {
+	int start;
+	int end;
+	char *tmp;
+	char *str;
+	char *inquote;
+//malloc protection for join and substr!
 	if (input_is_valid(line))
 	{
-
+		end = -1;
+		start = 0;
+		while(line[++end])
+		{
+			if (line[end] == '\'' || line[end] == '\"' && not_shielded(line, end))
+			{
+				str = ft_substr(line, start, end - 1 - start); // check \$
+				start = end + 1;
+				while (line[end] == '\'' || line[end] == '\"' && not_shielded(line, end))
+				{
+					end = quote_end(line, end);
+					inquote = ft_substr(line, start, end - 1 - start); // check q type if " convert \ $
+					tmp = str;
+					str = ft_strjoin(tmp, inquote);
+					free(tmp);
+					free(inquote);
+					start = ++end;
+				}
+			//add to lst (str);
+			}
+			if (ft_strchr(METACHAR, line[end]) && not_shielded(line, end))
+			{
+				if (end - 1 - start > 0)
+					ft_substr(line, start, end - 1 - start); // check \ $ && add to lst
+				if (line[end] == '>' && line[end + 1] == line[end])
+					ft_substr(line, end++, 2); //add to lst as cmd
+				else if (!ft_isspace(line[end]))
+					ft_substr(line, end, 1); //add to lst as cmd
+				start = ++end;
+			}
+		}
 		return (1);
 	}
 	return (0);

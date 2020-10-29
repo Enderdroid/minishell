@@ -6,6 +6,7 @@ int				main(int ac, char **av, char** envp)
 	int		i;
 	int		size;
 
+	g_code = 0;
 	(void)ac;
 	(void)av;
 	t_env *env = parse_env(envp, &size);

@@ -7,16 +7,22 @@ static int		syntax_err_msg(const char *token)
 	write(2, "`", 1);
 	write(2, token, ft_strlen(token));
 	write(2, "'\n", 2);
+	g_code = 258;
 	return (0);
 }
 
-static int		quote_end(char *input, int i, char quote)
+static int		quote_end(char *input, int i)
 {
+	char quote;
+
+	quote = input[i];
 	while (input[++i])
 	{
-		if (input[i] == quote && (input[i - 1] != '\\' && i > 0))
+		if (input[i] == quote && not_shielded(input, i))
 			break;
 	}
+	//if (input[i] == '\0')
+	//	write(2, "minishell: unclosed quote\n", 26); //???
 	return (i);
 }
 
@@ -25,15 +31,15 @@ static int		if_fst(char *str, int p)
 	int i;
 
 	i = p - 1;
-	printf("i1=%i\n", i);//
+	//printf("i1=%i\n", i);//
 	while (i > 0)
 	{
-		printf("i=%i, c=%c\n", i, str[i]);//
+		//printf("i=%i, c=%c\n", i, str[i]);//
 		if (str[i] != ' ')
 			break;
 		--i;
 	}
-	printf("i=%i\n", i);//
+	//printf("i=%i\n", i);//
 	return (i);
 }
 
@@ -105,7 +111,7 @@ int				input_is_valid(char *input)
 	while (input[++i])
 	{
 		if ((input[i] == '\'' || input[i] == '\"') && (input[i - 1] != '\\' && i > 0))
-			i = quote_end(input, i, input[i]);
+			i = quote_end(input, i) + 1;
 		else if (ft_strchr(";|><", input[i]))
 		{
 			c = input[i++];
