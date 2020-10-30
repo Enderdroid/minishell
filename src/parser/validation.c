@@ -11,21 +11,6 @@ static int		syntax_err_msg(const char *token)
 	return (0);
 }
 
-static int		quote_end(char *input, int i)
-{
-	char quote;
-
-	quote = input[i];
-	while (input[++i])
-	{
-		if (input[i] == quote && esc_seq(input, i))
-			break;
-	}
-	//if (input[i] == '\0')
-	//	write(2, "minishell: unclosed quote\n", 26); //???
-	return (i);
-}
-
 static int		if_fst(char *str, int p)
 {
 	int i;

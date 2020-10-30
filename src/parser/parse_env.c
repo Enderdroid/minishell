@@ -1,6 +1,6 @@
 #include "../../include/parser.h"
 
-t_env			*parse_env(char **envp, int *size)
+t_env	*parse_env(char **envp, int *size)
 {
 	t_env	*env;
 	char	**tmp;
@@ -24,7 +24,7 @@ t_env			*parse_env(char **envp, int *size)
 	return (env);
 }
 
-t_u_env			parse_u_env(t_env *env, int size)
+t_u_env	parse_u_env(t_env *env, int size)
 {
 	t_u_env	path_env;
 	int		i;
@@ -47,4 +47,23 @@ t_u_env			parse_u_env(t_env *env, int size)
 		}
 	}
 	return(path_env);
+}
+
+char	*find_env(char *key, t_env *env)
+{
+	char *value;
+	int i;
+
+	i = -1;
+	value = NULL;
+	while (env[++i].key)//size?
+	{
+		if (ft_strcmp(env[i].key, key) == 0)
+			value = ft_strdup(env[i].value);
+		//"_"
+	}
+	if (!value)
+		value = ft_strdup("");
+	free(key);
+	return (value);
 }

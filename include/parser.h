@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 16:01:44 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/30 02:38:04 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/10/30 22:49:27 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,12 @@
 int				input_is_valid(char *input);
 t_env			*parse_env(char **envp, int *size);
 t_u_env			parse_u_env(t_env *env, int size);
+char			*find_env(char *key, t_env *env);
 void			parse_input(t_env *env);
-int				not_shielded(char *input, int i);
+int				esc_seq(char *input, int i);
 void			free_tokens(t_dlist **lst);
+char			*check_slash(char *line);
+int				quote_end(char *input, int i);
 
 int g_code;
 

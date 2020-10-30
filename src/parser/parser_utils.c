@@ -22,3 +22,18 @@ void free_tokens(t_dlist **lst)
 	}
 	*lst = NULL;
 }
+
+int		quote_end(char *input, int i)
+{
+	char quote;
+
+	quote = input[i];
+	while (input[++i])
+	{
+		if (input[i] == quote && esc_seq(input, i))
+			break;
+	}
+	//if (input[i] == '\0')
+	//	write(2, "minishell: unclosed quote\n", 26); //???
+	return (i);
+}
