@@ -1,6 +1,6 @@
 #include "../../include/parser.h"
 
-int not_shielded(char *input, int i)
+int esc_seq(char *input, int i)
 {
 	return ((input[i - 1] != '\\' && i > 0));
 }

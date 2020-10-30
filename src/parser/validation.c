@@ -18,7 +18,7 @@ static int		quote_end(char *input, int i)
 	quote = input[i];
 	while (input[++i])
 	{
-		if (input[i] == quote && not_shielded(input, i))
+		if (input[i] == quote && esc_seq(input, i))
 			break;
 	}
 	//if (input[i] == '\0')
