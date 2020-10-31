@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/30 23:00:22 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/10/31 16:29:36 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int	parse_line(char *line, t_env *env)
 				start = ++end;
 			}
 			else if (ft_strchr(METACHAR, line[end]) && esc_seq(line, end))
-			{//if (line[end] == ';') cmd end, validate and send 
+			{
 				if (end - 1 - start > 0)
 					ft_substr(line, start, end - 1 - start); // add to lst, check quotes \ $ //malloc protection in next func - ok with errno?
 				if (line[end] == '>' && line[end + 1] == line[end])

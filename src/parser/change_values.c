@@ -81,12 +81,9 @@ char	*change_dollars(char *line, t_env *env)
 					start = ++i;
 				else
 				{
-					/* if (line[i] == '?')
-					{
-						//take last return value
-						new = ft_itoa();
-					}*/
-					/*else*/
+					if (line[i] == '?')
+						new = ft_itoa(g_code);//take last return value
+					else
 					{
 						while(ft_isalpha(line[i]) || ft_isdigit(line[i]) || line[i] == '_')
 							++i;

@@ -49,18 +49,20 @@ t_u_env	parse_u_env(t_env *env, int size)
 	return(path_env);
 }
 
-char	*find_env(char *key, t_env *env)
+char	*find_env(char *key, t_env *env) //"_" ?
 {
-	char *value;
-	int i;
+	char	*value;
+	int		i;
 
 	i = -1;
 	value = NULL;
 	while (env[++i].key)//size?
 	{
 		if (ft_strcmp(env[i].key, key) == 0)
-			value = ft_strdup(env[i].value);
-		//"_"
+			{
+				value = ft_strdup(env[i].value);
+				break ;
+			}
 	}
 	if (!value)
 		value = ft_strdup("");
