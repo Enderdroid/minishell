@@ -1,6 +1,5 @@
 #include "../../include/libbuiltins.h"
 #include "../../include/libutils.h"
-#include <sys/syslimits.h>
 
 //C_PATH - нынешний путь
 //он всегда верен по совместительству является буфером, равным 1024

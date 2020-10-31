@@ -18,15 +18,25 @@ char		*add_to_folder(char *c_path, char *name, int slash)
 	return (ret);
 }
 
-char		*s_in_path(char **path, char *name)
+char		*rm_from_folder(char *path)
 {
-	int		i;
+	int		ind;
+	int		len;
+	int		s_ind;
+	char	*ret;
 
-	i = 0;
-	while(path[i])
-		if (folder_search(path[i], name))
-			return(add_to_folder(path[i], name, 1));
-	return (NULL);
+	ret = ft_strdup(path);
+	ind = 0;
+	while (ret[ind])
+	{
+		if (ret[ind] == '/')
+			s_ind = ind;
+		++ind;
+	}
+	ind = s_ind;
+	while (ret[ind])
+		ret[ind++] = 0;
+	return (ret);
 }
 
 int			folder_search(char *path, char *name)
@@ -46,4 +56,18 @@ int			folder_search(char *path, char *name)
 	//else
 		//ERROR
 	return (found);
+}
+
+char *s_in_path(char **path_val, char *name)
+{
+	int i;
+
+	i = 0;
+	while (path_val[i])
+	{
+		if (folder_search(path_val[i], name))
+			return (path_val[i]);
+		++i;
+	}
+	return (NULL);
 }

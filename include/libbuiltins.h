@@ -3,4 +3,7 @@
 
 # include "libincludes.h"
 
+#define PATH_MAX 1024
+
+
 #endif
