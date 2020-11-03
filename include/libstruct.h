@@ -24,7 +24,7 @@ typedef struct	s_exec
 	char		*path;
 	char		**argv;
 	char		**env;
-	t_exec		*pipe;
+	struct s_exec		*pipe;
 	int			fd;
 	int			ret;
 }				t_exec;

@@ -6,7 +6,7 @@ SRC			=	parser.c\
 				get_next_line.c\
 				exit_parser.c\
 				parser_utils.c\
-				parse_env\
+				parse_env.c\
 				change_values.c\
 				main.c
 
@@ -22,9 +22,11 @@ FLAGS		= -g #-Wall -Wextra -Werror
 
 all : $(NAME)
 
-$(NAME)	:	$(OBJ) $(INCLUDES)
-	@make bonus -C ./libft/
-	@gcc $(FLAGS) -o $(NAME) $(OBJ) -I $(H_DIR) $(LIB)
+$(NAME)	:	$(OBJ) lib
+	gcc $(FLAGS) -o $(NAME) $(OBJ) -I $(H_DIR) $(LIB)
+
+lib:
+	make bonus -C ./libft/
 
 $(O_DIR)/%.o: ./src/*/%.c $(INCLUDES) | $(O_DIR)
 	@gcc $(FLAGS) -I $(H_DIR) -c $< -o $@

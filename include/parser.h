@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 16:01:44 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/30 22:49:27 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/03 20:48:38 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ typedef struct	s_vld
 
 typedef struct	s_token
 {
-	int			id;
 	char		*str;
+	int			len;
 }				t_token;
 /*
 enum TokenType{
@@ -61,6 +61,6 @@ enum TokenType{
 	TOKEN	= -1,
 };
 */
-char *METACHAR = "|;<> \t\n"; //&()
+#define METACHAR "|;<> \t\n" //&()
 
 #endif

@@ -52,11 +52,11 @@ char			*check_slash(char *line)
 
 char	*change_dollars(char *line, t_env *env)
 {
-	int i;
-	int start;
-	char *new;
-	char *res;
-	char *tmp;
+	int		i;
+	int		start;
+	char	*new;
+	char	*res;
+	char	*tmp;
 
 	i = 0;
 	start = 0;
@@ -77,7 +77,7 @@ char	*change_dollars(char *line, t_env *env)
 				free(new);
 				start = i;
 
-				if (!is_alpha(line[i]) && line[i] != '_')
+				if (!ft_isalpha(line[i]) && line[i] != '_')
 					start = ++i;
 				else
 				{

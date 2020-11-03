@@ -2,13 +2,13 @@
 
 int esc_seq(char *input, int i)
 {
-	return ((input[i - 1] != '\\' && i > 0));
+	return ((i > 0 && input[i - 1] != '\\') || i == 0);
 }
 
 void free_tokens(t_dlist **lst)
 {
-	t_list *tmp;
-	t_list *lptr;
+	t_dlist *tmp;
+	t_dlist *lptr;
 
 	if (!lst || !*lst)
 		return ;
@@ -17,6 +17,7 @@ void free_tokens(t_dlist **lst)
 	{
 		tmp = lptr->next;
 		free(((t_token *)(lptr->content))->str);
+		free((t_token *)(lptr->content));
 		free(lptr);
 		lptr = tmp;
 	}
