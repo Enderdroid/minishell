@@ -24,7 +24,7 @@ static int	no_slash_len(char *line)
 	return (i);
 }
 
-char			*check_slash(char *line)
+char	*check_slash(char *line)
 {
 	char *res;
 	int i;
@@ -68,7 +68,7 @@ char	*change_dollars(char *line, t_env *env)
 	//if (!res) ERROR
 	while(line[++i]) //len? // add last part
 	{
-		if (line[i] == '$' && esc_seq(line, i++))
+		if (line[i] == '$' /*&& esc_seq(line, i++)*/)
 		{
 			//{}??
 			if (!ft_strchr(METACHAR, line[i]) && !ft_strchr("\0 ~:/.,^+=\\\%", line[i]))
@@ -101,6 +101,7 @@ char	*change_dollars(char *line, t_env *env)
 				}
 			}
 		}
+	//++i;
 	}
 	free(line);
 	return (res);
@@ -118,12 +119,12 @@ char	*parse_quotes(char *line, t_env env)
 	start = 0;
 	while(line[end]) //end < len
 	{
-		if ((line[end] == '\'' || line[end] == '\"') && esc_seq(line, end)) // \\ line[end] == \0
+		if ((line[end] == '\'' || line[end] == '\"')) /*&& esc_seq(line, end))*/ // \\ line[end] == \0
 		{
 			str = ft_substr(line, start, end - start); // check \$
 			//if (!str) //ERROR
 			start = end + 1;
-			while ((line[end] == '\'' || line[end] == '\"') && esc_seq(line, end))
+			while ((line[end] == '\'' || line[end] == '\"') /*&& esc_seq(line, end)*/)
 			{
 				end = quote_pair(line, end);
 				new = ft_substr(line, start, end - start); // check q type if " convert \ $

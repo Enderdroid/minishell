@@ -1,11 +1,11 @@
 #include "../../include/parser.h"
 
-int esc_seq(char *input, int i)
+/*int		esc_seq(char *input, int i)
 {
 	return ((i > 0 && input[i - 1] != '\\') || i == 0);
-}
+}*/
 
-void free_tokens(t_dlist **lst)
+void	free_tokens(t_dlist **lst)
 {
 	t_dlist *tmp;
 	t_dlist *lptr;
@@ -31,10 +31,14 @@ int		quote_pair(char *input, int i)
 	quote = input[i];
 	while (input[++i])
 	{
-		if (input[i] == quote && esc_seq(input, i))
+		if (input[i] == quote)
 			break;
+		else if (input[i] == '\\' && quote == '\"' && input[i + 1])
+			++i;
+		//++i;
 	}
 	//if (input[i] == '\0')
+	//	--i;
 	//	write(2, "minishell: unclosed quote\n", 26); //???
 	return (i);
 }
