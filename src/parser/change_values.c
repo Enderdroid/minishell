@@ -50,6 +50,10 @@ char			*check_slash(char *line)
 	return (res);
 }
 
+//$> synt err
+//$% ?????
+//$- $0 $# $!
+//$~ $=
 char	*change_dollars(char *line, t_env *env)
 {
 	int		i;
@@ -58,11 +62,11 @@ char	*change_dollars(char *line, t_env *env)
 	char	*res;
 	char	*tmp;
 
-	i = 0;
+	i = -1;
 	start = 0;
 	res = ft_strdup("");
 	//if (!res) ERROR
-	while(line[i++]) //len? // add last part
+	while(line[++i]) //len? // add last part
 	{
 		if (line[i] == '$' && esc_seq(line, i++))
 		{
@@ -100,4 +104,40 @@ char	*change_dollars(char *line, t_env *env)
 	}
 	free(line);
 	return (res);
+}
+
+char	*parse_quotes(char *line, t_env env)
+{
+	int		end;
+	int		start;
+	char	*str;
+	char	*new;
+	char	*tmp;
+
+	end = 0;
+	start = 0;
+	while(line[end]) //end < len
+	{
+		if ((line[end] == '\'' || line[end] == '\"') && esc_seq(line, end)) // \\ line[end] == \0
+		{
+			str = ft_substr(line, start, end - start); // check \$
+			//if (!str) //ERROR
+			start = end + 1;
+			while ((line[end] == '\'' || line[end] == '\"') && esc_seq(line, end))
+			{
+				end = quote_pair(line, end);
+				new = ft_substr(line, start, end - start); // check q type if " convert \ $
+				tmp = str;
+				str = ft_strjoin(tmp, new);
+				//if (!str) //ERROR
+				free(tmp);
+				free(new);
+				start = ++end;
+			}
+		//change str in list: free(line/token.str); token.str = str;//add last part if no len used
+		}
+		else
+			++end;
+	}
+	return (str);
 }

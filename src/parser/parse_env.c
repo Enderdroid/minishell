@@ -59,10 +59,10 @@ char	*find_env(char *key, t_env *env) //"_" ?
 	while (env[++i].key)//size?
 	{
 		if (ft_strcmp(env[i].key, key) == 0)
-			{
-				value = ft_strdup(env[i].value);
-				break ;
-			}
+		{
+			value = ft_strdup(env[i].value);
+			break ;
+		}
 	}
 	if (!value)
 		value = ft_strdup("");

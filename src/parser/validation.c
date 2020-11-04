@@ -96,7 +96,7 @@ int				input_is_valid(char *input)
 	while (input[++i])
 	{
 		if ((input[i] == '\'' || input[i] == '\"') && (input[i - 1] != '\\' && i > 0))
-			i = quote_end(input, i) + 1;
+			i = quote_pair(input, i) + 1;
 		else if (ft_strchr(";|><", input[i]))
 		{
 			c = input[i++];

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 16:01:44 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/03 20:48:38 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/04 02:59:24 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@ void			parse_input(t_env *env);
 int				esc_seq(char *input, int i);
 void			free_tokens(t_dlist **lst);
 char			*check_slash(char *line);
-int				quote_end(char *input, int i);
+int				quote_pair(char *input, int i);
+char			*parse_quotes(char *line, t_env env);
 
 int g_code;
 

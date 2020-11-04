@@ -24,7 +24,7 @@ void free_tokens(t_dlist **lst)
 	*lst = NULL;
 }
 
-int		quote_end(char *input, int i)
+int		quote_pair(char *input, int i)
 {
 	char quote;
 
