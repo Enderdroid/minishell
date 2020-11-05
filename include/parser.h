@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 16:01:44 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/04 02:59:24 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/06 01:57:32 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,14 @@
 #include "../libft/libft.h"
 #include "libstruct.h"
 
-int				input_is_valid(char *input);
 t_env			*parse_env(char **envp, int *size);
 t_u_env			parse_u_env(t_env *env, int size);
-char			*find_env(char *key, t_env *env);
 void			parse_input(t_env *env);
-int				esc_seq(char *input, int i);
 void			free_tokens(t_dlist **lst);
-char			*check_slash(char *line);
 int				quote_pair(char *input, int i);
-char			*parse_quotes(char *line, t_env env);
-
-int g_code;
+void			correct_str(char **line, int len, char *mask);
+void			split_line(char *line, t_dlist **lst);
+int				input_is_valid(char *input);
 
 typedef struct	s_vld
 {

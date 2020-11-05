@@ -7,7 +7,8 @@ SRC			=	parser.c\
 				exit_parser.c\
 				parser_utils.c\
 				parse_env.c\
-				change_values.c\
+				split_line.c\
+				put_values.c\
 				main.c
 
 O_DIR		=	./bin

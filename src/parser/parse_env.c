@@ -16,8 +16,10 @@ t_env	*parse_env(char **envp, int *size)
 	while(envp[++i])
 	{
 		tmp = ft_split(envp[i], '=');
+		//if (!tmp) //ERROR
 		env[i].key = ft_strdup(tmp[0]);
 		env[i].value = ft_strdup(tmp[1]);
+		//if (!env[i].key || !env[i].value) //ERROR
 		free_arr(tmp);
 		env[i].link = &(envp[i]);
 	}
@@ -44,28 +46,10 @@ t_u_env	parse_u_env(t_env *env, int size)
 		{
 			path_env.l_path = &env[i];
 			path_env.path_content = ft_split(env[i].value, ':');
+			//if (!path_env.path_content)
+				//ERROR
 		}
 	}
 	return(path_env);
 }
 
-char	*find_env(char *key, t_env *env) //"_" ?
-{
-	char	*value;
-	int		i;
-
-	i = -1;
-	value = NULL;
-	while (env[++i].key)//size?
-	{
-		if (ft_strcmp(env[i].key, key) == 0)
-		{
-			value = ft_strdup(env[i].value);
-			break ;
-		}
-	}
-	if (!value)
-		value = ft_strdup("");
-	free(key);
-	return (value);
-}

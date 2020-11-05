@@ -9,9 +9,14 @@ int	main(int ac, char **av, char** envp)
 	g_code = 0;
 	(void)ac;
 	(void)av;
-	t_env *env = parse_env(envp, &size);
+	env = parse_env(envp, &size);
 	t_u_env path_env = parse_u_env(env, size);
 	parse_input(env);
+	/*	char *x = ft_strdup("\"ds\"$TH\\b");
+		char *n= ft_strdup("011021101");
+		correct_str(&x, 9, n);
+		printf("%s\n", x);*/
+		
 	//char *str = "c   ;";
 	//input_is_valid(str);
 	/*

@@ -1,10 +1,5 @@
 #include "../../include/parser.h"
 
-/*int		esc_seq(char *input, int i)
-{
-	return ((i > 0 && input[i - 1] != '\\') || i == 0);
-}*/
-
 void	free_tokens(t_dlist **lst)
 {
 	t_dlist *tmp;

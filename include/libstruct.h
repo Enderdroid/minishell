@@ -28,5 +28,8 @@ typedef struct	s_exec
 	int			fd;
 	int			ret;
 }				t_exec;
+//global var
+int g_code;
+t_env *env;
 
 #endif
