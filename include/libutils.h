@@ -2,6 +2,7 @@
 # define LIBUTILS_H
 
 # include "libincludes.h"
+# include "libstruct.h"
 
 size_t				ft_strlen(const char *s);
 size_t				ft_strlcpy(char *dst, const char *src, size_t size);

@@ -41,9 +41,9 @@ char		*rm_from_folder(char *path)
 
 int			folder_search(char *path, char *name)
 {
-	DIR *dir;
-	struct dirent *ent;
-	int		found;
+	DIR				*dir;
+	struct dirent	*ent;
+	int				found;
 
 	found = 0;
 	if ((dir = opendir(path)) != NULL)

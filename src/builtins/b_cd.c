@@ -6,7 +6,7 @@
 //N_PATH - аргумент
 //скорее всего неправильный
 
-char		*b_cd(char *c_path, const char *n_path)
+char *b_cd(t_data *c_path, const char *n_path)
 {
 	int		ret;
 
