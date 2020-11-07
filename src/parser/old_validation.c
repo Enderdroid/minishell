@@ -1,5 +1,12 @@
 #include "../../include/parser.h"
 
+typedef struct	s_vld
+{
+	char		c;
+	char		*after;
+	const char	*feedback[50];
+}				t_vld;
+
 static int		syntax_err_msg(const char *token)
 {
 	write(2, "minishell: ", 11);

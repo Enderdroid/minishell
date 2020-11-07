@@ -6,23 +6,19 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:28:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/18 15:13:25 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/06 18:22:42 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exit.h"
 #include "../../libft/libft.h"
 
-/*int	parser_exit(char **args, int error_num)
+int	parser_exit(t_dlist **lst, int error_num)
 {
-	//free_arr(args);
-	//malloc_c(0);
-	if (error_num == ERRNO)
-		return (exit_with_errno());
-	else
-		return (exit_custom_err(error_num));
+	free_tokens(lst);
+	free_and_exit(error_num);
 	exit(-1);
-}*/
+}
 
 int	exit_with_errno(void)
 {
@@ -32,7 +28,7 @@ int	exit_with_errno(void)
 
 int	free_and_exit(int error_num)
 {
-	//malloc_c(0);
+	free_data();
 	if (error_num == ERRNO)
 		return (exit_with_errno());
 	else

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 18:47:12 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/14 19:51:19 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/06 18:30:46 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include <errno.h>
 # include <string.h>
+# include "../libft/libft.h"
+# include "parser.h"
 
 # define ERRNO -1
 # define ERR_DEBUG -2
@@ -24,6 +26,6 @@ int	exit_custom_err(int error_num);
 int	free_and_exit(int error_num);
 
 int	parse_line_exit(char *line, int fd, int error_num);
-int	parser_exit(char **args, int error_num);
+int	parser_exit(t_dlist **lst, int error_num);
 
 #endif

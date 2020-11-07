@@ -2,13 +2,14 @@ NAME		=	minishell
 
 SRC_DIR		=	./src/
 SRC			=	parser.c\
-				validation.c\
 				get_next_line.c\
 				exit_parser.c\
 				parser_utils.c\
-				parse_env.c\
+				init_data.c\
 				split_line.c\
+				tokenize.c\
 				put_values.c\
+				free_data.c\
 				main.c
 
 O_DIR		=	./bin

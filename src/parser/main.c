@@ -2,21 +2,17 @@
 
 int	main(int ac, char **av, char** envp)
 {
-	char	*line;
-	int		i;
-	int		size;
-
-	g_code = 0;
 	(void)ac;
 	(void)av;
-	env = parse_env(envp, &size);
-	t_u_env path_env = parse_u_env(env, size);
-	parse_input(env);
-	/*	char *x = ft_strdup("\"ds\"$TH\\b");
-		char *n= ft_strdup("011021101");
-		correct_str(&x, 9, n);
+
+	init_data(envp);
+	parse_input();
+	/*	char *x = ft_strdup("\"jj\"");
+		char *n= ft_strdup("0110");
+		int len = 4;
+		correct_str(&x, &len, &n);
 		printf("%s\n", x);*/
-		
+
 	//char *str = "c   ;";
 	//input_is_valid(str);
 	/*
