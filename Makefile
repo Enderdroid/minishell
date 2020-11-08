@@ -8,7 +8,9 @@ SRC			=	parser.c\
 				init_data.c\
 				split_line.c\
 				tokenize.c\
-				put_values.c\
+				validate.c\
+				correct_str.c\
+				paste_env.c\
 				free_data.c\
 				main.c
 

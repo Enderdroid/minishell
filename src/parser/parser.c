@@ -6,41 +6,67 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/07 01:41:03 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/09 01:58:43 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/get_next_line.h"
 #include "../../include/parser.h"
 
-int	parse_line(char *line, t_dlist **lst) //ptr
+void	tokenize_lst(t_dlist **lst)
 {
-	int err_q;
+	t_dlist	*ptr;
+	char	*mask;
 
-//	if (input_is_valid(line)) //do it via list after parsing
-//	{
-		err_q = split_line(line, lst);//err if unclosed
-		//if (!validate(lst))// ptr
-		//return (0);
-		tokenize_lst(lst); //err_q?, ptr instead of lst //error if unfinished str
-		//if (err_q)
-		//	return (unclosed_q_msg());
-//	}
+	ptr = *lst;
+	while (ptr)
+	{
+		if (((t_token *)(ptr->content))->len > 0)
+		{
+			mask = tokenize_str((((t_token *)(ptr->content))->str), ((t_token *)(ptr->content))->len);
+			if (!mask)
+				parser_exit(lst, NULL);
+			printf("%s - mask\n", mask);//
+			correct_str(&(((t_token *)(ptr->content))->str), &(((t_token *)(ptr->content))->len), &mask, lst);
+			printf("%s\n", ((t_token *)(ptr->content))->str);//
+		}
+		ptr = ptr->next;
+	}
+}
+
+int		parse_line(char *line, t_dlist **lst, int last_char)
+{
+	int q_closed;
+
+	q_closed = (empty_after_backslash(lst, line, last_char)) ? 1 : split_line(line, lst, last_char);
+	free(line);
+	//print_list(lst);//
+	validate(lst, q_closed);
+	tokenize_lst(lst);
+	if (!*lst)  //if nothing to analise return to input
+		parse_input(0, lst);
+	//create struct exec
+
+	free_tokens(lst);
 	return (1);
 }
 
-void			parse_input() //int mode t_dlst **ptr
+void	parse_input(int unfinished, t_dlist **lst)
 {
 	int		ret;
 	char	*line;
-	t_dlist *lst;
-
-	while ((ret = get_next_line(STDIN_FILENO, &line)) != 0 || *line)
-	{//if (mode == 0)
-		lst = NULL;
-		if (parse_line(line, &lst)) //ptr //initialize ptr = lst
+	//line = ft_strdup("a;");//
+	if (!*lst)
+		write(1, "minishell", 9);
+	write(1, "> ", 2);
+	if ((ret = get_next_line(STDIN_FILENO, &line)) != 0 || *line)
+	{
+		printf("unfinished=%c\n", unfinished);//
+		if (!*lst)
+			unfinished = 0;
+		if (parse_line(line, lst, unfinished)) //ptr //initialize ptr = lst
 		{
-			//analise_lst(lst); //if nothing to analise return
+			//analise_lst(lst);
 			//free_and_exit();
 		}
 		//else
@@ -48,9 +74,9 @@ void			parse_input() //int mode t_dlst **ptr
 	if (ret == 0)
 	{
 		//free(line);
-		//free_and_exit();
+		//free_and_exit(); //if signal
 	}
-	free(line);
+	//free(line);
 }
 
 

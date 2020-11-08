@@ -30,10 +30,27 @@ int		quote_pair(char *input, int i)
 			break;
 		else if (input[i] == '\\' && quote == '\"' && input[i + 1])
 			++i;
-		//++i;
 	}
-	//if (input[i] == '\0')
-	//	--i;
-	//	write(2, "minishell: unclosed quote\n", 26); //???
 	return (i);
+}
+
+int	stradd(char **str, char *new)
+{
+	char *tmp;
+
+	if (!new || !*str)
+	{
+		if (*str)
+			free(*str);
+		if (new)
+			free(new);
+		return (0);
+	}
+	tmp = *str;
+	*str = ft_strjoin(tmp, new);
+	free(tmp);
+	free(new);
+	if (!*str)
+		return (0);
+	return (1);
 }

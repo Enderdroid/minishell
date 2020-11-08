@@ -6,17 +6,20 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:28:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/06 18:22:42 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/09 01:50:44 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exit.h"
+#include "../../include/parser.h"
 #include "../../libft/libft.h"
 
-int	parser_exit(t_dlist **lst, int error_num)
+void	parser_exit(t_dlist **lst, char **str) //, int error_num
 {
 	free_tokens(lst);
-	free_and_exit(error_num);
+	if (*str)
+		free(*str);
+	free_and_exit(ERRNO);
 	exit(-1);
 }
 

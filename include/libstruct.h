@@ -53,4 +53,5 @@ typedef struct			s_exec
 int g_code;
 t_data *data;
 
+
 #endif

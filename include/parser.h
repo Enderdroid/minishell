@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 16:01:44 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/07 01:47:23 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/09 01:58:12 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include "../libft/libft.h"
+#include "exit.h"
 #include "libstruct.h"
 
 #define METACHAR "|;<> \t\n" //&()
@@ -28,21 +29,25 @@ typedef struct	s_token
 
 typedef struct	s_vld
 {
-	char		*prev;
-	char		*after;
-	const char	*feedback[50];
+	char		*prv;
+	const char	*nxt[50];
 }				t_vld;
 
-void			init_data(char **envp);
-void			parse_input();
+void			parse_input(int unfinished, t_dlist **lst);
 void			free_tokens(t_dlist **lst);
 int				quote_pair(char *input, int i);
-void			correct_str(char **line, int *strlen, char **mask);
-int				split_line(char *line, t_dlist **lst);
+int				stradd(char **str, char *new);
+int				paste_env(char *str, int *start, int *end, char **res);
+void			correct_str(char **line, int *strlen, char **mask, t_dlist **lst);
+int				split_line(char *line, t_dlist **lst, int last_char);
 void			free_tokens(t_dlist **lst);
-void			tokenize_lst(t_dlist **lst);
+char			*tokenize_str(char *str, int len);
+void			validate(t_dlist **lst, int q);
+int	empty_after_backslash(t_dlist **lst, char *line, int last_char);
 
 void	free_data(void);
+void			init_data(char **envp);
+
 /*
 enum TokenType{
 	C_GENERAL = -1,

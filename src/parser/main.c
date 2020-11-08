@@ -2,16 +2,15 @@
 
 int	main(int ac, char **av, char** envp)
 {
+	t_dlist *lst;
+
 	(void)ac;
 	(void)av;
 
 	init_data(envp);
-	parse_input();
-	/*	char *x = ft_strdup("\"jj\"");
-		char *n= ft_strdup("0110");
-		int len = 4;
-		correct_str(&x, &len, &n);
-		printf("%s\n", x);*/
+	lst = NULL;
+	while(42)
+		parse_input(0, &lst);
 
 	//char *str = "c   ;";
 	//input_is_valid(str);
