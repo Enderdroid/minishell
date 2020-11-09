@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 16:01:44 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/09 01:58:12 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/09 06:16:26 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,17 +37,16 @@ void			parse_input(int unfinished, t_dlist **lst);
 void			free_tokens(t_dlist **lst);
 int				quote_pair(char *input, int i);
 int				stradd(char **str, char *new);
-int				paste_env(char *str, int *start, int *end, char **res);
 void			correct_str(char **line, int *strlen, char **mask, t_dlist **lst);
-int				split_line(char *line, t_dlist **lst, int last_char);
+int				get_tokens(t_dlist **lst, char *line, int last_char);
 void			free_tokens(t_dlist **lst);
-char			*tokenize_str(char *str, int len);
+char			*str_mask(char *str, int len);
 void			validate(t_dlist **lst, int q);
-int	empty_after_backslash(t_dlist **lst, char *line, int last_char);
 
-void	free_data(void);
+void			free_data(void);
 void			init_data(char **envp);
 
+void	print_list(t_dlist *lst);//
 /*
 enum TokenType{
 	C_GENERAL = -1,

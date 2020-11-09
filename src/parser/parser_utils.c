@@ -11,7 +11,8 @@ void	free_tokens(t_dlist **lst)
 	while (lptr)
 	{
 		tmp = lptr->next;
-		free(((t_token *)(lptr->content))->str);
+		if(((t_token *)(lptr->content))->str)
+			free(((t_token *)(lptr->content))->str);
 		free((t_token *)(lptr->content));
 		free(lptr);
 		lptr = tmp;
@@ -53,4 +54,15 @@ int	stradd(char **str, char *new)
 	if (!*str)
 		return (0);
 	return (1);
+}
+
+void	print_list(t_dlist *lst)
+{
+	while(lst)
+	{
+		printf("%s,", ((t_token *)(lst->content))->str);
+		printf("%i->",((t_token *)(lst->content))->len);
+		lst = (lst)->next;
+	}
+	printf("NULL\n");
 }

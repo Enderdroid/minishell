@@ -6,11 +6,10 @@ SRC			=	parser.c\
 				exit_parser.c\
 				parser_utils.c\
 				init_data.c\
-				split_line.c\
-				tokenize.c\
+				get_tokens.c\
+				str_mask.c\
 				validate.c\
 				correct_str.c\
-				paste_env.c\
 				free_data.c\
 				main.c
 

@@ -62,7 +62,7 @@ static void	check_last(char *str, int len, t_dlist **lst)
 			parse_input(*str, lst);
 	if (str[len - 1] == '\\')
 	{
-		mask = tokenize_str(str, len);
+		mask = str_mask(str, len);
 		if (!mask)
 			parser_exit(lst, NULL);
 		if (mask[len - 1] == '0')

@@ -6,14 +6,14 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/09 01:58:43 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/09 06:15:06 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/get_next_line.h"
 #include "../../include/parser.h"
 
-void	tokenize_lst(t_dlist **lst)
+void	correct_tokens(t_dlist **lst)
 {
 	t_dlist	*ptr;
 	char	*mask;
@@ -23,7 +23,7 @@ void	tokenize_lst(t_dlist **lst)
 	{
 		if (((t_token *)(ptr->content))->len > 0)
 		{
-			mask = tokenize_str((((t_token *)(ptr->content))->str), ((t_token *)(ptr->content))->len);
+			mask = str_mask((((t_token *)(ptr->content))->str), ((t_token *)(ptr->content))->len);
 			if (!mask)
 				parser_exit(lst, NULL);
 			printf("%s - mask\n", mask);//
@@ -38,11 +38,12 @@ int		parse_line(char *line, t_dlist **lst, int last_char)
 {
 	int q_closed;
 
-	q_closed = (empty_after_backslash(lst, line, last_char)) ? 1 : split_line(line, lst, last_char);
+	q_closed = get_tokens(lst, line, last_char);
 	free(line);
-	//print_list(lst);//
+	print_list(*lst);//
 	validate(lst, q_closed);
-	tokenize_lst(lst);
+	correct_tokens(lst);
+	print_list(*lst);//
 	if (!*lst)  //if nothing to analise return to input
 		parse_input(0, lst);
 	//create struct exec

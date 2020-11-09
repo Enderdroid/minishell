@@ -1,46 +1,31 @@
 #include "../../include/parser.h"
 
-static int	join_to_last(t_dlist *last, char *str)
-{
-	char	*tmp;
-
-	tmp = ((t_token *)(last->content))->str;
-	((t_token *)(last->content))->str = ft_strjoin(tmp, str);
-	free(tmp);
-	free(str);
-	if (!((t_token *)(last->content))->str)
-		return (0);
-	((t_token *)(last->content))->len = ft_strlen(((t_token *)(last->content))->str);
-	return (1);
-}
-
 static int	to_lst(t_dlist **lst, char *line, int len, int *mode)
 {
 	t_token	*token;
+	t_dlist *last;
 	char	*str;
 
 	if (!len)
 		return (1);
-	str = ft_substr(line, 0, len);
-	if (!str)
+	if (!(str = ft_substr(line, 0, len)))
 		return (0);
 	if (*mode == '\\')
 	{
-		if (!join_to_last(ft_dlstlast(*lst), str))
-			return (0);
+		last = ft_dlstlast(*lst);
+		if (!stradd(&(((t_token *)(last->content))->str), str))
+			parser_exit (lst, &line);
+		((t_token *)(last->content))->len = ft_strlen(((t_token *)(last->content))->str);
 		*mode = 0;
 		return (1);
 	}
-	token = malloc(sizeof(t_token *));
-	if (!token)
+	if (!(token = malloc(sizeof(t_token *))))
 		return (0);
-	printf("!%s\n", str);//
+	//printf("!%s\n", str);//
 	token->str = str;
 	token->len = (*mode == 'c') ? -1 : len;
-	//if (*lst)
-	//	printf("*!%s\n", ((t_token *)((*lst)->content))->str);
 	ft_dlstadd_back(lst, ft_dlstnew(token));
-	printf("#head=%s,%i\n", ((t_token *)((*lst)->content))->str, ((t_token *)((*lst)->content))->len);//
+	//print_list(*lst);//
 	return (1);
 }
 
@@ -64,46 +49,7 @@ static void	add_cmd(char *line, t_dlist **lst, int *start, int *end)
 	//printf("s1=%c,e1=%c\n", line[start], line[end]);
 }
 
-/*static void	join_line(char **line, t_dlist **lst)
-{
-	t_dlist *last;
-	char	*tmp;
-
-	last = ft_dlstlast(*lst);
-	tmp = *line;
-	*line = ft_strjoin(((t_token *)(last->content))->str, tmp);
-	if (!*line)
-		parser_exit(lst, NULL);
-	free(tmp);
-	free(((t_token *)(last->content))->str);
-	free((t_token *)(last->content));
-	if (last->prev)
-		last->prev->next = NULL;
-	else
-		{free(*lst);
-			*lst = NULL;
-		}
-	//free(last);
-	last = NULL;
-	printf("?%s\n", *line);
-}*/
-int			empty_after_backslash(t_dlist **lst, char *line, int last_char)
-{
-	char *whitespace;
-
-	if (last_char == '\\' && !*line)
-	{
-		whitespace = ft_strdup(" ");
-		if (!whitespace)
-			parser_exit(lst, &line);
-		if (!join_to_last(ft_dlstlast(*lst), whitespace))
-			parser_exit(lst, &line);
-		return (1);
-	}
-	return (0);
-}
-
-int			split_line(char *line, t_dlist **lst, int mode)
+static int	split_line(t_dlist **lst, char *line, int mode)
 {
 	int start;
 	int end;
@@ -129,6 +75,24 @@ int			split_line(char *line, t_dlist **lst, int mode)
 	if (!to_lst(lst, &line[start], end - start, &mode))
 		parser_exit(lst, &line); //if (!to_lst) //free_and_exit(lst)
 	return (1);
+}
+
+int			get_tokens(t_dlist **lst, char *line, int last_char)
+{
+	char	*tmp;
+	t_dlist	*last;
+
+	if (last_char == '\\' && !*line)
+	{
+		last = ft_dlstlast(*lst);
+		tmp = ((t_token *)(last->content))->str;
+		((t_token *)(last->content))->str = ft_substr(tmp, 0, ((t_token *)(last->content))->len - 1);
+		free(tmp);
+		if (!((t_token *)(last->content))->str)
+			parser_exit(lst, &line);
+		return (1);
+	}
+	return (split_line(lst, line, last_char));
 }
 //printf("len=%i\n", len);
 	//printf("-%s\n", ((t_token *)((*lst)->content))->str);

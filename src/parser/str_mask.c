@@ -25,7 +25,7 @@ static void check_dollar(char *str, char *mask, int i, int q)
 		mask[i] = '1';
 }
 
-char	*tokenize_str(char *str, int len)
+char	*str_mask(char *str, int len)
 {
 	char	*mask;
 	int		i;
