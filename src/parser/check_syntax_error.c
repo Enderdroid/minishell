@@ -13,19 +13,8 @@ static int	syntax_err_msg(const char *token, t_dlist **lst)
 	return (0);
 }
 
-static int	unclosed_q_msg(t_dlist **lst)
-{
-	write(2, "minishell: ", 11);
-	write(2, "syntax error: unclosed quote\n", 29);
-	g_code = 258;
-	if (*lst)
-		free_tokens(lst);
-	parse_input(0, lst);
-	return (0);
-}
-
 static void	check_token(char *prv, char *nxt, t_dlist **lst)
-{printf("in:prv=%s,nxt=%s\n", prv, nxt);
+{printf("in:prv=%s,nxt=%s\n", prv, nxt);//
 	int		i;
 	int		j;
 	t_vld	vld[7] = { {"newline", {";", "|", NULL} } , \
@@ -39,7 +28,7 @@ static void	check_token(char *prv, char *nxt, t_dlist **lst)
 	i = -1;
 	while (++i < 7)
 	{
-		int j = -1;
+		j = -1;
 		//printf("in:prv=%s,nxt=%s, prv=%s,%i\n", prv, nxt,vld[i].prv, i);
 		if (!ft_strcmp(prv, vld[i].prv))
 		{
@@ -53,36 +42,11 @@ static void	check_token(char *prv, char *nxt, t_dlist **lst)
 	}
 }
 
-static void	check_last(char *str, int len, t_dlist **lst)
-{
-	char *mask;
-//printf("?!\n");//
-	if (len < 0)
-		if (*str == '|')
-			parse_input(*str, lst);
-	if (str[len - 1] == '\\')
-	{
-		mask = str_mask(str, len);
-		if (!mask)
-			parser_exit(lst, NULL);
-		if (mask[len - 1] == '0')
-		{
-			free(mask);
-			parse_input(str[len - 1], lst);
-		}
-	}
-	return ;
-}
-
-void		validate(t_dlist **lst, int q_closed)
+void		check_syntax_error(t_dlist **lst, t_dlist **last)
 {
 	t_dlist	*ptr;
-	t_dlist	*last;
-	int		i;
 	char	*nxt;
-//printf("q %i\n", q_closed);//
-//printf("*%s, %i\n", ((t_token *)((*lst)->content))->str, ((t_token *)((*lst)->content))->len);
-	last = NULL;
+
 	if ((ptr = *lst))
 	{
 		if (((t_token *)(ptr->content))->len < 0)
@@ -96,15 +60,9 @@ void		validate(t_dlist **lst, int q_closed)
 				check_token(((t_token *)(ptr->content))->str, nxt, lst);
 			}
 			if (!ptr->next)
-				{last = ptr;
-				printf("last=%s\n", ((t_token *)(last->content))->str);}
+				{*last = ptr;
+				printf("last=%s\n", ((t_token *)((*last)->content))->str);}
 			ptr = ptr->next;
 		}
-	}
-	//printf("*!%s\n", ((t_token *)(last->content))->str);
-	if (!q_closed)
-		unclosed_q_msg(lst);
-	if (last)
-		check_last(((t_token *)(last->content))->str, ((t_token *)(last->content))->len, lst);
-	//printf("##%s\n", ((t_token *)((*lst)->content))->str);//
+	}//printf("*!%s\n", ((t_token *)(last->content))->str);
 }

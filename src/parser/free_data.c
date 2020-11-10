@@ -17,6 +17,16 @@ void	free_data(void)
 	free(data);
 }
 
+void	free_exec(t_exec *exec)
+{
+	if (exec->name)
+		free(exec->name);
+	if (exec->path)
+		free(exec->path);
+	if (exec->argv)
+		free_arr(exec->argv);
+}
+
 /*void	free_data(void)
 {
 	int i;

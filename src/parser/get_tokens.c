@@ -1,5 +1,16 @@
 #include "../../include/parser.h"
 
+static void	del_last_token(t_dlist *last)
+{
+	if (last->prev)
+		last->prev->next = NULL;
+	if(((t_token *)(last->content))->str)
+		free(((t_token *)(last->content))->str);
+	free((t_token *)(last->content));
+	free(last);
+	last = NULL;
+}
+
 static int	to_lst(t_dlist **lst, char *line, int len, int *mode)
 {
 	t_token	*token;
@@ -23,7 +34,7 @@ static int	to_lst(t_dlist **lst, char *line, int len, int *mode)
 		return (0);
 	//printf("!%s\n", str);//
 	token->str = str;
-	token->len = (*mode == 'c') ? -1 : len;
+	token->len = (*mode == 'C') ? cmd_type(str) : len;
 	ft_dlstadd_back(lst, ft_dlstnew(token));
 	//print_list(*lst);//
 	return (1);
@@ -33,16 +44,16 @@ static void	add_cmd(char *line, t_dlist **lst, int *start, int *end)
 {
 	int mode;
 
-	mode = 'c';
+	mode = 'C';
 	if (line[*end] == '>' && (line[*end + 1] == '>' || line[*end + 1] == '|'))
 	{
 		if (!to_lst(lst, &line[(*end)++], 2, &mode))
-			parser_exit(lst, &line); //add to lst as cmd
+			parser_exit(lst, &line);
 	}
 	else if (!ft_isspace(line[*end]))
 	{
 		if (!to_lst(lst, &line[*end], 1, &mode))
-			parser_exit(lst, &line); //add to lst as cmd
+			parser_exit(lst, &line);
 	}
 	//printf("s=%c,e=%c\n", line[start], line[end]);
 	*start = *end + 1;
@@ -62,18 +73,18 @@ static int	split_line(t_dlist **lst, char *line, int mode)
 			++end;
 		else if ((line[end] == '\'' || line[end] == '\"'))
 		{
-			if (!line[end = quote_pair(line, end)])//--end;
-				return (0); //unclosed quote//printf("s=%c,e=%c,%i,%i\n", line[start], line[end], start, end);
+			if (!line[end = quote_pair(line, end)])
+				return (0);
 		}
 		else if (ft_strchr(METACHAR, line[end]))
 		{
 			if (!to_lst(lst, &line[start], end - start, &mode))
-				parser_exit(lst, &line); //ft_substr(line, start, len), len, &mode); // add to lst, check quotes \ $ //malloc protection in next func - ok with errno?
+				parser_exit(lst, &line);
 			add_cmd(line, lst, &start, &end);
 		}
 	}
 	if (!to_lst(lst, &line[start], end - start, &mode))
-		parser_exit(lst, &line); //if (!to_lst) //free_and_exit(lst)
+		parser_exit(lst, &line);
 	return (1);
 }
 
@@ -85,6 +96,14 @@ int			get_tokens(t_dlist **lst, char *line, int last_char)
 	if (last_char == '\\' && !*line)
 	{
 		last = ft_dlstlast(*lst);
+		if (!*(((t_token *)(last->content))->str + 1) && last->prev && \
+			((t_token *)(last->prev->content))->len < 0 && *(((t_token *)(last->prev->content))->str) == '|')
+		{
+			del_last_token(last);
+			free(line);
+			parse_input('|', lst);
+			return (1);
+		}
 		tmp = ((t_token *)(last->content))->str;
 		((t_token *)(last->content))->str = ft_substr(tmp, 0, ((t_token *)(last->content))->len - 1);
 		free(tmp);

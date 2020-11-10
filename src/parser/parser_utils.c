@@ -1,5 +1,22 @@
 #include "../../include/parser.h"
 
+int		cmd_type(char *cmd)
+{
+	if (*cmd == '|')
+		return (C_PIPE);
+	if (*cmd == '>')
+	{
+		if (*(cmd + 1) == '>')
+			return (C_RDR_R_DBL);
+		return (C_RDR_R);
+	}
+	if (*cmd == '<')
+		return (C_RDR_L);
+	if (*cmd == ';')
+		return (C_END);
+	return (-1);
+}
+
 void	free_tokens(t_dlist **lst)
 {
 	t_dlist *tmp;

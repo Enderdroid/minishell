@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/09 06:15:06 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/11 00:35:44 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,20 @@
 void	correct_tokens(t_dlist **lst)
 {
 	t_dlist	*ptr;
-	char	*mask;
+	char	*tmp;
 
 	ptr = *lst;
 	while (ptr)
 	{
 		if (((t_token *)(ptr->content))->len > 0)
 		{
-			mask = str_mask((((t_token *)(ptr->content))->str), ((t_token *)(ptr->content))->len);
-			if (!mask)
-				parser_exit(lst, NULL);
-			printf("%s - mask\n", mask);//
-			correct_str(&(((t_token *)(ptr->content))->str), &(((t_token *)(ptr->content))->len), &mask, lst);
+			tmp = corrected_str(lst, (t_token *)(ptr->content));
+			if (tmp)
+			{
+				free(((t_token *)(ptr->content))->str);
+				((t_token *)(ptr->content))->str = tmp;
+				((t_token *)(ptr->content))->len = ft_strlen(tmp);
+			}
 			printf("%s\n", ((t_token *)(ptr->content))->str);//
 		}
 		ptr = ptr->next;
@@ -41,14 +43,13 @@ int		parse_line(char *line, t_dlist **lst, int last_char)
 	q_closed = get_tokens(lst, line, last_char);
 	free(line);
 	print_list(*lst);//
-	validate(lst, q_closed);
+	validate_tokens(lst, q_closed);
 	correct_tokens(lst);
 	print_list(*lst);//
-	if (!*lst)  //if nothing to analise return to input
-		parse_input(0, lst);
-	//create struct exec
 
-	free_tokens(lst);
+	//create struct exec
+	analise_tokens(lst);
+	//free_tokens(lst);
 	return (1);
 }
 
@@ -56,7 +57,7 @@ void	parse_input(int unfinished, t_dlist **lst)
 {
 	int		ret;
 	char	*line;
-	//line = ft_strdup("a;");//
+	//line = ft_strdup("cd | $T");//
 	if (!*lst)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);
@@ -77,19 +78,5 @@ void	parse_input(int unfinished, t_dlist **lst)
 		//free(line);
 		//free_and_exit(); //if signal
 	}
-	//free(line);
+	//free(line);//freed after split?
 }
-
-
-/*
-t_exec analise_lst(t_dlist *lst)
-{
-	//static?
-}
-
-{
-		analise_lst
-	else
-		parse_input
-}
-*/

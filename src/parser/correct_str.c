@@ -1,32 +1,6 @@
 
 #include "../../include/parser.h"
 
-static char	*find_env(char *key)
-{
-	char	*value;
-	int		i;
-
-	if (!key)
-		return (NULL);
-	i = -1;
-	value = NULL;
-	while (data->env_arr[++i].key)
-	{
-		//printf("%s\n", env[i].key);//
-		if (ft_strcmp(data->env_arr[i].key, key) == 0)
-		{
-			value = ft_strdup(data->env_arr[i].value);
-			if (!value)
-				return (NULL);
-			break ;
-		}
-	}
-	if (!value)
-		value = ft_strdup("");
-	free(key);
-	return (value);
-}
-
 static int	paste_env(char *str, int *start, int *end, char **res)
 {
 	char *new;
@@ -80,36 +54,43 @@ static char	*substr_filtered(char *str, char *mask, int len, int end)
 	return (res);
 }
 
-void	correct_str(char **str, int *strlen, char **mask, t_dlist **lst)
+static void	correct_str(t_token *token, char **res, char **mask, t_dlist **lst)
 {
 	int		end;
 	int		start;
 	int		len;
-	char	*res;
 
 	end = -1;
 	start = 0;
 	len = 0;
-	if (!(res = ft_strdup("")))
-		parser_exit(lst, mask);
-	while(++end <= *strlen)
+	while(++end <= token->len)
 	{
 		if ((*mask)[end] == '1')
 			++len;
-		else if (end == *strlen || (*mask)[end] == '$')
+		else if (end == token->len || (*mask)[end] == '$')
 		{
-			if (end == *strlen && *strlen == len)
+			if (end == token->len && token->len == len)
 				return ;
 			if (len > 0)
-				if (!stradd(&res, substr_filtered(*str + start, *mask + start, len, end - start)))
+				if (!stradd(res, substr_filtered(token->str + start, *mask + start, len, end - start)))
 					parser_exit(lst, mask);
 			if ((*mask)[start = end++] == '$')
-				if (!paste_env(*str, &start, &end, &res))
+				if (!paste_env(token->str, &start, &end, res))
 					parser_exit(lst, mask);
 		}
 	}
-	free(*mask);
-	free(*str);
-	*str = res;
-	*strlen = ft_strlen(*str);
+}
+
+char		*corrected_str(t_dlist **lst, t_token *token)
+{
+	char *mask;
+	char *res;
+
+	if (!(mask = str_mask(token->str, token->len)))
+		parser_exit(lst, NULL);
+	if (!(res = ft_strdup("")))
+		parser_exit(lst, &mask);
+	correct_str(token, &res, &mask, lst);
+	free(mask);
+	return (res);
 }

@@ -8,9 +8,12 @@ SRC			=	parser.c\
 				init_data.c\
 				get_tokens.c\
 				str_mask.c\
-				validate.c\
+				validate_tokens.c\
+				check_syntax_error.c\
+				find_env.c\
 				correct_str.c\
 				free_data.c\
+				create_exec.c\
 				main.c
 
 O_DIR		=	./bin
