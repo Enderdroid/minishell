@@ -138,6 +138,7 @@ void	analise_tokens(t_dlist **lst)
 		newlst = exec_fill(lst, exec);
 		free_tokens(lst);
 		*lst = newlst;
+		//send exec
 	}
 	parse_input(0, lst);
 }

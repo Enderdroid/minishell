@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/11 00:35:44 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/13 15:16:14 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	correct_tokens(t_dlist **lst)
 	}
 }
 
-int		parse_line(char *line, t_dlist **lst, int last_char)
+void	parse_line(char *line, t_dlist **lst, int last_char)
 {
 	int q_closed;
 
@@ -47,10 +47,9 @@ int		parse_line(char *line, t_dlist **lst, int last_char)
 	correct_tokens(lst);
 	print_list(*lst);//
 
-	//create struct exec
+	//create struct exec and send
 	analise_tokens(lst);
 	//free_tokens(lst);
-	return (1);
 }
 
 void	parse_input(int unfinished, t_dlist **lst)
@@ -66,12 +65,7 @@ void	parse_input(int unfinished, t_dlist **lst)
 		printf("unfinished=%c\n", unfinished);//
 		if (!*lst)
 			unfinished = 0;
-		if (parse_line(line, lst, unfinished)) //ptr //initialize ptr = lst
-		{
-			//analise_lst(lst);
-			//free_and_exit();
-		}
-		//else
+		parse_line(line, lst, unfinished);
 	}
 	if (ret == 0)
 	{

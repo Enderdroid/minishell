@@ -11,9 +11,6 @@ int	main(int ac, char **av, char** envp)
 	lst = NULL;
 	while(42)
 		parse_input(0, &lst);
-
-	//char *str = "c   ;";
-	//input_is_valid(str);
 	/*
 	i = -1;
 	while (++i < size)
