@@ -25,8 +25,8 @@ void	free_exec(t_exec *exec)
 		free(exec->path);
 	if (exec->argv)
 		free_arr(exec->argv);
-	if (exec->pipe_to)
-		free_arr(exec->pipe_to);
+	//if (exec->pipe_to)
+	//	free_arr(exec->pipe_to);
 }
 
 /*void	free_data(void)

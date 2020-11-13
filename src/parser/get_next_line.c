@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/24 17:48:14 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/19 15:57:46 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/13 19:02:57 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,8 @@ static int		get_line(char **line, char *src, char *rem)
 	char *n;
 	char *tmp;
 
+	if (!*line)
+		return (free_and_exit(ERRNO));
 	tmp = *line;
 	*line = ft_strjoin_part(tmp, src);
 	free(tmp);
@@ -63,20 +65,22 @@ int				get_next_line(int fd, char **line)
 
 	if (!line || BUFFER_SIZE <= 0)
 		return (parse_line_exit(*line, fd, ERR_DEBUG));
-	if (!(*line = ft_strdup("")))
-		return (free_and_exit(ERRNO));
-	if (*rem)
-		if ((n = get_line(line, rem, rem)) != 0)
-			return (n);
-	while ((rd = read(fd, buff, BUFFER_SIZE)) > 0)
+	*line = ft_strdup("");
+	while (42)
 	{
-		buff[rd] = '\0';
-		if ((n = get_line(line, buff, rem)) != 0)
-			return (n);
+		if (*rem)
+			if ((n = get_line(line, rem, rem)) != 0)
+				return (n);
+		while ((rd = read(fd, buff, BUFFER_SIZE)) > 0)
+		{
+			buff[rd] = '\0';
+			if ((n = get_line(line, buff, rem)) != 0)
+				return (n);
+		}
+		if (rd == 0 && !*rem && !(**line))
+			return (rd);
+		if (rd < 0)
+			return (parse_line_exit(*line, fd, ERRNO));
 	}
-	if (rd == 0 && !*rem)
-		return (rd);
-	if (rd < 0)
-		return (parse_line_exit(*line, fd, ERRNO));
 	return (parse_line_exit(*line, fd, ERR_DEBUG));
 }

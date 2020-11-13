@@ -29,16 +29,6 @@ static void	check_last(t_token *token, t_dlist **lst, t_dlist *prv)
 		}
 		free(tmp);
 	}
-	if (prv && *(token->str) == '$' && token->str[1] && token->len == C_PIPE)
-	{
-		if ((tmp = corrected_str(lst, token)) && !*tmp)
-		{
-			free_tokens(lst);
-			free(tmp);
-			parse_input(0, lst);
-		}
-		free(tmp);
-	}
 }
 
 void		validate_tokens(t_dlist **lst, int q_closed)

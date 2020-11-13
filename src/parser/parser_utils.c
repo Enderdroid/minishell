@@ -28,7 +28,7 @@ void	free_tokens(t_dlist **lst)
 	while (lptr)
 	{
 		tmp = lptr->next;
-		if(((t_token *)(lptr->content))->str)
+		if (((t_token *)(lptr->content))->str)
 			free(((t_token *)(lptr->content))->str);
 		free((t_token *)(lptr->content));
 		free(lptr);
@@ -45,7 +45,7 @@ int		quote_pair(char *input, int i)
 	while (input[++i])
 	{
 		if (input[i] == quote)
-			break;
+			break ;
 		else if (input[i] == '\\' && quote == '\"' && input[i + 1])
 			++i;
 	}
@@ -75,10 +75,10 @@ int	stradd(char **str, char *new)
 
 void	print_list(t_dlist *lst)
 {
-	while(lst)
+	while (lst)
 	{
 		printf("%s,", ((t_token *)(lst->content))->str);
-		printf("%i->",((t_token *)(lst->content))->len);
+		printf("%i->", ((t_token *)(lst->content))->len);
 		lst = (lst)->next;
 	}
 	printf("NULL\n");

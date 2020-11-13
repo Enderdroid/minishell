@@ -130,7 +130,7 @@ void	analise_tokens(t_dlist **lst)
 	t_dlist	*newlst;
 	t_exec	*exec;
 
-	while (!*lst)
+	while (*lst)
 	{
 		len = 0;
 		if (!(exec = exec_init()))
@@ -187,4 +187,3 @@ void	analise_tokens(t_dlist **lst)
 	}
 	return (NULL);
 }*/
-

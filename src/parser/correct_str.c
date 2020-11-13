@@ -16,7 +16,8 @@ static int	paste_env(char *str, int *start, int *end, char **res)
 		}
 		else
 		{
-			while(ft_isalpha(str[*end]) || ft_isdigit(str[*end]) || str[*end] == '_')
+			while (ft_isalpha(str[*end]) || \
+					ft_isdigit(str[*end]) || str[*end] == '_')
 				++(*end);
 			new = find_env(ft_substr(str, *start + 1, *end - *start - 1));
 		}
@@ -63,14 +64,18 @@ static void	correct_str(t_token *token, char **res, char **mask, t_dlist **lst)
 	end = -1;
 	start = 0;
 	len = 0;
-	while(++end <= token->len)
+	while (++end <= token->len)
 	{
 		if ((*mask)[end] == '1')
 			++len;
 		else if (end == token->len || (*mask)[end] == '$')
 		{
 			if (end == token->len && token->len == len)
+			{
+				free(*res);
+				*res = NULL;
 				return ;
+			}
 			if (len > 0)
 				if (!stradd(res, substr_filtered(token->str + start, *mask + start, len, end - start)))
 					parser_exit(lst, mask);

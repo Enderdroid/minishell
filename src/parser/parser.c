@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/13 15:16:14 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/13 19:34:10 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	parse_line(char *line, t_dlist **lst, int last_char)
 	validate_tokens(lst, q_closed);
 	correct_tokens(lst);
 	print_list(*lst);//
-
 	//create struct exec and send
 	analise_tokens(lst);
 	//free_tokens(lst);
@@ -56,12 +55,12 @@ void	parse_input(int unfinished, t_dlist **lst)
 {
 	int		ret;
 	char	*line;
-	//line = ft_strdup("cd | $T");//
+	//line = ft_strdup("");//
 	if (!*lst)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);
-	if ((ret = get_next_line(STDIN_FILENO, &line)) != 0 || *line)
-	{
+	if ((ret = get_next_line(STDIN_FILENO, &line)) != 0)
+	{//printf("gnl=%i\n", ret);//
 		printf("unfinished=%c\n", unfinished);//
 		if (!*lst)
 			unfinished = 0;
@@ -69,8 +68,12 @@ void	parse_input(int unfinished, t_dlist **lst)
 	}
 	if (ret == 0)
 	{
-		//free(line);
-		//free_and_exit(); //if signal
+		//printf("gnl=%i\n", ret);
+		free(line);
+		write(1, "exit\n", 5);
+		free_data();
+		exit(0);
 	}
+	printf("do I ever get here?");
 	//free(line);//freed after split?
 }
