@@ -21,7 +21,7 @@ t_exec	*exec_init()
 
 int		cmd_len(t_dlist *lptr)
 {
-	int		len;
+	int len;
 
 	len = 0;
 	while (lptr)
@@ -42,27 +42,22 @@ void	fill_name_path(char *str, t_exec *exec, char **name, t_dlist **lst)
 	{
 		if (*str == '~')
 			if (!(exec->path = find_env(ft_strdup("HOME"))))
-				//free_exec(exec);
 				parser_exit(lst, NULL);
 		if (*str == '.')
 			if (!(exec->path = find_env(ft_strdup("PWD"))))
-				//free_exec(exec);
 				parser_exit(lst, NULL);
 	}
 	s = ft_strrchr(str, '/');
 	exec->name = (s) ? ft_strdup((s + 1)) : ft_strdup(str);
 	if (!exec->name)
-		//free_exec(exec);
 		parser_exit(lst, NULL);
 	if (!(*name = ft_strdup(exec->name))) //argv[0]
-		//free_exec(exec);
 		parser_exit(lst, NULL);
 	if (s)
 	{
-		exec->path = (exec->path) ? ft_strjoin(exec->path, ft_substr(str, 0, s - str)) \
+		exec->path = (exec->path) ? ft_strjoin(exec->path, ft_substr(str, 1, s - str)) \
 								: ft_substr(str, 0, s - str);
 		if (!exec->path)
-		//free_exec(exec);
 			parser_exit(lst, NULL);
 	}
 }
@@ -83,7 +78,7 @@ void	process_cmd(t_dlist **lst, t_dlist *newlst, t_exec *exec, int cmd) //redire
 
 t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
 {
-	t_dlist *newlst;
+	t_dlist	*newlst;
 	int		i;
 
 	i = 0;
@@ -98,8 +93,8 @@ t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
 			process_cmd(lst, newlst, exec, (((t_token *)lptr->content)->len));
 		}
 		if (!(argv[++i] = ft_strdup(((t_token *)lptr->content)->str)))
-			//free_exec
 			parser_exit(lst, NULL);
+		printf("%s, %i\n", argv[i], i);//
 		lptr = lptr->next;
 	}
 	return (NULL);
@@ -113,12 +108,13 @@ t_dlist	*exec_fill(t_dlist **lst, t_exec *exec)
 
 	len = cmd_len(*lst);
 	if (!(argv = (char **)ft_calloc(sizeof(char), len + 1)))
-		//free_exec(exec);
 		parser_exit(lst, NULL);
 	lptr = *lst;
 	if (((t_token *)(*lst)->content)->len >= 0)
 	{
 		fill_name_path(((t_token *)(*lst)->content)->str, exec, &argv[0], lst);
+		printf("name = %s\n", data->exec->name);//
+		printf("path = %s\n", data->exec->path);//
 		lptr = (*lst)->next;
 	}
 	return (exec_arr_fill(lst, lptr, exec, argv));
@@ -128,17 +124,16 @@ void	analise_tokens(t_dlist **lst)
 {
 	int		len;
 	t_dlist	*newlst;
-	t_exec	*exec;
 
 	while (*lst)
 	{
 		len = 0;
-		if (!(exec = exec_init()))
+		if (!(data->exec = exec_init()))
 			parser_exit(lst, NULL);
-		newlst = exec_fill(lst, exec);
+		newlst = exec_fill(lst, data->exec);
 		free_tokens(lst);
 		*lst = newlst;
-		//send exec
+		//ft_processor(data->exec); //send exec
 	}
 	parse_input(0, lst);
 }

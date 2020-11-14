@@ -73,7 +73,7 @@ int	stradd(char **str, char *new)
 	return (1);
 }
 
-void	print_list(t_dlist *lst)
+void	print_list(t_dlist *lst)//for tests
 {
 	while (lst)
 	{

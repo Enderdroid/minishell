@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/13 19:34:10 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/14 22:16:49 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 
 void	correct_tokens(t_dlist **lst)
 {
-	t_dlist	*ptr;
-	char	*tmp;
+	t_dlist	*lptr;
+	char	*newstr;
 
-	ptr = *lst;
-	while (ptr)
+	lptr = *lst;
+	while (lptr)
 	{
-		if (((t_token *)(ptr->content))->len > 0)
+		if (((t_token *)(lptr->content))->len > 0)
 		{
-			tmp = corrected_str(lst, (t_token *)(ptr->content));
-			if (tmp)
+			newstr = corrected_str(lst, (t_token *)(lptr->content));
+			if (newstr)
 			{
-				free(((t_token *)(ptr->content))->str);
-				((t_token *)(ptr->content))->str = tmp;
-				((t_token *)(ptr->content))->len = ft_strlen(tmp);
+				free(((t_token *)(lptr->content))->str);
+				((t_token *)(lptr->content))->str = newstr;
+				//((t_token *)(lptr->content))->len = ft_strlen(newstr);
 			}
-			printf("%s\n", ((t_token *)(ptr->content))->str);//
+			//printf("%s\n", ((t_token *)(lptr->content))->str);//
 		}
-		ptr = ptr->next;
+		lptr = lptr->next;
 	}
 }
 
@@ -55,7 +55,7 @@ void	parse_input(int unfinished, t_dlist **lst)
 {
 	int		ret;
 	char	*line;
-	//line = ft_strdup("");//
+	//line = ft_strdup("scd$z");//
 	if (!*lst)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);
@@ -71,9 +71,8 @@ void	parse_input(int unfinished, t_dlist **lst)
 		//printf("gnl=%i\n", ret);
 		free(line);
 		write(1, "exit\n", 5);
-		free_data();
-		exit(0);
+		free_and_exit(0);
 	}
-	printf("do I ever get here?");
+	printf("do I ever get here?");//
 	//free(line);//freed after split?
 }

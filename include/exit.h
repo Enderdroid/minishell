@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 18:47:12 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/09 01:59:52 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/14 22:03:30 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # include <string.h>
 #include "../libft/libft.h"
 
-# define ERRNO -1
-# define ERR_DEBUG -2
+# define ERRNO -2
+# define ERR_DEBUG -1
 
 int	exit_with_errno(void);
 int	exit_custom_err(int error_num);

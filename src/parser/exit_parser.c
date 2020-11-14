@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:28:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/09 01:50:44 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/14 22:02:57 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	parser_exit(t_dlist **lst, char **str) //, int error_num
 int	exit_with_errno(void)
 {
 	ft_putendl_fd(strerror(errno), 1);
+	g_code = errno;//?
 	exit(errno);
 }
 
@@ -35,14 +36,17 @@ int	free_and_exit(int error_num)
 	if (error_num == ERRNO)
 		return (exit_with_errno());
 	else
+	{
+		g_code = error_num;
 		return (exit_custom_err(error_num));
+	}
 }
 
 int	exit_custom_err(int error_num)
 {
 	if (error_num == ERR_DEBUG)
 		write(1, "Error\nSomething went wrong\n", 27);
-	exit(-1);
+	exit(error_num);
 }
 
 int	parse_line_exit(char *line, int fd, int error_num)

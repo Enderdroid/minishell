@@ -3,32 +3,6 @@
 
 #include <stdio.h> //
 
-typedef struct			s_env
-{
-	char				*key;
-	char				*value;
-	char				**link;
-}						t_env;
-
-typedef	struct			s_u_env
-{
-	t_env				*l_pwd;
-	t_env				*l_old_pwd;
-	t_env				*l_path;
-	char				**path_content;
-}						t_u_env;
-
-typedef	struct			s_data
-{
-	//Array of env_structures
-	//how to make it **arr???
-	t_env				*env_arr;
-	//unusual env
-	t_u_env				*u_env;
-	//link to original env
-	char				**l_env;
-}						t_data;
-
 typedef struct			s_exec
 {
 	//ONLY NAME
@@ -49,9 +23,35 @@ typedef struct			s_exec
 	int					ret;
 }						t_exec;
 
+typedef struct			s_env
+{
+	char				*key;
+	char				*value;
+	char				**link;
+}						t_env;
+
+typedef	struct			s_u_env
+{
+	t_env				*l_pwd;
+	t_env				*l_old_pwd;
+	t_env				*l_path;
+	char				**path_content;
+}						t_u_env;
+
+typedef	struct			s_data
+{
+	//Array of env_structures
+	//how to make it **arr???
+	t_env				**env_arr;
+	//unusual env
+	t_u_env				*u_env;
+	//link to original env
+	char				**l_env;
+	t_exec				*exec;
+}						t_data;
+
 //global var
 int g_code;
 t_data *data;
-
 
 #endif

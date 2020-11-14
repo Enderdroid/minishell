@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/17 16:01:44 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/11 01:01:14 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/14 22:17:41 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ t_dlist			*exec_fill(t_dlist **lst, t_exec *exec);
 
 char			*find_env(char *key);
 void			free_data(void);
-void			free_exec(t_exec *exec);
 void			init_data(char **envp);
 
 void	print_list(t_dlist *lst);//del

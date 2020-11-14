@@ -1,11 +1,11 @@
 NAME		=	minishell
 
 SRC_DIR		=	./src/
-SRC			=	parser.c\
+SRC			=	init_data.c\
+				parser.c\
 				get_next_line.c\
 				exit_parser.c\
 				parser_utils.c\
-				init_data.c\
 				get_tokens.c\
 				str_mask.c\
 				validate_tokens.c\
