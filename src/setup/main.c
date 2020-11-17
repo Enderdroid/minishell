@@ -1,12 +1,12 @@
 #include "../../include/parser.h"
 
-int	main(int ac, char **av, char** envp)
+int	main(int ac, char **av, char **envp)
 {
 	t_dlist *lst;
 	t_data *data;
+
 	(void)ac;
 	(void)av;
-
 	//data = NULL;
 	init_data(envp);
 

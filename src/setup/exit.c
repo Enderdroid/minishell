@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit_parser.c                                      :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:28:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/14 22:02:57 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/17 15:37:13 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,9 @@ int	exit_custom_err(int error_num)
 	exit(error_num);
 }
 
-int	parse_line_exit(char *line, int fd, int error_num)
+int	parse_line_exit(char *line, int error_num)
 {
 	if (line)
 		free(line);
-	close(fd);
 	return ((free_and_exit(error_num)));
 }

@@ -1,4 +1,4 @@
-#include "../../include/parser.h"
+#include "../../include/lexer.h"
 
 static int	syntax_err_msg(const char *token, t_dlist **lst)
 {
@@ -17,7 +17,7 @@ static void	check_token(char *prv, char *nxt, t_dlist **lst)
 {printf("in:prv=%s,nxt=%s\n", prv, nxt);//
 	int		i;
 	int		j;
-	t_vld	vld[7] = { {"newline", {";", "|", NULL} } , \
+	t_vld	vld[7] = { {"\0", {";", "|", NULL} } , \
 			{";", {"|", ";", NULL} }, \
 			{">>", {">|", "newline", ">", "<", ">>", ";", "|", NULL} }, \
 			{">|", {">|", "newline", ">", "<", ">>", ";", "|", NULL} }, \
@@ -50,7 +50,7 @@ void		check_syntax_error(t_dlist **lst, t_dlist **last)
 	if ((ptr = *lst))
 	{
 		if (((t_token *)(ptr->content))->len < 0)
-			check_token("newline", ((t_token *)(ptr->content))->str, lst);
+			check_token("\0", ((t_token *)(ptr->content))->str, lst);
 		while (ptr)
 		{
 			if (((t_token *)(ptr->content))->len < 0 && \

@@ -54,4 +54,9 @@ typedef	struct			s_data
 int g_code;
 t_data *data;
 
+void			free_data(void);
+void			free_exec(t_exec *exec);
+void			init_data(char **envp);
+char			*find_env(char *key);
+
 #endif

@@ -1,14 +1,20 @@
-#include "../../include/parser.h"
+#include "../../include/lexer.h"
 
-static void	del_last_token(t_dlist *last)
+static int	cmd_type(char *cmd)
 {
-	if (last->prev)
-		last->prev->next = NULL;
-	if (((t_token *)(last->content))->str)
-		free(((t_token *)(last->content))->str);
-	free((t_token *)(last->content));
-	free(last);
-	last = NULL;
+	if (*cmd == '|')
+		return (C_PIPE);
+	if (*cmd == '>')
+	{
+		if (*(cmd + 1) == '>')
+			return (C_RDR_R_DBL);
+		return (C_RDR_R);
+	}
+	if (*cmd == '<')
+		return (C_RDR_L);
+	if (*cmd == ';')
+		return (C_END);
+	return (-1);
 }
 
 static int	to_lst(t_dlist **lst, char *line, int len, int *mode)
@@ -61,7 +67,22 @@ static void	add_cmd(char *line, t_dlist **lst, int *start, int *end)
 	//printf("s1=%c,e1=%c\n", line[start], line[end]);
 }
 
-static int	split_line(t_dlist **lst, char *line, int mode)
+static int	quote_pair(char *input, int i)
+{
+	char quote;
+
+	quote = input[i];
+	while (input[++i])
+	{
+		if (input[i] == quote)
+			break ;
+		else if (input[i] == '\\' && quote == '\"' && input[i + 1])
+			++i;
+	}
+	return (i);
+}
+
+int			split_line(t_dlist **lst, char *line, int mode)
 {
 	int start;
 	int end;
@@ -88,34 +109,3 @@ static int	split_line(t_dlist **lst, char *line, int mode)
 		parser_exit(lst, &line);
 	return (1);
 }
-
-int			get_tokens(t_dlist **lst, char *line, int last_char)
-{
-	char	*tmp;
-	t_dlist	*last;
-
-	if (last_char == '\\' && !*line)
-	{
-		last = ft_dlstlast(*lst);
-		if (!*(((t_token *)(last->content))->str + 1) && last->prev \
-			&& ((t_token *)(last->prev->content))->len < 0 \
-			&& *(((t_token *)(last->prev->content))->str) == '|')
-		{
-			del_last_token(last);
-			free(line);
-			parse_input('|', lst);
-			return (1);
-		}
-		tmp = ((t_token *)(last->content))->str;
-		((t_token *)(last->content))->str = \
-					ft_substr(tmp, 0, ((t_token *)(last->content))->len - 1);
-		free(tmp);
-		if (!((t_token *)(last->content))->str)
-			parser_exit(lst, &line);
-		return (1);
-	}
-	return (split_line(lst, line, last_char));
-}
-//printf("len=%i\n", len);
-	//printf("-%s\n", ((t_token *)((*lst)->content))->str);
-	//printf("-%s\n", ((t_token *)((*lst)->next->content))->str);

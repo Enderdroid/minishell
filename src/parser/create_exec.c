@@ -1,6 +1,6 @@
 #include "../../include/parser.h"
 
-t_exec	*exec_init()
+t_exec	*exec_init(void)
 {
 	t_exec *exec;
 
@@ -13,86 +13,69 @@ t_exec	*exec_init()
 	exec->env = data->l_env;
 	exec->pipe_to = NULL;
 	exec->pipe_from = NULL;
-	//exec->fd_old
-	//exec->fd_new
+	//exec->fd_old = {-2, -2};
+	exec->fd_new[0] = -2;//read
+	exec->fd_new[1] = -2;//write
 	exec->ret = 0;
 	return (exec);
 }
 
-int		cmd_len(t_dlist *lptr)
+int		cmd_len(t_dlist *lptr, t_exec *exec)
 {
 	int len;
+	int cmd;
 
-	len = 0;
+	len = (exec->pipe_from) ? 1 : 0;
 	while (lptr)
 	{
-		if(((t_token *)lptr->content)->len < 0)
-			return (len);
-		++len;
+		if((cmd = ((t_token *)lptr->content)->len) < 0)
+		{
+			if (cmd == C_END || cmd == C_PIPE)
+				return (len);
+		}
+		else
+			++len;
 		lptr = lptr->next;
 	}
 	return (len);
 }
 
-void	fill_name_path(char *str, t_exec *exec, char **name, t_dlist **lst)
+t_dlist	*process_pipe(t_dlist **lst, t_dlist *newlst, t_exec *exec) //redirecs???
 {
-	char *s;
+	t_exec *newexec;
 
-	if (*(str + 1) == '/')
-	{
-		if (*str == '~')
-			if (!(exec->path = find_env(ft_strdup("HOME"))))
-				parser_exit(lst, NULL);
-		if (*str == '.')
-			if (!(exec->path = find_env(ft_strdup("PWD"))))
-				parser_exit(lst, NULL);
-	}
-	s = ft_strrchr(str, '/');
-	exec->name = (s) ? ft_strdup((s + 1)) : ft_strdup(str);
-	if (!exec->name)
-		parser_exit(lst, NULL);
-	if (!(*name = ft_strdup(exec->name))) //argv[0]
-		parser_exit(lst, NULL);
-	if (s)
-	{
-		exec->path = (exec->path) ? ft_strjoin(exec->path, ft_substr(str, 1, s - str)) \
-								: ft_substr(str, 0, s - str);
-		if (!exec->path)
-			parser_exit(lst, NULL);
-	}
-}
-
-void	process_cmd(t_dlist **lst, t_dlist *newlst, t_exec *exec, int cmd) //redirecs???
-{
 	free_tokens(lst);
 	*lst = newlst;
-	t_exec *newexec = exec_init();
-	if (cmd == C_PIPE)
-	{
-		exec->pipe_to = newexec;
-		newexec->pipe_from = exec;
-	}
-
-	exec_fill(lst, newexec);
+	//printf("NEW=%s\n", ((t_token *)((*lst)->content))->str);
+	newexec = exec_init();
+	exec->pipe_to = newexec;
+	newexec->pipe_from = exec;
+	return (exec_fill(lst, newexec));
 }
 
 t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
 {
 	t_dlist	*newlst;
+	int		cmd;
 	int		i;
 
 	i = 0;
 	while (lptr)
 	{
-		if (((t_token *)lptr->content)->len < 0)
+		if ((cmd = ((t_token *)lptr->content)->len) < 0)
 		{
-			newlst = lptr->next;
-			lptr->next = NULL;
-			if(((t_token *)lptr->content)->len == C_END)
-				return (newlst);
-			process_cmd(lst, newlst, exec, (((t_token *)lptr->content)->len));
+			if (cmd == C_END || cmd == C_PIPE)
+			{
+				newlst = lptr->next;
+				lptr->next = NULL;
+				if (cmd == C_END)
+					return (newlst);
+				return (process_pipe(lst, newlst, exec));
+			}
+			else if (!process_rdr(lst, exec, &lptr, argv))
+				return (NULL);
 		}
-		if (!(argv[++i] = ft_strdup(((t_token *)lptr->content)->str)))
+		else if (!(argv[++i] = ft_strdup(((t_token *)lptr->content)->str)))
 			parser_exit(lst, NULL);
 		printf("%s, %i\n", argv[i], i);//
 		lptr = lptr->next;
@@ -106,79 +89,21 @@ t_dlist	*exec_fill(t_dlist **lst, t_exec *exec)
 	char	**argv;
 	int		len;
 
-	len = cmd_len(*lst);
+//printf("NEW=%s\n", ((t_token *)((*lst)->content))->str);
+	len = cmd_len(*lst, exec);
 	if (!(argv = (char **)ft_calloc(sizeof(char), len + 1)))
 		parser_exit(lst, NULL);
 	lptr = *lst;
 	if (((t_token *)(*lst)->content)->len >= 0)
 	{
 		fill_name_path(((t_token *)(*lst)->content)->str, exec, &argv[0], lst);
-		printf("name = %s\n", data->exec->name);//
-		printf("path = %s\n", data->exec->path);//
+
+		/*printf("head name = %s\n", data->exec->name);//
+		if (data->exec->pipe_to)
+			printf("next name = %s\n", ((t_exec *)(data->exec->pipe_to))->name);//
+		printf("head path = %s\n", data->exec->path);*/
+
 		lptr = (*lst)->next;
 	}
 	return (exec_arr_fill(lst, lptr, exec, argv));
 }
-
-void	analise_tokens(t_dlist **lst)
-{
-	int		len;
-	t_dlist	*newlst;
-
-	while (*lst)
-	{
-		len = 0;
-		if (!(data->exec = exec_init()))
-			parser_exit(lst, NULL);
-		newlst = exec_fill(lst, data->exec);
-		free_tokens(lst);
-		*lst = newlst;
-		//ft_processor(data->exec); //send exec
-	}
-	parse_input(0, lst);
-}
-
-/*void	free_tokens_part(t_dlist **lst)
-{
-	t_dlist *tmp;
-	t_dlist *lptr;
-
-	if (!lst || !*lst)
-		return ;
-	lptr = *lst;
-	//1st token
-	//lptr = lptr->next;
-	while (lptr)
-	{
-		//argv
-		if(is_token_end((t_token *)(lptr->content)))
-		{
-			tmp = lptr->next;
-			lptr->next = NULL;
-			free_tokens(lst);
-			*lst = tmp;
-			(*lst)->prev = NULL;
-		}
-		lptr = lptr->next;
-	}
-}*/
-
-/*t_dlist	*split_tokens(t_dlist **lst, int *len)
-{
-	t_dlist	*newlst;
-	t_dlist	*lptr;
-
-	lptr = *lst;
-	while (lptr)
-	{
-		if(is_token_end((t_token *)(lptr->content)))
-		{
-			newlst = lptr->next;
-			lptr->next = NULL;
-			return (newlst);
-		}
-		++(*len);
-		lptr = lptr->next;
-	}
-	return (NULL);
-}*/

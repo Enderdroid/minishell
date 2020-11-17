@@ -6,12 +6,13 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/14 22:16:49 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/17 16:20:54 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/get_next_line.h"
 #include "../../include/parser.h"
+#include "../../include/lexer.h"
 
 void	correct_tokens(t_dlist **lst)
 {
@@ -36,6 +37,23 @@ void	correct_tokens(t_dlist **lst)
 	}
 }
 
+void	analise_tokens(t_dlist **lst)
+{
+	t_dlist	*newlst;
+
+	while (*lst)
+	{
+		if (!(data->exec = exec_init()))
+			parser_exit(lst, NULL);
+		newlst = exec_fill(lst, data->exec);
+		free_tokens(lst);
+		*lst = newlst;
+		//if (exec)
+			//ft_processor(data->exec);
+	}
+	parse_input(0, lst);
+}
+
 void	parse_line(char *line, t_dlist **lst, int last_char)
 {
 	int q_closed;
@@ -55,11 +73,11 @@ void	parse_input(int unfinished, t_dlist **lst)
 {
 	int		ret;
 	char	*line;
-	//line = ft_strdup("scd$z");//
+	//line = ft_strdup("abc d e f");//
 	if (!*lst)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);
-	if ((ret = get_next_line(STDIN_FILENO, &line)) != 0)
+	if ((ret = get_next_line(&line)) != 0)
 	{//printf("gnl=%i\n", ret);//
 		printf("unfinished=%c\n", unfinished);//
 		if (!*lst)

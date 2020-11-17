@@ -1,5 +1,5 @@
 
-#include "../../include/parser.h"
+#include "../../include/lexer.h"
 
 static int	paste_env(char *str, int *start, int *end, char **res)
 {

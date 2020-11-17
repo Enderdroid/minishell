@@ -1,4 +1,4 @@
-#include "../../include/parser.h"
+#include "../../include/lexer.h"
 
 static void process_slash(char *str, char *mask, int *i)
 {

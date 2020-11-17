@@ -1,6 +1,6 @@
 #include "../../include/parser.h"
 
-static void	free_exec(t_exec *exec)
+void	free_exec(t_exec *exec)
 {
 	if (exec->name)
 		free(exec->name);
@@ -10,9 +10,13 @@ static void	free_exec(t_exec *exec)
 		free_arr(exec->argv);
 	if (exec->pipe_to)
 		free_exec(exec->pipe_to);
+	if (exec->fd_new[0] > 1)
+		close(exec->fd_new[0]);
+	if (exec->fd_new[1] > 1)
+		close(exec->fd_new[1]);
 }
 
-void		free_data(void)
+void	free_data(void)
 {
 	int i;
 

@@ -4,8 +4,9 @@ SRC_DIR		=	./src/
 SRC			=	init_data.c\
 				parser.c\
 				get_next_line.c\
-				exit_parser.c\
+				exit.c\
 				parser_utils.c\
+				split_line.c\
 				get_tokens.c\
 				str_mask.c\
 				validate_tokens.c\
@@ -14,6 +15,8 @@ SRC			=	init_data.c\
 				correct_str.c\
 				free_data.c\
 				create_exec.c\
+				process_redirect.c\
+				fill_name_path.c\
 				main.c
 
 O_DIR		=	./bin
