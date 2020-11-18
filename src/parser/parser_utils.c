@@ -13,12 +13,21 @@ void	free_tokens(t_dlist **lst)
 		tmp = lptr->next;
 		printf("str to free: %s\n", ((t_token *)(lptr->content))->str);
 		if (((t_token *)(lptr->content))->str)
+		{
 			free(((t_token *)(lptr->content))->str);
+			((t_token *)(lptr->content))->str = NULL;
+		}
 		free((t_token *)(lptr->content));
 		free(lptr);
 		lptr = tmp;
 	}
 	*lst = NULL;
+}
+
+void free_and_null(char **str)
+{
+	free(*str);
+	*str = NULL;
 }
 
 int		stradd(char **str, char *new)

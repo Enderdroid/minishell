@@ -27,6 +27,7 @@ void			handle_signals(void);
 void			parse_input(int unfinished, t_dlist **lst);
 void			free_tokens(t_dlist **lst);
 int				stradd(char **str, char *new);
+void			free_and_null(char **str);
 
 void	print_list(t_dlist *lst); //del
 

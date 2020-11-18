@@ -17,7 +17,7 @@ typedef struct			s_exec
 	struct s_exec		*pipe_to;
 	struct s_exec		*pipe_from;
 	//[0] - read [1] - write or *FILL WITH STD*
-	int					fd_old[2];
+//	int					fd_old[2];
 	//fd ofter pipe or redir; -2 if no
 	int					fd_new[2];
 	int					ret;

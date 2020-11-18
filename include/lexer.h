@@ -12,7 +12,7 @@ typedef struct	s_vld
 	const char	*nxt[50];
 }				t_vld;
 
-char			*corrected_str(t_dlist **lst, t_token *token);
+void			correct_tokens(t_dlist **lst);
 int				split_line(t_dlist **lst, char *line, int mode);
 int				get_tokens(t_dlist **lst, char *line, int last_char);
 char			*str_mask(char *str, int len);

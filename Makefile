@@ -12,11 +12,11 @@ SRC			=	init_data.c\
 				validate_tokens.c\
 				check_syntax_error.c\
 				find_env.c\
-				correct_str.c\
+				correct_tokens.c\
 				free_data.c\
 				exec_fill.c\
 				process_redirect.c\
-				fill_name_path.c\
+				find_name.c\
 				handle_signals.c\
 				main.c
 

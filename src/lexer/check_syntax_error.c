@@ -14,7 +14,7 @@ static int	syntax_err_msg(const char *token, t_dlist **lst)
 }
 
 static void	check_token(char *prv, char *nxt, t_dlist **lst)
-{printf("in:prv=%s,nxt=%s\n", prv, nxt);//
+{//printf("in:prv=%s,nxt=%s\n", prv, nxt);//
 	int		i;
 	int		j;
 	t_vld	vld[7] = { {"\0", {";", "|", NULL} } , \
@@ -60,8 +60,8 @@ void		check_syntax_error(t_dlist **lst, t_dlist **last)
 				check_token(((t_token *)(ptr->content))->str, nxt, lst);
 			}
 			if (!ptr->next)
-				{*last = ptr;
-				printf("last=%s\n", ((t_token *)((*last)->content))->str);}
+				*last = ptr;
+				//printf("last=%s\n", ((t_token *)((*last)->content))->str);}
 			ptr = ptr->next;
 		}
 	}//printf("*!%s\n", ((t_token *)(last->content))->str);

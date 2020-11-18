@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   correct_tokens.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/18 19:18:11 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/19 01:35:58 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/lexer.h"
 
@@ -11,7 +22,7 @@ static int	paste_env(char *str, int *start, int *end, char **res)
 	{
 		if (str[*end] == '?')
 		{
-			new = ft_itoa(g_code);//take last return value
+			new = ft_itoa(g_code);
 			++(*end);
 		}
 		else
@@ -68,17 +79,13 @@ static void	correct_str(t_token *token, char **res, char **mask, t_dlist **lst)
 	{
 		if ((*mask)[end] == '1')
 			++len;
+		else if (end == token->len && token->len == len)
+			free_and_null(res);
 		else if (end == token->len || (*mask)[end] == '$')
 		{
-			if (end == token->len && token->len == len)
-			{
-				free(*res);
-				*res = NULL;
-				return ;
-			}
 			if (len > 0)
 				if (!stradd(res, substr_filtered(token->str + start, \
-							*mask + start, len, end - start)))
+						*mask + start, len, end - start)))
 					parser_exit(lst, mask);
 			if ((*mask)[start = end++] == '$')
 				if (!paste_env(token->str, &start, &end, res))
@@ -87,7 +94,7 @@ static void	correct_str(t_token *token, char **res, char **mask, t_dlist **lst)
 	}
 }
 
-char		*corrected_str(t_dlist **lst, t_token *token)
+static char	*corrected_str(t_dlist **lst, t_token *token)
 {
 	char *mask;
 	char *res;
@@ -98,5 +105,35 @@ char		*corrected_str(t_dlist **lst, t_token *token)
 		parser_exit(lst, &mask);
 	correct_str(token, &res, &mask, lst);
 	free(mask);
+	if (res && !ft_strcmp(res, "\0") &&
+		!(ft_strchr(token->str, '\'') || \
+		ft_strchr(token->str, '\"')))
+	{
+		token->len = 0;
+		free(res);
+		res = NULL;
+	}
+	else
+		token->len = 1;
 	return (res);
+}
+
+void		correct_tokens(t_dlist **lst)
+{
+	t_dlist	*lptr;
+	char	*newstr;
+
+	lptr = *lst;
+	while (lptr)
+	{
+		if (((t_token *)(lptr->content))->len > 0)
+		{
+			if ((newstr = corrected_str(lst, (t_token *)(lptr->content))))
+			{
+				free(((t_token *)(lptr->content))->str);
+				((t_token *)(lptr->content))->str = newstr;
+			}
+		}
+		lptr = lptr->next;
+	}
 }

@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   process_redirect.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/18 19:52:49 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/18 19:52:51 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/parser.h"
 #include <fcntl.h>
@@ -37,7 +48,7 @@ static int	error_msg_amb(char *filename)
 	return (0);
 }
 
-int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **argv)
+int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **arr)
 {
 	char	*filename;
 	int		cmd;
@@ -45,7 +56,7 @@ int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **argv)
 	cmd = ((t_token *)((*lptr)->content))->len;
 	*lptr = (*lptr)->next;
 	filename = ((t_token *)((*lptr)->content))->str;
-	printf("rdr=%s\n", filename);
+	printf("rdr=%s\n", filename);//
 	if (!((t_token *)((*lptr)->content))->len)
 	{
 		error_msg_amb(filename);
@@ -56,16 +67,10 @@ int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **argv)
 		if (!process_rdr_left(exec, filename))
 			return (0);
 	}
-	else
-	{
-		if (!process_rdr_right(exec, filename, cmd))
-			return (0);
-	}
-	if (!exec->name && (*lptr)->next)
-	{
-		*lptr = (*lptr)->next;
-		fill_name_path(((t_token *)((*lptr)->content))->str, exec, &argv[0], lst);
-	}
+	else if (!process_rdr_right(exec, filename, cmd))
+		return (0);
 	*lptr = (*lptr)->next;
+	if (!exec->name)
+		find_name(lst, lptr, exec, &arr[0]);
 	return (1);
 }

@@ -2,6 +2,7 @@
 
 void	free_exec(t_exec *exec)
 {
+	//printf("exec->name: %s\n", exec->name);
 	if (exec->name)
 		free(exec->name);
 	if (exec->path)
@@ -14,6 +15,7 @@ void	free_exec(t_exec *exec)
 		close(exec->fd_new[0]);
 	if (exec->fd_new[1] > 1)
 		close(exec->fd_new[1]);
+	free(exec);
 }
 
 void	free_data(void)

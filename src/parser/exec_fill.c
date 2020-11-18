@@ -13,9 +13,8 @@ t_exec	*exec_init(void)
 	exec->env = data->l_env;
 	exec->pipe_to = NULL;
 	exec->pipe_from = NULL;
-	//exec->fd_old = {-2, -2};
-	exec->fd_new[0] = -2;//read
-	exec->fd_new[1] = -2;//write
+	exec->fd_new[0] = -2;
+	exec->fd_new[1] = -2;
 	exec->ret = 0;
 	return (exec);
 }
@@ -33,7 +32,7 @@ int		cmd_len(t_dlist *lptr, t_exec *exec)
 			if (cmd == C_END || cmd == C_PIPE)
 				return (len);
 		}
-		else
+		else if (cmd > 0)
 			++len;
 		lptr = lptr->next;
 	}
@@ -69,6 +68,9 @@ t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
 	int		cmd;
 	int		i;
 
+	//if (argv[0])
+		//printf("argv[0]=%s\n", argv[0]);//
+	//printf("argv[0]=%s,%i\n", exec->argv[0], 0);
 	i = 0;
 	while (lptr)
 	{
@@ -88,6 +90,8 @@ t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
 		}
 		lptr = lptr->next;
 	}
+	//argv[++i] = NULL;
+	//printf("argv[++i]=%s,%i\n", exec->argv[i+1], i);
 	return (NULL);
 }
 
@@ -99,21 +103,12 @@ t_dlist	*exec_fill(t_dlist **lst, t_exec *exec)
 
 //printf("NEW=%s\n", ((t_token *)((*lst)->content))->str);
 	len = cmd_len(*lst, exec);
-	if (!(argv = (char **)ft_calloc(sizeof(char), len + 1)))
+	//printf("len=%i\n", len);
+	if (!(exec->argv = (char **)ft_calloc(sizeof(char *), len + 1)))
+	//if (!(exec->argv = (char **)malloc(sizeof(char) * (len + 1))))
 		parser_exit(lst, NULL);
 	lptr = *lst;
-	while (lptr && ((t_token *)lptr->content)->len == 0)
-		lptr = lptr->next;
-	if (lptr && ((t_token *)lptr->content)->len > 0)
-	{
-		fill_name_path(((t_token *)lptr->content)->str, exec, &argv[0], lst);
-
-		/*printf("head name = %s\n", data->exec->name);//
-		if (data->exec->pipe_to)
-			printf("next name = %s\n", ((t_exec *)(data->exec->pipe_to))->name);//
-		printf("head path = %s\n", data->exec->path);*/
-
-		lptr = lptr->next;
-	}
-	return (exec_arr_fill(lst, lptr, exec, argv));
+	find_name(lst, &lptr, exec, &(exec->argv[0]));
+	//printf("argv[0]=%s\n", exec->argv[0]);
+	return (exec_arr_fill(lst, lptr, exec, exec->argv));
 }

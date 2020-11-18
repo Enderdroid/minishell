@@ -16,6 +16,9 @@ int	main(int ac, char **av, char **envp)
 		handle_signals();
 		parse_input(0, &lst);
 	}
+	//free_data();//
+
+
 	/*int i = 0;
 	while (data->env_arr[i])
 	{

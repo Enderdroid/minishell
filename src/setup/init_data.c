@@ -6,7 +6,7 @@ static void		fill_env_arr(t_env **env, char **envp)
 	char	**tmp;
 
 	i = 0;
-	while(envp[i])
+	while (envp[i])
 	{
 		if (!(env[i] = (t_env *)malloc(sizeof(t_env))))
 			free_and_exit(ERRNO);
@@ -30,7 +30,7 @@ static t_env	**parse_env(char **envp, int size)
 {
 	t_env	**env;
 
-	if (!(env = (t_env **)malloc(sizeof(t_env *) * size )))
+	if (!(env = (t_env **)malloc(sizeof(t_env *) * (size + 1))))
 	{
 		free(data);
 		exit_with_errno();

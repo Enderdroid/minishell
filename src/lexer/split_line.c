@@ -37,7 +37,7 @@ static int	to_lst(t_dlist **lst, char *line, int len, int *mode)
 		*mode = 0;
 		return (1);
 	}
-	if (!(token = malloc(sizeof(t_token *))))
+	if (!(token = (t_token *)malloc(sizeof(t_token))))
 		return (0);
 	//printf("!%s\n", str);//
 	token->str = str;

@@ -6,11 +6,12 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/21 21:54:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/09/30 23:04:23 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/18 23:41:49 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft.h"
+#include <stdio.h>
 
 void	free_arr(char **arr)
 {
