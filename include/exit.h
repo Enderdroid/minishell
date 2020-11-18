@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 18:47:12 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/17 15:36:01 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/18 02:32:22 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 
 # define ERRNO -2
 # define ERR_DEBUG -1
+
+int	error_msg(char *filename, int code);
 
 int	exit_with_errno(void);
 int	exit_custom_err(int error_num);

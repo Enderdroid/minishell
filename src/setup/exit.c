@@ -6,13 +6,25 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:28:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/17 15:37:13 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/18 02:31:43 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/exit.h"
 #include "../../include/parser.h"
 #include "../../libft/libft.h"
+
+int		error_msg(char *filename, int code)
+{
+	g_code = code;
+	write(2, "minishell: ", 11);
+	write(2, filename, ft_strlen(filename));
+	write(2, ": ", 2);
+	ft_putendl_fd(strerror(errno), 1);
+	free_exec(data->exec);
+	data->exec = NULL;
+	return (0);
+}
 
 void	parser_exit(t_dlist **lst, char **str) //, int error_num
 {

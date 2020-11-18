@@ -8,19 +8,11 @@ static int	process_rdr_left(t_exec *exec, char *filename)
 		close(exec->fd_new[0]);
 	exec->fd_new[0] = open(filename, O_RDONLY);
 	if (exec->fd_new[0] < 0)
-	{
-		g_code = 1;
-		write(2, "minishell: ", 11);
-		write(2, filename, ft_strlen(filename));
-		write(2, ": No such file or directory\n", 28);
-		free_exec(exec);
-		exec = NULL;
-		return (0);
-	}
+		return (error_msg(filename, 1));
 	return (1);
 }
 
-static void	process_rdr_right(t_exec *exec, char *filename, int cmd) //void or int?
+static int	process_rdr_right(t_exec *exec, char *filename, int cmd)
 {
 	if (exec->fd_new[1] > 1)
 		close(exec->fd_new[1]);
@@ -30,7 +22,9 @@ static void	process_rdr_right(t_exec *exec, char *filename, int cmd) //void or i
 	if (cmd == C_RDR_R)
 		exec->fd_new[1] = open(filename, O_CREAT | O_WRONLY | \
 										O_APPEND, S_IRWXU | S_IROTH);
-	//if (exec->fd_new[0] < 0)?
+	if (exec->fd_new[1] < 0)
+		return (error_msg(filename, 1));
+	return (1);
 }
 
 int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **argv)
@@ -48,12 +42,16 @@ int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **argv)
 			return (0);
 	}
 	else
-		process_rdr_right(exec, filename, cmd);
+	{
+		if (!process_rdr_right(exec, filename, cmd))
+			return (0);
+	}
 	if (!exec->name && (*lptr)->next)
 	{
 		*lptr = (*lptr)->next;
 		fill_name_path(((t_token *)((*lptr)->content))->str, exec, &argv[0], lst);
 	}
+	*lptr = (*lptr)->next;
 	return (1);
 }
 

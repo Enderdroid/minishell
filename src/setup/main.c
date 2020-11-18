@@ -1,4 +1,4 @@
-#include "../../include/parser.h"
+#include "../../include/parserstruct.h"
 
 int	main(int ac, char **av, char **envp)
 {
@@ -12,8 +12,10 @@ int	main(int ac, char **av, char **envp)
 
 	lst = NULL;
 	while(42)
+	{
+		handle_signals();
 		parse_input(0, &lst);
-
+	}
 	/*int i = 0;
 	while (data->env_arr[i])
 	{

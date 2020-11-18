@@ -74,6 +74,7 @@ t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
 			}
 			else if (!process_rdr(lst, exec, &lptr, argv))
 				return (NULL);
+			continue ;
 		}
 		else if (!(argv[++i] = ft_strdup(((t_token *)lptr->content)->str)))
 			parser_exit(lst, NULL);

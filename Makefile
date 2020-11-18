@@ -14,9 +14,10 @@ SRC			=	init_data.c\
 				find_env.c\
 				correct_str.c\
 				free_data.c\
-				create_exec.c\
+				exec_fill.c\
 				process_redirect.c\
 				fill_name_path.c\
+				handle_signals.c\
 				main.c
 
 O_DIR		=	./bin

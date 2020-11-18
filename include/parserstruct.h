@@ -23,6 +23,7 @@ enum			cmd_type
 	C_END = -6,
 };
 
+void			handle_signals(void);
 void			parse_input(int unfinished, t_dlist **lst);
 void			free_tokens(t_dlist **lst);
 int				stradd(char **str, char *new);

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/17 16:20:54 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/18 04:05:31 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	correct_tokens(t_dlist **lst)
 		if (((t_token *)(lptr->content))->len > 0)
 		{
 			newstr = corrected_str(lst, (t_token *)(lptr->content));
+			//printf("newstr%s\n", newstr);//
 			if (newstr)
 			{
 				free(((t_token *)(lptr->content))->str);
@@ -64,21 +65,19 @@ void	parse_line(char *line, t_dlist **lst, int last_char)
 	validate_tokens(lst, q_closed);
 	correct_tokens(lst);
 	print_list(*lst);//
-	//create struct exec and send
 	analise_tokens(lst);
-	//free_tokens(lst);
 }
 
 void	parse_input(int unfinished, t_dlist **lst)
 {
 	int		ret;
 	char	*line;
-	//line = ft_strdup("abc d e f");//
+	//line = ft_strdup("test a b c");//
 	if (!*lst)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);
 	if ((ret = get_next_line(&line)) != 0)
-	{//printf("gnl=%i\n", ret);//
+	{printf("gnl=%i\n", ret);//
 		printf("unfinished=%c\n", unfinished);//
 		if (!*lst)
 			unfinished = 0;
