@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/18 04:05:31 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/18 15:43:24 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,17 @@ void	correct_tokens(t_dlist **lst)
 			//printf("newstr%s\n", newstr);//
 			if (newstr)
 			{
-				free(((t_token *)(lptr->content))->str);
-				((t_token *)(lptr->content))->str = newstr;
+				if (!ft_strcmp(newstr, "\0") &&
+					!(ft_strchr(((t_token *)(lptr->content))->str, '\'') || \
+					ft_strchr(((t_token *)(lptr->content))->str, '\"')))
+					((t_token *)(lptr->content))->len = 0;
+				else
+					((t_token *)(lptr->content))->len = 1;
+				if (((t_token *)(lptr->content))->len)
+				{
+					free(((t_token *)(lptr->content))->str);
+					((t_token *)(lptr->content))->str = newstr;
+				}
 				//((t_token *)(lptr->content))->len = ft_strlen(newstr);
 			}
 			//printf("%s\n", ((t_token *)(lptr->content))->str);//
@@ -72,12 +81,12 @@ void	parse_input(int unfinished, t_dlist **lst)
 {
 	int		ret;
 	char	*line;
-	//line = ft_strdup("test a b c");//
+	//line = ft_strdup("$AAA "" $AA''");//
 	if (!*lst)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);
 	if ((ret = get_next_line(&line)) != 0)
-	{printf("gnl=%i\n", ret);//
+	{//printf("gnl=%i\n", ret);//
 		printf("unfinished=%c\n", unfinished);//
 		if (!*lst)
 			unfinished = 0;

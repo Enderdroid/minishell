@@ -8,7 +8,7 @@ static int	process_rdr_left(t_exec *exec, char *filename)
 		close(exec->fd_new[0]);
 	exec->fd_new[0] = open(filename, O_RDONLY);
 	if (exec->fd_new[0] < 0)
-		return (error_msg(filename, 1));
+		return (error_msg_auto(filename, 1));
 	return (1);
 }
 
@@ -23,8 +23,18 @@ static int	process_rdr_right(t_exec *exec, char *filename, int cmd)
 		exec->fd_new[1] = open(filename, O_CREAT | O_WRONLY | \
 										O_APPEND, S_IRWXU | S_IROTH);
 	if (exec->fd_new[1] < 0)
-		return (error_msg(filename, 1));
+		return (error_msg_auto(filename, 1));
 	return (1);
+}
+
+static int	error_msg_amb(char *filename)
+{
+	g_code = 1;
+	error_msg_prompt(filename);
+	write(2, "ambiguous redirect\n", 19);
+	free_exec(data->exec);
+	data->exec = NULL;
+	return (0);
 }
 
 int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **argv)
@@ -35,7 +45,12 @@ int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **argv)
 	cmd = ((t_token *)((*lptr)->content))->len;
 	*lptr = (*lptr)->next;
 	filename = ((t_token *)((*lptr)->content))->str;
-	printf("%s\n", filename);
+	printf("rdr=%s\n", filename);
+	if (!((t_token *)((*lptr)->content))->len)
+	{
+		error_msg_amb(filename);
+		return (0);
+	}
 	if (cmd == C_RDR_L)
 	{
 		if (!process_rdr_left(exec, filename))
@@ -54,4 +69,3 @@ int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **argv)
 	*lptr = (*lptr)->next;
 	return (1);
 }
-

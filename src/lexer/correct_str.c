@@ -80,7 +80,7 @@ static void	correct_str(t_token *token, char **res, char **mask, t_dlist **lst)
 				if (!stradd(res, substr_filtered(token->str + start, \
 							*mask + start, len, end - start)))
 					parser_exit(lst, mask);
-			if ((*mask)[start = end++] == '$') //return $
+			if ((*mask)[start = end++] == '$')
 				if (!paste_env(token->str, &start, &end, res))
 					parser_exit(lst, mask);
 		}

@@ -53,9 +53,19 @@ t_dlist	*process_pipe(t_dlist **lst, t_dlist *newlst, t_exec *exec) //redirecs??
 	return (exec_fill(lst, newexec));
 }
 
-t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
+t_dlist	*end_cmd(t_dlist **lst, t_dlist *lptr, t_exec *exec, int cmd)
 {
 	t_dlist	*newlst;
+
+	newlst = lptr->next;
+	lptr->next = NULL;
+	if (cmd == C_END)
+		return (newlst);
+	return (process_pipe(lst, newlst, exec));
+}
+
+t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
+{
 	int		cmd;
 	int		i;
 
@@ -65,20 +75,17 @@ t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
 		if ((cmd = ((t_token *)lptr->content)->len) < 0)
 		{
 			if (cmd == C_END || cmd == C_PIPE)
-			{
-				newlst = lptr->next;
-				lptr->next = NULL;
-				if (cmd == C_END)
-					return (newlst);
-				return (process_pipe(lst, newlst, exec));
-			}
+				return (end_cmd(lst, lptr, exec, cmd));
 			else if (!process_rdr(lst, exec, &lptr, argv))
 				return (NULL);
 			continue ;
 		}
-		else if (!(argv[++i] = ft_strdup(((t_token *)lptr->content)->str)))
-			parser_exit(lst, NULL);
-		printf("%s, %i\n", argv[i], i);//
+		else if ((cmd = ((t_token *)lptr->content)->len) > 0)
+		{
+			if (!(argv[++i] = ft_strdup(((t_token *)lptr->content)->str)))
+				parser_exit(lst, NULL);
+			printf("%s, %i\n", argv[i], i);//
+		}
 		lptr = lptr->next;
 	}
 	return (NULL);
@@ -95,16 +102,18 @@ t_dlist	*exec_fill(t_dlist **lst, t_exec *exec)
 	if (!(argv = (char **)ft_calloc(sizeof(char), len + 1)))
 		parser_exit(lst, NULL);
 	lptr = *lst;
-	if (((t_token *)(*lst)->content)->len >= 0)
+	while (lptr && ((t_token *)lptr->content)->len == 0)
+		lptr = lptr->next;
+	if (lptr && ((t_token *)lptr->content)->len > 0)
 	{
-		fill_name_path(((t_token *)(*lst)->content)->str, exec, &argv[0], lst);
+		fill_name_path(((t_token *)lptr->content)->str, exec, &argv[0], lst);
 
 		/*printf("head name = %s\n", data->exec->name);//
 		if (data->exec->pipe_to)
 			printf("next name = %s\n", ((t_exec *)(data->exec->pipe_to))->name);//
 		printf("head path = %s\n", data->exec->path);*/
 
-		lptr = (*lst)->next;
+		lptr = lptr->next;
 	}
 	return (exec_arr_fill(lst, lptr, exec, argv));
 }
