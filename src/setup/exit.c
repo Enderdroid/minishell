@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:28:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/18 16:05:55 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/19 02:16:13 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ int		error_msg_auto(char *filename, int code)
 	g_code = code;
 	error_msg_prompt(filename);
 	ft_putendl_fd(strerror(errno), 1);
-	free_exec(data->exec);
-	data->exec = NULL;
+	free_exec(g_data->exec);
+	g_data->exec = NULL;
 	return (0);
 }
 

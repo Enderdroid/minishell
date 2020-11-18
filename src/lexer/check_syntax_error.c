@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_syntax_error.c                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/19 01:45:18 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/19 01:49:48 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/lexer.h"
 
 static int	syntax_err_msg(const char *token, t_dlist **lst)
@@ -15,15 +27,15 @@ static int	syntax_err_msg(const char *token, t_dlist **lst)
 
 static void	check_token(char *prv, char *nxt, t_dlist **lst)
 {//printf("in:prv=%s,nxt=%s\n", prv, nxt);//
-	int		i;
-	int		j;
-	t_vld	vld[7] = { {"\0", {";", "|", NULL} } , \
-			{";", {"|", ";", NULL} }, \
-			{">>", {">|", "newline", ">", "<", ">>", ";", "|", NULL} }, \
-			{">|", {">|", "newline", ">", "<", ">>", ";", "|", NULL} }, \
-			{"|", {";", NULL} }, \
-			{">", {"<", ";", "newline", NULL} }, \
-			{"<", {"<", ";", "|", "newline", ">", ">|", ">>", NULL} },} ;
+	int			i;
+	int			j;
+	const t_vld	vld[7] = { {"\0", {";", "|", NULL} }, \
+				{";", {"|", ";", NULL} }, \
+				{">>", {">|", "newline", ">", "<", ">>", ";", "|", NULL} }, \
+				{">|", {">|", "newline", ">", "<", ">>", ";", "|", NULL} }, \
+				{"|", {";", NULL} }, \
+				{">", {"<", ";", "newline", NULL} }, \
+				{"<", {"<", ";", "|", "newline", ">", ">|", ">>", NULL} }, };
 
 	i = -1;
 	while (++i < 7)
@@ -56,7 +68,8 @@ void		check_syntax_error(t_dlist **lst, t_dlist **last)
 			if (((t_token *)(ptr->content))->len < 0 && \
 				(!(ptr->next) || ((t_token *)(ptr->next->content))->len < 0))
 			{
-				nxt = (ptr->next) ? ((t_token *)(ptr->next->content))->str : "newline";
+				nxt = (ptr->next) ? \
+						((t_token *)(ptr->next->content))->str : "newline";
 				check_token(((t_token *)(ptr->content))->str, nxt, lst);
 			}
 			if (!ptr->next)

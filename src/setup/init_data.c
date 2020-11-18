@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init_data.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/19 02:16:13 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/parser.h"
 
 static void		fill_env_arr(t_env **env, char **envp)
@@ -32,7 +44,7 @@ static t_env	**parse_env(char **envp, int size)
 
 	if (!(env = (t_env **)malloc(sizeof(t_env *) * (size + 1))))
 	{
-		free(data);
+		free(g_data);
 		exit_with_errno();
 	}
 	fill_env_arr(env, envp);
@@ -44,8 +56,7 @@ static t_u_env	*parse_u_env(t_env **env, int size)
 	t_u_env	*path_env;
 	int		i;
 
-	path_env = (t_u_env *)malloc(sizeof(t_u_env));
-	if (!path_env)
+	if (!(path_env = (t_u_env *)malloc(sizeof(t_u_env))))
 		free_and_exit(ERRNO);
 	path_env->l_pwd = NULL;
 	path_env->l_old_pwd = NULL;
@@ -75,16 +86,15 @@ void			init_data(char **envp)
 	t_env	**env;
 
 	g_code = 0;
-	data = (t_data *)malloc(sizeof(t_data));
-	if (!data)
+	g_data = (t_data *)malloc(sizeof(t_data));
+	if (!g_data)
 		exit_with_errno();
 	size = 0;
-	//printf("THIS == %i]\n", size);
 	while (envp[size])
 		++size;
 	env = parse_env(envp, size);
-	data->env_arr = env;
-	data->u_env = parse_u_env(env, size);
-	data->l_env = envp;
-	data->exec = NULL;
+	g_data->env_arr = env;
+	g_data->u_env = parse_u_env(env, size);
+	g_data->l_env = envp;
+	g_data->exec = NULL;
 }

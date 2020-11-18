@@ -1,10 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lexer.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/19 01:50:56 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/19 02:11:45 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #ifndef LEXER_H
 # define LEXER_H
 
-#include "parserstruct.h"
+# include "parserstruct.h"
 
-#define METACHAR "|;<> \t\n" //&()
+# define METACHAR "|;<> \t\n"
 
 typedef struct	s_vld
 {

@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libstruct.h                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/19 02:13:45 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBSTRUCT_H
 # define LIBSTRUCT_H
 
-#include <stdio.h> //
+# include <stdio.h> //
 
 typedef struct			s_exec
 {
@@ -52,7 +64,7 @@ typedef	struct			s_data
 
 //global var
 int g_code;
-t_data *data;
+t_data *g_data;
 
 void			free_data(void);
 void			free_exec(t_exec *exec);

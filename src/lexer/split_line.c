@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_line.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/19 01:51:22 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/19 01:55:29 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/lexer.h"
 
 static int	cmd_type(char *cmd)
@@ -39,11 +51,9 @@ static int	to_lst(t_dlist **lst, char *line, int len, int *mode)
 	}
 	if (!(token = (t_token *)malloc(sizeof(t_token))))
 		return (0);
-	//printf("!%s\n", str);//
 	token->str = str;
 	token->len = (*mode == 'C') ? cmd_type(str) : len;
 	ft_dlstadd_back(lst, ft_dlstnew(token));
-	//print_list(*lst);//
 	return (1);
 }
 
@@ -62,9 +72,7 @@ static void	add_cmd(char *line, t_dlist **lst, int *start, int *end)
 		if (!to_lst(lst, &line[*end], 1, &mode))
 			parser_exit(lst, &line);
 	}
-	//printf("s=%c,e=%c\n", line[start], line[end]);
 	*start = *end + 1;
-	//printf("s1=%c,e1=%c\n", line[start], line[end]);
 }
 
 static int	quote_pair(char *input, int i)
@@ -87,9 +95,9 @@ int			split_line(t_dlist **lst, char *line, int mode)
 	int start;
 	int end;
 
-	end = (mode  == '\\') ? 0 : -1;
+	end = (mode == '\\') ? 0 : -1;
 	start = 0;
-	while(line[++end])
+	while (line[++end])
 	{
 		if (line[end] == '\\' && line[end + 1])
 			++end;

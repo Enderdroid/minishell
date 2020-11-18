@@ -1,3 +1,14 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   validate_tokens.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/19 01:51:29 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/19 01:57:14 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "../../include/lexer.h"
 
@@ -15,7 +26,7 @@ static int	unclosed_q_msg(t_dlist **lst)
 static void	check_last(t_token *token, t_dlist **lst, t_dlist *prv)
 {
 	char *tmp;
-//printf("?!\n");//
+
 	if (token->len == C_PIPE)
 		parse_input('|', lst);
 	if (token->str[token->len - 1] == '\\')

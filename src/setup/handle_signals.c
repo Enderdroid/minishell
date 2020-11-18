@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   handle_signals.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/19 01:51:52 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/19 02:16:13 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/parserstruct.h"
 
 static void	handle_sigint(int signal)
 {
-	/*if (data->cur_process)
+	/*if (g_data->cur_process)
 	{
-		kill(data->cur_process, signal);
+		kill(g_data->cur_process, signal);
 		g_code = 130;
-		data->cur_process = 0;
+		g_data->cur_process = 0;
 	}
 	else*/
 	{
@@ -22,12 +34,12 @@ static void	handle_sigint(int signal)
 
 static void	handle_sigquit(int signal)
 {
-	/*if (data->cur_process)
+	/*if (g_data->cur_process)
 	{
-		kill(data->cur_process, signal);
+		kill(g_data->cur_process, signal);
 		g_code = 131;
 		write(2, "Quit: 3\n", 8);
-		data->cur_process = 0;
+		g_data->cur_process = 0;
 	}
 	else*/
 	{

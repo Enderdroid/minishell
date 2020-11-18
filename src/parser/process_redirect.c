@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:52:49 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/18 19:52:51 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/19 02:16:13 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ static int	error_msg_amb(char *filename)
 	g_code = 1;
 	error_msg_prompt(filename);
 	write(2, "ambiguous redirect\n", 19);
-	free_exec(data->exec);
-	data->exec = NULL;
+	free_exec(g_data->exec);
+	g_data->exec = NULL;
 	return (0);
 }
 

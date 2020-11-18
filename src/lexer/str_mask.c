@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   str_mask.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/19 01:51:26 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/19 01:56:02 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/lexer.h"
 
-static void process_slash(char *str, char *mask, int *i)
+static void	process_slash(char *str, char *mask, int *i)
 {
 	mask[*i] = '0';
 	if (str[++(*i)])
 		mask[*i] = '1';
 }
 
-static void process_single_quote(char *str, char *mask, int *i)
+static void	process_single_quote(char *str, char *mask, int *i)
 {
 	mask[*i] = '0';
 	while (str[++(*i)] && str[*i] != '\'')
@@ -16,7 +28,7 @@ static void process_single_quote(char *str, char *mask, int *i)
 		mask[*i] = '0';
 }
 
-static void check_dollar(char *str, char *mask, int i, int q)
+static void	check_dollar(char *str, char *mask, int i, int q)
 {
 	if (str[i] == '$' && !ft_strchr(" ~:/.,^+=\\\%\0", str[i + 1]) \
 		&& !(str[i + 1] == '\"' && q))
@@ -25,7 +37,7 @@ static void check_dollar(char *str, char *mask, int i, int q)
 		mask[i] = '1';
 }
 
-char	*str_mask(char *str, int len)
+char		*str_mask(char *str, int len)
 {
 	char	*mask;
 	int		i;

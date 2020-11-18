@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_fill.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/11/19 02:16:13 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/parser.h"
 
 t_exec	*exec_init(void)
@@ -10,7 +22,7 @@ t_exec	*exec_init(void)
 	exec->name = NULL;
 	exec->path = NULL;
 	exec->argv = NULL;
-	exec->env = data->l_env;
+	exec->env = g_data->l_env;
 	exec->pipe_to = NULL;
 	exec->pipe_from = NULL;
 	exec->fd_new[0] = -2;
@@ -27,7 +39,7 @@ int		cmd_len(t_dlist *lptr, t_exec *exec)
 	len = (exec->pipe_from) ? 1 : 0;
 	while (lptr)
 	{
-		if((cmd = ((t_token *)lptr->content)->len) < 0)
+		if ((cmd = ((t_token *)lptr->content)->len) < 0)
 		{
 			if (cmd == C_END || cmd == C_PIPE)
 				return (len);
@@ -39,7 +51,7 @@ int		cmd_len(t_dlist *lptr, t_exec *exec)
 	return (len);
 }
 
-t_dlist	*process_pipe(t_dlist **lst, t_dlist *newlst, t_exec *exec) //redirecs???
+t_dlist	*process_pipe(t_dlist **lst, t_dlist *newlst, t_exec *exec)
 {
 	t_exec *newexec;
 
