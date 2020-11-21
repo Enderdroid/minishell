@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:53:59 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 02:16:13 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/21 21:48:38 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,6 @@ static void	fill_name_path(char *str, t_exec *exec, t_dlist **lst)
 
 	if (*(str + 1) == '/')
 	{
-		if (*str == '~')
-			if (!(exec->path = find_env(ft_strdup("HOME"))))
-				parser_exit(lst, NULL);
 		if (*str == '.')
 			if (!(exec->path = find_env(ft_strdup("PWD"))))
 				parser_exit(lst, NULL);

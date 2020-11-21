@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:18:11 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 01:35:58 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/21 21:47:29 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ static int	paste_env(char *str, int *start, int *end, char **res)
 {
 	char *new;
 
-	if (!ft_isalpha(str[*end]) && str[*end] != '_' && str[*end] != '?')
+	if (str[*start] == '~')
+		new = find_env(ft_strdup("HOME"));
+	else if (!ft_isalpha(str[*end]) && str[*end] != '_' && str[*end] != '?')
 		*start = ++(*end);
 	else
 	{
@@ -32,10 +34,10 @@ static int	paste_env(char *str, int *start, int *end, char **res)
 				++(*end);
 			new = find_env(ft_substr(str, *start + 1, *end - *start - 1));
 		}
-		if (!stradd(res, new))
-			return (0);
-		*start = *end;
 	}
+	if (!stradd(res, new))
+		return (0);
+	*start = *end;
 	return (1);
 }
 
@@ -81,13 +83,13 @@ static void	correct_str(t_token *token, char **res, char **mask, t_dlist **lst)
 			++len;
 		else if (end == token->len && token->len == len)
 			free_and_null(res);
-		else if (end == token->len || (*mask)[end] == '$')
+		else if (end == token->len || ft_strchr("$~", (*mask)[end]))
 		{
 			if (len > 0)
 				if (!stradd(res, substr_filtered(token->str + start, \
 						*mask + start, len, end - start)))
 					parser_exit(lst, mask);
-			if ((*mask)[start = end++] == '$')
+			if ((*mask)[start = end++] == '$' || (*mask)[start] == '~')
 				if (!paste_env(token->str, &start, &end, res))
 					parser_exit(lst, mask);
 		}
@@ -104,6 +106,7 @@ static char	*corrected_str(t_dlist **lst, t_token *token)
 	if (!(res = ft_strdup("")))
 		parser_exit(lst, &mask);
 	correct_str(token, &res, &mask, lst);
+	printf("mask=%s\n", mask);
 	free(mask);
 	if (res && !ft_strcmp(res, "\0") &&
 		!(ft_strchr(token->str, '\'') || \

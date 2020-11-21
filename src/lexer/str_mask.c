@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:26 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 01:56:02 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/21 20:12:40 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	check_dollar(char *str, char *mask, int i, int q)
 	if (str[i] == '$' && !ft_strchr(" ~:/.,^+=\\\%\0", str[i + 1]) \
 		&& !(str[i + 1] == '\"' && q))
 		mask[i] = '$';
+	else if (str[i] == '~' && !q)
+		mask[i] = '~';
 	else
 		mask[i] = '1';
 }

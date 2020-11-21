@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 02:16:13 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/21 20:20:37 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_exec	*exec_init(void)
 	return (exec);
 }
 
-int		cmd_len(t_dlist *lptr, t_exec *exec)
+static int		cmd_len(t_dlist *lptr, t_exec *exec)
 {
 	int len;
 	int cmd;
@@ -75,7 +75,7 @@ t_dlist	*end_cmd(t_dlist **lst, t_dlist *lptr, t_exec *exec, int cmd)
 	return (process_pipe(lst, newlst, exec));
 }
 
-t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
+static t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
 {
 	int		cmd;
 	int		i;

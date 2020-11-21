@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:01 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 02:12:42 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/19 16:25:04 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ enum
 	C_END = -6,
 };
 
-void			handle_signals(void);
 void			parse_input(int unfinished, t_dlist **lst);
 void			free_tokens(t_dlist **lst);
 int				stradd(char **str, char *new);

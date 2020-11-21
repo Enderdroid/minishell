@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 02:13:45 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/19 16:25:17 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ t_data *g_data;
 void			free_data(void);
 void			free_exec(t_exec *exec);
 void			init_data(char **envp);
+void			handle_signals(void);
 char			*find_env(char *key);
 
 #endif
