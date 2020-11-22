@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/20 18:47:12 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 02:10:59 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 23:44:57 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,11 @@
 # define ERRNO -2
 # define ERR_DEBUG -1
 
-int		error_msg_auto(char *filename, int code);
-void	error_msg_prompt(char *filename);
 int		exit_with_errno(void);
 int		exit_custom_err(int error_num);
 int		free_and_exit(int error_num);
 
-int		parse_line_exit(char *line, int error_num);
-void	parser_exit(t_dlist **lst, char **str);
+int		parse_line_exit(int error_num, char **line);
+int		parser_exit(int error_num, char **str);
 
 #endif

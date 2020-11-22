@@ -6,11 +6,12 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:52:49 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 02:16:13 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 23:49:29 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
+#include "../../include/error.h"
 #include <fcntl.h>
 
 static int	process_rdr_left(t_exec *exec, char *filename)
@@ -48,7 +49,7 @@ static int	error_msg_amb(char *filename)
 	return (0);
 }
 
-int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **arr)
+int			process_rdr(t_exec *exec, t_dlist **lptr, char **arr)
 {
 	char	*filename;
 	int		cmd;
@@ -71,6 +72,6 @@ int			process_rdr(t_dlist **lst, t_exec *exec, t_dlist **lptr, char **arr)
 		return (0);
 	*lptr = (*lptr)->next;
 	if (!exec->name)
-		find_name(lst, lptr, exec, &arr[0]);
+		find_name(lptr, exec, &arr[0]);
 	return (1);
 }

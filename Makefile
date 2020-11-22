@@ -5,6 +5,7 @@ SRC			=	init_data.c\
 				parser.c\
 				get_next_line.c\
 				exit.c\
+				error.c\
 				parser_utils.c\
 				split_line.c\
 				get_tokens.c\
@@ -33,10 +34,10 @@ FLAGS		= -g #-Wall -Wextra -Werror
 all : $(NAME)
 
 $(NAME)	:	$(OBJ) lib
-	gcc $(FLAGS) -o $(NAME) $(OBJ) -I $(H_DIR) $(LIB)
+	@gcc $(FLAGS) -o $(NAME) $(OBJ) -I $(H_DIR) $(LIB)
 
 lib:
-	make bonus -C ./libft/
+	@make bonus -C ./libft/
 
 $(O_DIR)/%.o: ./src/*/%.c $(INCLUDES) | $(O_DIR)
 	@gcc $(FLAGS) -I $(H_DIR) -c $< -o $@

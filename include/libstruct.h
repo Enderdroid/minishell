@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/21 22:13:29 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 23:13:27 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ typedef	struct			s_data
 	//link to original env
 	char				**l_env;
 	t_exec				*exec;
-	t_dlist				**lst;//?
+	t_dlist				*lst;//?
+	int					cur_process;//
 }						t_data;
 
 //global var

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 09:09:31 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 23:39:14 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,55 +14,54 @@
 #include "../../include/parser.h"
 #include "../../include/lexer.h"
 
-void	analise_tokens(t_dlist **lst)
+void	analise_tokens(void)
 {
 	t_dlist	*newlst;
 
-	while (*lst)
+	while (g_data->lst)
 	{
 		if (!(g_data->exec = exec_init()))
-			parser_exit(lst, NULL);
-		newlst = exec_fill(lst, g_data->exec);
-		free_tokens(lst);
-		*lst = newlst;
-		g_data->lst = lst;//?
+			parser_exit(ERRNO, NULL);
+		newlst = exec_fill(g_data->exec);
+		free_tokens(&(g_data->lst));
+		g_data->lst = newlst;
 		if (g_data->exec)
 			//ft_processor(g_data->exec);
 			free_exec(g_data->exec);//
 			g_data->exec = NULL;
 	}
-	parse_input(0, lst);
+	parse_input(0);
 }
 
-void	parse_line(char **line, t_dlist **lst, int last_char)
+void	parse_line(char **line, int last_char)
 {
 	int q_closed;
 
-	q_closed = get_tokens(lst, *line, last_char);
+	q_closed = get_tokens(*line, last_char);
 	free_and_null(line);
-	print_list(*lst);//
-	validate_tokens(lst, q_closed);
-	correct_tokens(lst);
-	print_list(*lst);//
-	analise_tokens(lst);
+	print_list(g_data->lst);//
+	validate_tokens(q_closed);
+	correct_tokens();
+	print_list(g_data->lst);//
+	analise_tokens();
 	//free_tokens(lst);//
 }
 
-void	parse_input(int unfinished, t_dlist **lst)
+void	parse_input(int unfinished)
 {
 	int		ret;
 	char	*line;
 
-	//line = ft_strdup("$\"PATH\"");//
-	if (!*lst)
+	//line = ft_strdup("abc");//
+	if (!g_data->lst)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);
 	if ((ret = get_next_line(&line)) != 0)
 	{//printf("gnl=%i\n", ret);//
 		//printf("unfinished=%c\n", unfinished);//
-		if (!*lst)
+		if (!g_data->lst)
 			unfinished = 0;
-		parse_line(&line, lst, unfinished);
+		parse_line(&line, unfinished);
 		return ;
 	}
 	if (ret == 0)
@@ -72,6 +71,4 @@ void	parse_input(int unfinished, t_dlist **lst)
 		write(1, "exit\n", 5);
 		free_and_exit(0);
 	}
-	//printf("do I ever get here?");//
-	printf("gnl=%i, line = %s\n", ret, line);
 }

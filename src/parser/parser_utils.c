@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:29 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/21 22:04:50 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 19:54:13 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ void	print_list(t_dlist *lst)//for tests
 {
 	while (lst)
 	{
-		printf("%s,", ((t_token *)(lst->content))->str);
-		printf("%i->", ((t_token *)(lst->content))->len);
+		printf("[%s,", ((t_token *)(lst->content))->str);
+		printf("%i]->", ((t_token *)(lst->content))->len);
 		lst = (lst)->next;
 	}
 	printf("NULL\n");

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:22 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 01:55:29 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 23:18:11 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,49 +29,45 @@ static int	cmd_type(char *cmd)
 	return (-1);
 }
 
-static int	to_lst(t_dlist **lst, char *line, int len, int *mode)
+static void	to_lst(char *line, int start, int len, int *mode)
 {
 	t_token	*token;
 	t_dlist *last;
 	char	*str;
 
 	if (!len)
-		return (1);
-	if (!(str = ft_substr(line, 0, len)))
-		return (0);
+		return ;
+	if (!(str = ft_substr(line, start, len)))
+		parser_exit(ERRNO, &line);
 	if (*mode == '\\')
 	{
-		last = ft_dlstlast(*lst);
+		last = ft_dlstlast(g_data->lst);
 		if (!stradd(&(((t_token *)(last->content))->str), str))
-			parser_exit(lst, &line);
+			parser_exit(ERRNO, &line);
 		((t_token *)(last->content))->len = \
 							ft_strlen(((t_token *)(last->content))->str);
 		*mode = 0;
-		return (1);
+		return ;
 	}
 	if (!(token = (t_token *)malloc(sizeof(t_token))))
-		return (0);
+	{
+		free(str);
+		parser_exit(ERRNO, &line);
+	}
 	token->str = str;
 	token->len = (*mode == 'C') ? cmd_type(str) : len;
-	ft_dlstadd_back(lst, ft_dlstnew(token));
-	return (1);
+	ft_dlstadd_back(&(g_data->lst), ft_dlstnew(token));
 }
 
-static void	add_cmd(char *line, t_dlist **lst, int *start, int *end)
+static void	add_cmd(char *line, int *start, int *end)
 {
 	int mode;
 
 	mode = 'C';
 	if (line[*end] == '>' && (line[*end + 1] == '>' || line[*end + 1] == '|'))
-	{
-		if (!to_lst(lst, &line[(*end)++], 2, &mode))
-			parser_exit(lst, &line);
-	}
+		to_lst(line, (*end)++, 2, &mode);
 	else if (!ft_isspace(line[*end]))
-	{
-		if (!to_lst(lst, &line[*end], 1, &mode))
-			parser_exit(lst, &line);
-	}
+		to_lst(line, *end, 1, &mode);
 	*start = *end + 1;
 }
 
@@ -90,7 +86,7 @@ static int	quote_pair(char *input, int i)
 	return (i);
 }
 
-int			split_line(t_dlist **lst, char *line, int mode)
+int			split_line(char *line, int mode)
 {
 	int start;
 	int end;
@@ -108,12 +104,10 @@ int			split_line(t_dlist **lst, char *line, int mode)
 		}
 		else if (ft_strchr(METACHAR, line[end]))
 		{
-			if (!to_lst(lst, &line[start], end - start, &mode))
-				parser_exit(lst, &line);
-			add_cmd(line, lst, &start, &end);
+			to_lst(line, start, end - start, &mode);
+			add_cmd(line, &start, &end);
 		}
 	}
-	if (!to_lst(lst, &line[start], end - start, &mode))
-		parser_exit(lst, &line);
+	to_lst(line, start, end - start, &mode);
 	return (1);
 }

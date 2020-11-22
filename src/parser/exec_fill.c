@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/21 20:20:37 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 23:31:53 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,22 @@ static int		cmd_len(t_dlist *lptr, t_exec *exec)
 	return (len);
 }
 
-t_dlist	*process_pipe(t_dlist **lst, t_dlist *newlst, t_exec *exec)
+t_dlist	*process_pipe(t_dlist *newlst, t_exec *exec)
 {
 	t_exec *newexec;
 
-	free_tokens(lst);
-	*lst = newlst;
+	free_tokens(&(g_data->lst));
+	g_data->lst = newlst;
 	//printf("NEW=%s\n", ((t_token *)((*lst)->content))->str);
 	newexec = exec_init();
+	if (!newexec)
+		parser_exit(ERRNO, NULL);
 	exec->pipe_to = newexec;
 	newexec->pipe_from = exec;
-	return (exec_fill(lst, newexec));
+	return (exec_fill(newexec));
 }
 
-t_dlist	*end_cmd(t_dlist **lst, t_dlist *lptr, t_exec *exec, int cmd)
+t_dlist	*end_cmd(t_dlist *lptr, t_exec *exec, int cmd)
 {
 	t_dlist	*newlst;
 
@@ -72,10 +74,10 @@ t_dlist	*end_cmd(t_dlist **lst, t_dlist *lptr, t_exec *exec, int cmd)
 	lptr->next = NULL;
 	if (cmd == C_END)
 		return (newlst);
-	return (process_pipe(lst, newlst, exec));
+	return (process_pipe(newlst, exec));
 }
 
-static t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char **argv)
+static t_dlist	*exec_arr_fill(t_dlist *lptr, t_exec *exec, char **argv)
 {
 	int		cmd;
 	int		i;
@@ -89,15 +91,15 @@ static t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char *
 		if ((cmd = ((t_token *)lptr->content)->len) < 0)
 		{
 			if (cmd == C_END || cmd == C_PIPE)
-				return (end_cmd(lst, lptr, exec, cmd));
-			else if (!process_rdr(lst, exec, &lptr, argv))
+				return (end_cmd(lptr, exec, cmd));
+			else if (!process_rdr(exec, &lptr, argv))
 				return (NULL);
 			continue ;
 		}
 		else if ((cmd = ((t_token *)lptr->content)->len) > 0)
 		{
 			if (!(argv[++i] = ft_strdup(((t_token *)lptr->content)->str)))
-				parser_exit(lst, NULL);
+				parser_exit(ERRNO, NULL);
 			printf("%s, %i\n", argv[i], i);//
 		}
 		lptr = lptr->next;
@@ -107,20 +109,19 @@ static t_dlist	*exec_arr_fill(t_dlist **lst, t_dlist *lptr, t_exec *exec, char *
 	return (NULL);
 }
 
-t_dlist	*exec_fill(t_dlist **lst, t_exec *exec)
+t_dlist	*exec_fill(t_exec *exec)
 {
 	t_dlist *lptr;
-	char	**argv;
 	int		len;
 
 //printf("NEW=%s\n", ((t_token *)((*lst)->content))->str);
-	len = cmd_len(*lst, exec);
+	len = cmd_len(g_data->lst, exec);
 	//printf("len=%i\n", len);
 	if (!(exec->argv = (char **)ft_calloc(sizeof(char *), len + 1)))
 	//if (!(exec->argv = (char **)malloc(sizeof(char) * (len + 1))))
-		parser_exit(lst, NULL);
-	lptr = *lst;
-	find_name(lst, &lptr, exec, &(exec->argv[0]));
+		parser_exit(ERRNO, NULL);
+	lptr = g_data->lst;
+	find_name(&lptr, exec, &(exec->argv[0]));
 	//printf("argv[0]=%s\n", exec->argv[0]);
-	return (exec_arr_fill(lst, lptr, exec, exec->argv));
+	return (exec_arr_fill(lptr, exec, exec->argv));
 }

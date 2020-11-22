@@ -6,51 +6,51 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:29 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 01:57:14 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 23:21:41 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lexer.h"
 
-static int	unclosed_q_msg(t_dlist **lst)
+static int	unclosed_q_msg(void)
 {
 	write(2, "minishell: ", 11);
 	write(2, "syntax error: unclosed quote\n", 29);
 	g_code = 258;
-	if (*lst)
-		free_tokens(lst);
-	parse_input(0, lst);
+	if (g_data->lst)
+		free_tokens(&(g_data->lst));
+	parse_input(0);
 	return (0);
 }
 
-static void	check_last(t_token *token, t_dlist **lst, t_dlist *prv)
+static void	check_last(t_token *token)
 {
-	char *tmp;
+	char *mask;
 
 	if (token->len == C_PIPE)
-		parse_input('|', lst);
+		parse_input('|');
 	if (token->str[token->len - 1] == '\\')
 	{
-		if (!(tmp = str_mask(token->str, token->len)))
-			parser_exit(lst, NULL);
-		if (tmp[token->len - 1] == '0')
+		if (!(mask = str_mask(token->str, token->len)))
+			parser_exit(ERRNO, NULL);
+		if (mask[token->len - 1] == '0')
 		{
-			free(tmp);
-			parse_input('\\', lst);
+			free(mask);
+			parse_input('\\');
 		}
-		free(tmp);
+		free(mask);
 	}
 }
 
-void		validate_tokens(t_dlist **lst, int q_closed)
+void		validate_tokens(int q_closed)
 {
 	t_dlist	*last;
 //printf("q %i\n", q_closed);// //printf("*%s, %i\n", ((t_token *)((*lst)->content))->str, ((t_token *)((*lst)->content))->len);
 	last = NULL;
-	check_syntax_error(lst, &last);
+	check_syntax_error(&last);
 	if (!q_closed)
-		unclosed_q_msg(lst);
+		unclosed_q_msg();
 	if (last)
-		check_last((t_token *)(last->content), lst, last->prev);
+		check_last((t_token *)(last->content));
 	//printf("##%s\n", ((t_token *)((*lst)->content))->str);//
 }

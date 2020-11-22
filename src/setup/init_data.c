@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/21 22:13:15 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 19:41:49 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void			init_data(char **envp)
 {
 	int		size;
 	t_env	**env;
+	t_dlist *lst;
 
 	g_code = 0;
 	g_data = (t_data *)malloc(sizeof(t_data));
@@ -97,5 +98,5 @@ void			init_data(char **envp)
 	g_data->u_env = parse_u_env(env, size);
 	g_data->l_env = envp;
 	g_data->exec = NULL;
-	g_data->lst = NULL;//?
+	g_data->lst = NULL;
 }

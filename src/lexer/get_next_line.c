@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/24 17:48:14 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/18 04:12:17 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 19:23:53 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int				get_next_line(char **line)
 	int			n;
 
 	if (!line || BUFFER_SIZE <= 0)
-		return (parse_line_exit(*line, ERR_DEBUG));
+		return (parser_exit(ERR_DEBUG, line));
 	*line = ft_strdup("");
 	while (42)
 	{
@@ -80,7 +80,7 @@ int				get_next_line(char **line)
 		if (rd == 0 && !*rem && !(**line))
 			return (rd);
 		if (rd < 0)
-			return (parse_line_exit(*line, ERRNO));
+			return (parser_exit(ERRNO, line));
 	}
-	return (parse_line_exit(*line, ERR_DEBUG));
+	return (parser_exit(ERR_DEBUG, line));
 }

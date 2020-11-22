@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:57 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/21 22:08:10 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 23:24:35 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,6 @@ void	free_data(void)
 	if (g_data->exec)
 		free_exec(g_data->exec);
 	if (g_data->lst)
-		free_tokens(g_data->lst);
+		free_tokens(&(g_data->lst));
 	free(g_data);
 }
