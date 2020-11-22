@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 02:31:08 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 09:09:31 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	analise_tokens(t_dlist **lst)
 		newlst = exec_fill(lst, g_data->exec);
 		free_tokens(lst);
 		*lst = newlst;
+		g_data->lst = lst;//?
 		if (g_data->exec)
 			//ft_processor(g_data->exec);
 			free_exec(g_data->exec);//
@@ -52,7 +53,7 @@ void	parse_input(int unfinished, t_dlist **lst)
 	int		ret;
 	char	*line;
 
-	//line = ft_strdup("asa ; saa");//
+	//line = ft_strdup("$\"PATH\"");//
 	if (!*lst)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);

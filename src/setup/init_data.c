@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 02:16:13 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/21 22:13:15 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,4 +97,5 @@ void			init_data(char **envp)
 	g_data->u_env = parse_u_env(env, size);
 	g_data->l_env = envp;
 	g_data->exec = NULL;
+	g_data->lst = NULL;//?
 }

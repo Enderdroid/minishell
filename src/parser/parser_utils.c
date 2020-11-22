@@ -6,35 +6,11 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:29 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 02:00:36 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/21 22:04:50 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
-
-void	free_tokens(t_dlist **lst)
-{
-	t_dlist *tmp;
-	t_dlist *lptr;
-
-	if (!lst || !*lst)
-		return ;
-	lptr = *lst;
-	while (lptr)
-	{
-		tmp = lptr->next;
-		printf("str to free: %s\n", ((t_token *)(lptr->content))->str);
-		if (((t_token *)(lptr->content))->str)
-		{
-			free(((t_token *)(lptr->content))->str);
-			((t_token *)(lptr->content))->str = NULL;
-		}
-		free((t_token *)(lptr->content));
-		free(lptr);
-		lptr = tmp;
-	}
-	*lst = NULL;
-}
 
 void	free_and_null(char **str)
 {

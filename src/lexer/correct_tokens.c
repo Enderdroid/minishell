@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:18:11 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/21 21:47:29 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 09:31:52 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ static int	paste_env(char *str, int *start, int *end, char **res)
 {
 	char *new;
 
-	if (str[*start] == '~')
-		new = find_env(ft_strdup("HOME"));
-	else if (!ft_isalpha(str[*end]) && str[*end] != '_' && str[*end] != '?')
+	if (str[*start] == '$' && !(ft_strchr("_?", str[*end])))
 		*start = ++(*end);
 	else
 	{
-		if (str[*end] == '?')
+		if (str[*start] == '~')
+			new = find_env(ft_strdup("HOME"));
+		else if (str[*end] == '?')
 		{
 			new = ft_itoa(g_code);
 			++(*end);
@@ -34,9 +34,9 @@ static int	paste_env(char *str, int *start, int *end, char **res)
 				++(*end);
 			new = find_env(ft_substr(str, *start + 1, *end - *start - 1));
 		}
-	}
 	if (!stradd(res, new))
 		return (0);
+	}
 	*start = *end;
 	return (1);
 }

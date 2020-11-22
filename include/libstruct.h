@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 16:25:17 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/21 22:13:29 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,10 @@
 # define LIBSTRUCT_H
 
 # include <stdio.h> //
+# include "../libft/libft.h"
+# include <unistd.h>
+# include <stdlib.h>
+# include "exit.h"
 
 typedef struct			s_exec
 {
@@ -60,6 +64,7 @@ typedef	struct			s_data
 	//link to original env
 	char				**l_env;
 	t_exec				*exec;
+	t_dlist				**lst;//?
 }						t_data;
 
 //global var

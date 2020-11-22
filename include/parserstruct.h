@@ -6,17 +6,13 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:01 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 16:25:04 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/21 22:06:53 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PARSERSTRUCT_H
 # define PARSERSTRUCT_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include "../libft/libft.h"
-# include "exit.h"
 # include "libstruct.h"
 
 typedef struct	s_token

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:26 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/21 20:12:40 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 09:33:33 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,12 @@ static void	process_single_quote(char *str, char *mask, int *i)
 		mask[*i] = '0';
 }
 
-static void	check_dollar(char *str, char *mask, int i, int q)
+static void	check_env(char *str, char *mask, int i, int q)
 {
-	if (str[i] == '$' && !ft_strchr(" ~:/.,^+=\\\%\0", str[i + 1]) \
+	if (str[i] == '$' && !ft_strchr("~:/.,^+=\\%\0", str[i + 1]) \
 		&& !(str[i + 1] == '\"' && q))
 		mask[i] = '$';
-	else if (str[i] == '~' && !q)
+	else if (str[i] == '~' && i == 0)
 		mask[i] = '~';
 	else
 		mask[i] = '1';
@@ -61,7 +61,7 @@ char		*str_mask(char *str, int len)
 		else if (str[i] == '\\' && (!q || ft_strchr("$\"\\\0", str[i + 1])))
 			process_slash(str, mask, &i);
 		else
-			check_dollar(str, mask, i, q);
+			check_env(str, mask, i, q);
 		++i;
 	}
 	mask[len] = '\0';
