@@ -6,7 +6,7 @@
 #    By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/04/29 13:18:57 by ttamesha          #+#    #+#              #
-#    Updated: 2020/10/22 17:32:01 by ttamesha         ###   ########.fr        #
+#    Updated: 2020/11/23 00:06:07 by ttamesha         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,9 +24,11 @@ MAIN_SRC	=	ft_atoi.c ft_atof.c \
 				ft_tolower.c ft_toupper.c \
 				ft_split.c\
 				free_arr.c\
+				free_and_null.c\
 				ft_strmapi.c \
 				ft_putendl_fd.c ft_putnbr_fd.c ft_putchar_fd.c ft_putstr_fd.c ft_putnbr_base_ll.c\
-				ft_pow.c ft_min.c ft_max.c countdigits.c countdigits_base_ll.c
+				ft_pow.c ft_min.c ft_max.c countdigits.c countdigits_base_ll.c\
+				stradd.c
 MAIN_OBJ	=	$(addprefix $(O_DIR)/, $(MAIN_SRC:.c=.o))
 BONUS_SRC	=	ft_lstsize.c \
 				ft_lstnew.c ft_lstnew_c.c \

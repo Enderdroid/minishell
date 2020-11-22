@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 15:54:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/10/22 17:31:15 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/23 00:04:33 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,9 @@ void					ft_putstr_fd(char *s, int fd);
 void					*malloc_c(size_t size);
 void					*calloc_c(size_t nitems, size_t size);
 void					free_arr(char **arr);
+void					free_and_null(char **str);
+int						stradd(char **str, char *new);
 double					ft_atof(char *str);
-int						sq_equation(float a, float b, float c, float *t);
 double					ft_pow(double n, double pow);
 int						ft_max(int x, int y);
 int						ft_min(int x, int y);

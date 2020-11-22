@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 23:13:27 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/23 00:16:31 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,15 @@
 
 typedef struct			s_exec
 {
-	//ONLY NAME
 	char				*name;
-	//ONLY PATH
 	char				*path;
 	//[0] - exe name | [n] - NULL
 	char				**argv;
-	//l_env
 	char				**env;
 	//null if no
 	struct s_exec		*pipe_to;
 	struct s_exec		*pipe_from;
 	//[0] - read [1] - write or *FILL WITH STD*
-//	int					fd_old[2];
 	//fd ofter pipe or redir; -2 if no
 	int					fd_new[2];
 	int					ret;
@@ -56,26 +52,21 @@ typedef	struct			s_u_env
 
 typedef	struct			s_data
 {
-	//Array of env_structures
-	//how to make it **arr???
 	t_env				**env_arr;
-	//unusual env
 	t_u_env				*u_env;
-	//link to original env
 	char				**l_env;
 	t_exec				*exec;
-	t_dlist				*lst;//?
+	t_dlist				*lst;
 	int					cur_process;//
 }						t_data;
 
-//global var
 int g_code;
 t_data *g_data;
 
-void			free_data(void);
-void			free_exec(t_exec *exec);
-void			init_data(char **envp);
-void			handle_signals(void);
-char			*find_env(char *key);
+void					init_data(char **envp);
+void					free_data(void);
+void					free_exec(t_exec *exec);
+void					handle_signals(void);
+char					*find_env(char *key);
 
 #endif

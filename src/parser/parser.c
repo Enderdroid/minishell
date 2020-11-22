@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 23:39:14 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/23 00:25:31 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	analise_tokens(void)
 		if (g_data->exec)
 			//ft_processor(g_data->exec);
 			free_exec(g_data->exec);//
-			g_data->exec = NULL;
+			g_data->exec = NULL;//
 	}
 	parse_input(0);
 }
@@ -58,9 +58,9 @@ void	parse_input(int unfinished)
 	write(1, "> ", 2);
 	if ((ret = get_next_line(&line)) != 0)
 	{//printf("gnl=%i\n", ret);//
-		//printf("unfinished=%c\n", unfinished);//
-		if (!g_data->lst)
-			unfinished = 0;
+		printf("unfinished=%c\n", unfinished);//
+		//if (!g_data->lst)
+		//	unfinished = 0;
 		parse_line(&line, unfinished);
 		return ;
 	}
