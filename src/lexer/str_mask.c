@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:26 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 09:33:33 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 09:55:05 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	check_env(char *str, char *mask, int i, int q)
 	if (str[i] == '$' && !ft_strchr("~:/.,^+=\\%\0", str[i + 1]) \
 		&& !(str[i + 1] == '\"' && q))
 		mask[i] = '$';
-	else if (str[i] == '~' && i == 0)
+	else if (str[i] == '~' && i == 0 && ft_strchr("/\0", str[i + 1]))
 		mask[i] = '~';
 	else
 		mask[i] = '1';

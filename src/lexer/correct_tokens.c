@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:18:11 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 09:47:35 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/22 10:25:49 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,18 @@ static int	paste_env(char *str, int *start, int *end, char **res)
 	char *new;
 
 	if (str[*start] == '$' && !ft_isalpha(str[*end]) && !ft_strchr("_?", str[*end]))
-		*start = ++(*end);
+		*start = *end + 1;
 	else
 	{
 		if (str[*start] == '~')
+		{
 			new = find_env(ft_strdup("HOME"));
-		if (str[*end] == '?')
+			--(*end);
+		}
+		else if (str[*end] == '?')
 		{
 			new = ft_itoa(g_code);
-			++(*end);
+			*start = *end + 1;
 		}
 		else
 		{
@@ -33,10 +36,10 @@ static int	paste_env(char *str, int *start, int *end, char **res)
 					ft_isdigit(str[*end]) || str[*end] == '_')
 				++(*end);
 			new = find_env(ft_substr(str, *start + 1, *end - *start - 1));
+			*start = (*end)--;
 		}
 		if (!stradd(res, new))
 			return (0);
-		*start = *end;
 	}
 	return (1);
 }
@@ -83,7 +86,7 @@ static void	correct_str(t_token *token, char **res, char **mask, t_dlist **lst)
 			++len;
 		else if (end == token->len && token->len == len)
 			free_and_null(res);
-		else if (end == token->len || ft_strchr("$~", (*mask)[end]))
+		else if (ft_strchr("$~\0", (*mask)[end]))
 		{
 			if (len > 0)
 				if (!stradd(res, substr_filtered(token->str + start, \
