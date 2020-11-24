@@ -6,39 +6,51 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 19:41:49 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/24 21:04:34 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static void		fill_env_arr(t_env **env, char **envp)
+static void		paste_oldpwd(t_env **env, int i)
+{
+	if (!(env[i] = (t_env *)malloc(sizeof(t_env))))
+		free_and_exit(ERRNO);
+	env[i]->key = ft_strdup("OLDPWD");
+	//printf("%s\n", env[i]->key);//
+	env[i]->value = NULL;
+	if (!env[i]->key)
+		free_and_exit(ERRNO);
+}
+
+static void		fill_env_arr(t_env **env, char **envp, int oldpwd)
 {
 	int		i;
 	char	**tmp;
 
-	i = 0;
-	while (envp[i])
+	i = -1;
+	while (envp[++i])
 	{
 		if (!(env[i] = (t_env *)malloc(sizeof(t_env))))
 			free_and_exit(ERRNO);
 		if (!(tmp = ft_split(envp[i], '=')))
 			free_and_exit(ERRNO);
 		env[i]->key = ft_strdup(tmp[0]);
-		env[i]->value = ft_strdup(tmp[1]);
-		if (!env[i]->key || !env[i]->value)
+		env[i]->value = (tmp[1]) ? ft_strdup(tmp[1]) : NULL;
+		if (!env[i]->key || (!env[i]->value && tmp[1]))
 		{
 			free_arr(tmp);
 			free_and_exit(ERRNO);
 		}
 		free_arr(tmp);
-		env[i]->link = &(envp[i]);
-		++i;
+		//printf("key=%s, value=%s\n", env[i]->key,env[i]->value);//
 	}
+	if (oldpwd)
+		paste_oldpwd(env, i++);
 	env[i] = NULL;
 }
 
-static t_env	**parse_env(char **envp, int size)
+static t_env	**parse_env(char **envp, int size, int oldpwd)
 {
 	t_env	**env;
 
@@ -47,7 +59,7 @@ static t_env	**parse_env(char **envp, int size)
 		free(g_data);
 		exit_with_errno();
 	}
-	fill_env_arr(env, envp);
+	fill_env_arr(env, envp, oldpwd);
 	return (env);
 }
 
@@ -83,20 +95,28 @@ static t_u_env	*parse_u_env(t_env **env, int size)
 void			init_data(char **envp)
 {
 	int		size;
+	int		oldpwd;
 	t_env	**env;
-	t_dlist *lst;
 
 	g_code = 0;
 	g_data = (t_data *)malloc(sizeof(t_data));
 	if (!g_data)
 		exit_with_errno();
 	size = 0;
+	oldpwd = 1;
 	while (envp[size])
+	{
+		if (ft_memcmp(envp[size], "OLDPWD", 6) == 0)
+			oldpwd = 0;
+		//printf("%s\n", envp[size]);
 		++size;
-	env = parse_env(envp, size);
+	}
+	//printf("!!!!%i\n", oldpwd);
+	if (oldpwd)
+		++size;
+	env = parse_env(envp, size, oldpwd);
 	g_data->env_arr = env;
 	g_data->u_env = parse_u_env(env, size);
-	g_data->l_env = envp;
 	g_data->exec = NULL;
 	g_data->lst = NULL;
 }

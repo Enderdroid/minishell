@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/23 00:25:31 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/23 21:21:22 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ void	parse_input(int unfinished)
 	char	*line;
 
 	//line = ft_strdup("abc");//
-	if (!g_data->lst)
+	if (!unfinished)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);
 	if ((ret = get_next_line(&line)) != 0)
 	{//printf("gnl=%i\n", ret);//
-		printf("unfinished=%c\n", unfinished);//
+		//printf("unfinished=%c\n", unfinished);//
 		//if (!g_data->lst)
 		//	unfinished = 0;
 		parse_line(&line, unfinished);

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/23 00:16:31 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/24 21:02:03 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ typedef struct			s_env
 {
 	char				*key;
 	char				*value;
-	char				**link;
 }						t_env;
 
 typedef	struct			s_u_env

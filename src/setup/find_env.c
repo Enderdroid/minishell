@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:44:22 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/19 02:16:13 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/24 20:44:06 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ char	*find_env(char *key)
 		//printf("%s, %i\n", g_data->env_arr[i]->key, i);//
 		if (ft_strcmp(g_data->env_arr[i]->key, key) == 0)
 		{
-			value = ft_strdup(g_data->env_arr[i]->value);
-			if (!value)
-				return (NULL);
+			if (g_data->env_arr[i]->value)
+			{
+				if (!(value = ft_strdup(g_data->env_arr[i]->value)))
+					return (NULL);
+			}
 			break ;
 		}
 	}
