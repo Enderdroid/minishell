@@ -1,3 +1,11 @@
 .DS_Store
 ./a.out
 /bin
+**/.DS_Store
+**/bin
+**/a.out
+**/libft.a
+minishell*
+/bin
+./main.c
+./minishell_subject.pdf
