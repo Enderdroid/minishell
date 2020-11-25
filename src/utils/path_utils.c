@@ -1,4 +1,4 @@
-#include "../../include/libutils.h"
+#include "../../include/libincludes.h"
 #include <dirent.h>
 
 
@@ -66,7 +66,7 @@ char *s_in_path(char **path_val, char *name)
 	while (path_val[i])
 	{
 		if (folder_search(path_val[i], name))
-			return (path_val[i]);
+			return (ft_strjoin(path_val[i], "/"));
 		++i;
 	}
 	return (NULL);

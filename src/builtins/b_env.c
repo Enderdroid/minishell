@@ -1,11 +1,18 @@
 #include "../../include/libbuiltins.h"
-#include "../../include/libutils.h"
 
-ssize_t b_env(char **env)
+void	b_put_env(t_env *var, int fd)
 {
-	size_t	ind;
+	ft_putstr_fd(var->key, fd);
+	ft_putstr_fd("=", fd);
+	ft_putendl_fd(var->value, fd);
+}
 
-	ind = 0;
-	while (env[ind])
-		ft_putstr_fd(env[ind], 1);
+ssize_t b_env(int fd)
+{
+	int	ind;
+
+	ind = -1;
+	while (g_data->env_arr[++ind])
+		if (g_data->env_arr[ind]->value)
+			b_put_env(g_data->env_arr[ind], fd);
 }

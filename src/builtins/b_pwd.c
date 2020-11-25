@@ -1,11 +1,10 @@
 #include "../../include/libbuiltins.h"
 
-char	*b_pwd()
+int		b_pwd(int fd)
 {
-	char	*path;
+	char path[PATH_MAX];
 
-	path = (char*)malloc(sizeof(char) * PATH_MAX);
-	path = getcwd(path, PATH_MAX);
-	//IF NULL -> ERROR
-	return (path);
+	getcwd(path, PATH_MAX);
+	ft_putstr_fd(path, fd);
+	return (0);
 }
