@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 23:31:53 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/26 01:30:23 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,9 @@ static t_dlist	*exec_arr_fill(t_dlist *lptr, t_exec *exec, char **argv)
 		{
 			if (cmd == C_END || cmd == C_PIPE)
 				return (end_cmd(lptr, exec, cmd));
-			else if (!process_rdr(exec, &lptr, argv))
-				return (NULL);
+			else
+				process_rdr(exec, &lptr, argv); //else if(!(process_rdr))
+//				return (NULL);
 			continue ;
 		}
 		else if ((cmd = ((t_token *)lptr->content)->len) > 0)

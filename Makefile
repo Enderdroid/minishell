@@ -13,6 +13,7 @@ SRC			=	init_data.c\
 				validate_tokens.c\
 				check_syntax_error.c\
 				find_env.c\
+				find_env_unset.c\
 				correct_tokens.c\
 				free_data.c\
 				exec_fill.c\

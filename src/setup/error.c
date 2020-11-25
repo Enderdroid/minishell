@@ -6,8 +6,6 @@ int		error_msg_auto(char *filename, int code)
 	g_data->code = code;
 	error_msg_prompt(filename);
 	ft_putendl_fd(strerror(errno), 1);
-	free_exec(g_data->exec);
-	g_data->exec = NULL;
 	return (0);
 }
 

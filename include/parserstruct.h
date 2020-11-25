@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:01 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/23 00:15:55 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/26 01:26:36 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ enum
 
 void			parse_input(int unfinished);
 void			free_tokens(t_dlist **lst);
+char			*find_env(char *key);
 
 //int				stradd(char **str, char *new);
 void			print_list(t_dlist *lst); //del
