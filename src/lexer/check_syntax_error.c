@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:45:18 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/23 00:32:09 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/25 23:56:14 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	syntax_err_msg(const char *token)
 	write(2, "`", 1);
 	write(2, token, ft_strlen(token));
 	write(2, "'\n", 2);
-	g_code = 258;
+	g_data->code = 258;
 	free_tokens(&(g_data->lst));
 	parse_input(0);
 	return (0);

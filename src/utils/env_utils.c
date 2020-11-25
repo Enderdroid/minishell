@@ -11,7 +11,7 @@ int get_env_count()
 	return (size);
 }
 
-int add_env(char *key, char *value)
+void	add_env(char *key, char *value) //int add_env
 {
 	t_env *env;
 	int		old_size;

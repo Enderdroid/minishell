@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:18:11 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 23:26:19 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/25 23:56:14 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	paste_env(char *str, int *start, int *end, char **res)
 		}
 		else if (str[*end] == '?')
 		{
-			new = ft_itoa(g_code);
+			new = ft_itoa(g_data->code);
 			*start = *end + 1;
 		}
 		else

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:28:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 23:42:57 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/25 23:56:14 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	parser_exit(int error_num, char **str)
 int	exit_with_errno(void)
 {
 	ft_putendl_fd(strerror(errno), 1);
-	g_code = errno;//?
+	g_data->code = errno;//?
 	exit(errno);
 }
 
@@ -41,7 +41,7 @@ int	free_and_exit(int error_num)
 		return (exit_with_errno());
 	else
 	{
-		g_code = error_num;
+		g_data->code = error_num;
 		return (exit_custom_err(error_num));
 	}
 }

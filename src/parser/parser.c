@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/24 21:07:36 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/26 00:32:53 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,9 +27,11 @@ void	analise_tokens(void)
 		free_tokens(&(g_data->lst));
 		g_data->lst = newlst;
 		if (g_data->exec)
+		{
 			ft_processor(g_data->exec);
 			free_exec(g_data->exec);//
 			g_data->exec = NULL;//
+		}
 	}
 	parse_input(0);
 }

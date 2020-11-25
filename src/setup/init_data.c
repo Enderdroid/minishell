@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/24 21:04:34 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/25 23:53:39 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ void			init_data(char **envp)
 	int		oldpwd;
 	t_env	**env;
 
-	g_code = 0;
 	g_data = (t_data *)malloc(sizeof(t_data));
 	if (!g_data)
 		exit_with_errno();
@@ -119,4 +118,6 @@ void			init_data(char **envp)
 	g_data->u_env = parse_u_env(env, size);
 	g_data->exec = NULL;
 	g_data->lst = NULL;
+	g_data->code = 0;
+	g_data->pid = 0;
 }

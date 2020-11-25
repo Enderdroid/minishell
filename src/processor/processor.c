@@ -1,5 +1,6 @@
 #include "../../include/libincludes.h"
 #include "../../include/libbuiltins.h"
+#include "../../include/error.h"
 #include <stdio.h>
 
 void ft_pipe(t_exec *from, t_exec *to)
@@ -41,7 +42,8 @@ int ft_preprocess(t_exec *exec)
 		return(b_unset(exec->argv));
 	exec->path = s_in_path(g_data->u_env->path_content, exec->name);
 	if (!(exec->path))
-		printf("%s: command not found", exec->name);
+		//printf("%s: command not found", exec->name);
+		error_msg_custom(exec->name, " command not found", 127);
 	return (0);
 }
 

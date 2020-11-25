@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/24 21:06:44 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/25 23:56:19 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,10 @@ typedef	struct			s_data
 	char				**l_env;
 	t_exec				*exec;
 	t_dlist				*lst;
-
-	int					pid;//
+	int					code;
+	int					pid;
 }						t_data;
 
-int g_code;
 t_data *g_data;
 
 void					init_data(char **envp);

@@ -1,10 +1,10 @@
 #include "../../include/libincludes.h"
 
-int realloc_env(int new_size, int old_size)
+int	realloc_env(int new_size, int old_size)
 {
-	t_env **new_arr;
-	int i;
-	int j;
+	t_env	**new_arr;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -27,9 +27,12 @@ char	*ft_realloc(char *str, int new_size)
 	ind = 0;
 	new_str = (char*)malloc(sizeof(char) * new_size);
 	while (str[ind])
-		new_str[ind] = str[ind++];
+	{
+		new_str[ind] = str[ind]; //new_str[ind] = str[ind++];
+		++ind;
+	}
 	free(str);
-	while(ind < new_size)
+	while (ind < new_size)
 		new_str[ind] = 0;
 	return (new_str);
 }

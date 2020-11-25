@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:29 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 23:21:41 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/25 23:56:14 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	unclosed_q_msg(void)
 {
 	write(2, "minishell: ", 11);
 	write(2, "syntax error: unclosed quote\n", 29);
-	g_code = 258;
+	g_data->code = 258;
 	if (g_data->lst)
 		free_tokens(&(g_data->lst));
 	parse_input(0);

@@ -7,7 +7,7 @@ void	b_put_env(t_env *var, int fd)
 	ft_putendl_fd(var->value, fd);
 }
 
-ssize_t b_env(int fd)
+ssize_t	b_env(int fd) //ssize_t b_env(int fd)?
 {
 	int	ind;
 
@@ -15,4 +15,5 @@ ssize_t b_env(int fd)
 	while (g_data->env_arr[++ind])
 		if (g_data->env_arr[ind]->value)
 			b_put_env(g_data->env_arr[ind], fd);
+	return 0; //???????
 }
