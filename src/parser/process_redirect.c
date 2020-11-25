@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:52:49 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/25 23:56:14 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/26 01:12:52 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,16 +39,6 @@ static int	process_rdr_right(t_exec *exec, char *filename, int cmd)
 	return (1);
 }
 
-static int	error_msg_amb(char *filename)
-{
-	g_data->code = 1;
-	error_msg_prompt(filename);
-	write(2, "ambiguous redirect\n", 19);
-	free_exec(g_data->exec);
-	g_data->exec = NULL;
-	return (0);
-}
-
 int			process_rdr(t_exec *exec, t_dlist **lptr, char **arr)
 {
 	char	*filename;
@@ -60,7 +50,9 @@ int			process_rdr(t_exec *exec, t_dlist **lptr, char **arr)
 	printf("rdr=%s\n", filename);//
 	if (!((t_token *)((*lptr)->content))->len)
 	{
-		error_msg_amb(filename);
+		error_msg_custom(filename, "ambiguous redirect", 1);
+		free_exec(g_data->exec);
+		g_data->exec = NULL;
 		return (0);
 	}
 	if (cmd == C_RDR_L)

@@ -16,6 +16,7 @@ int		error_msg_custom(char *filename, char *message, int code)
 	g_data->code = code;
 	error_msg_prompt(filename);
 	write(2, message, ft_strlen(message));
+	write(2, "\n", 1);
 	return (0);
 }
 
