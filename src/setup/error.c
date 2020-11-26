@@ -5,7 +5,7 @@ int		error_msg_auto(char *filename, int code)
 {
 	g_data->code = code;
 	error_msg_prompt(filename);
-	ft_putendl_fd(strerror(errno), 1);
+	ft_putendl_fd(strerror(errno), 2);
 	return (0);
 }
 
@@ -13,8 +13,7 @@ int		error_msg_custom(char *filename, char *message, int code)
 {
 	g_data->code = code;
 	error_msg_prompt(filename);
-	write(2, message, ft_strlen(message));
-	write(2, "\n", 1);
+	ft_putendl_fd(message, 2);
 	return (0);
 }
 

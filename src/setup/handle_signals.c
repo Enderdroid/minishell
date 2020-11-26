@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:52 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/25 23:54:58 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/26 03:15:56 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ static void	handle_sigquit(int signal)
 		g_data->pid = 0;
 	}
 	else
-	{
 		write(1, "\b\b", 2);
-	}
-
 }
 
 void			handle_signals(void)
