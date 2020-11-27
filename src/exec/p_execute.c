@@ -10,6 +10,7 @@ int builtin_call(t_exec *exec)
 		return (b_env(1));
 	// if (!(ft_strcmp(exec->name, "exit")))
 	// ret = b_exit();
+	//return(free_and_exit(0)); если нужна функция для выхода из проги
 	else if (!(ft_strcmp(exec->name, "export")))
 		return (b_export(exec->argv, exec->fd_new[1]));
 	else if (!(ft_strcmp(exec->name, "pwd")))
@@ -33,8 +34,9 @@ int ft_execute(t_exec *exec, int fd, int rv)
 	if (exec->path)
 	{
 		f_name = ft_strjoin(exec->path, exec->name);
-		// if (!f_name)
-		// ERROR
+		//exec->name_and_path ? это строка без разбиения на path и name
+		if (!f_name)
+			free_and_exit(ERRNO); //для выхода по ошибке
 		execve(f_name, exec->argv, exec->env);
 		exit (rv);
 	}
@@ -67,7 +69,8 @@ int ft_pipe(t_exec *from, t_exec *to)
 	int f_ret[2];
 	int rv[2];
 	char *f_name;
-if (!(f_ret[0] = fork()))
+
+	if (!(f_ret[0] = fork()))
 		ft_execute(from, 1, rv[1]);
 	else
 	{

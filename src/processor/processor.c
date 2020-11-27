@@ -50,10 +50,12 @@ int ft_processor(t_exec *exec)
 	if (exec->pipe_to)
 		while (exec->pipe_to)
 		{
-			ft_pipe_proc(exec, exec->pipe_to);
+			if (exec->name) //если exec->name == NULL, пропускаем команду? добавила, чтоб не сегалось
+			//exec->name == NULL если файла/команды нет, если именем был несуществующий $env или если была ошибка редиркта
+				ft_pipe_proc(exec, exec->pipe_to);
 			exec = exec->pipe_to;
 		}
-	else if (exec && exec->name) // добавила && exec->name, тк exec->name мб NULL, в пайпе надо тоже предусмотреть!
+	else if (exec->name) // добавила условие для exec->name (exec всегда true)
 		ft_no_pipe(exec);
 	printf("\n[Processor ended]\n");
 	return (0);

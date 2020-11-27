@@ -1,9 +1,8 @@
-#include "../../include/libincludes.h"
-#include "../../include/libbuiltins.h"
+//#include "../../include/libincludes.h"
+#include "../../include/libstruct.h"
 #include "../../include/error.h"
-#include <stdio.h>
 
-int	ft_preprocess(t_exec *exec)
+int	ft_preprocess(t_exec *exec) // поменять на void?
 {
 	int ret;
 

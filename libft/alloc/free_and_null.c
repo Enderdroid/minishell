@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/23 00:00:38 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/23 00:02:08 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/28 00:36:05 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	free_and_null(char **str)
 {
-	free(*str);
-	*str = NULL;
+	if (str)
+	{
+		free(*str);
+		*str = NULL;
+	}
 }

@@ -64,7 +64,7 @@ clean:
 
 fclean: clean
 	@rm -rf $(NAME)
-#	@make fclean -C ./libft/
+	@make fclean -C ./libft/
 	@echo "$(NAME) deleted"
 
 re: fclean all

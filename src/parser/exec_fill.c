@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/27 21:40:16 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/28 00:36:15 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_exec	*exec_init(void)
 		return (NULL);
 	exec->name = NULL;
 	exec->path = NULL;
+	exec->name_and_path = NULL;
 	exec->argv = NULL;
 	exec->env = g_data->l_env;
 	exec->pipe_to = NULL;
@@ -112,8 +113,7 @@ static t_dlist	*exec_arr_fill(t_dlist *lptr, t_exec *exec, char **argv)
 				return (end_cmd(lptr, exec, cmd));
 			else if (!(process_rdr(exec, &lptr, argv)))
 			{
-				if (exec->name)
-					free_and_null(&(exec->name));
+				free_and_null(&(exec->name));
 				go_to_cmd_end(&lptr);
 			}
 			continue ;

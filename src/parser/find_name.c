@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:53:59 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/27 21:40:04 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/28 00:55:22 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,18 @@ static void	fill_name_path(char *str, t_exec *exec)
 	char *s;
 
 	exec->name_and_path = ft_strdup(str);
-	if (*str == '.' && *(str + 1) == '/')
+	/*if (*str == '.' && *(str + 1) == '/')
 		if (!(exec->path = find_env(ft_strdup("PWD"))))
-			parser_exit(ERRNO, NULL);
+			parser_exit(ERRNO, NULL);*/
 	s = ft_strrchr(str, '/');
 	exec->name = (s) ? ft_strdup((s + 1)) : ft_strdup(str);
 	if (!exec->name)
 		parser_exit(ERRNO, NULL);
 	if (s)
 	{
-		if (exec->path)
-			stradd(&(exec->path), ft_substr(str, 1, s - str));
-		else
+		//if (exec->path)
+		//	stradd(&(exec->path), ft_substr(str, 1, s - str));
+		//else
 			exec->path = ft_substr(str, 0, s - str);
 		if (!exec->path)
 			parser_exit(ERRNO, NULL);
