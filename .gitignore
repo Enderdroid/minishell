@@ -1,5 +1,4 @@
 .DS_Store
 ./a.out
-/bin
 ./main.c
 ./minishell_subject.pdf
