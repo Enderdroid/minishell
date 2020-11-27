@@ -25,8 +25,8 @@ t_exec	*exec_init(void)
 	exec->env = g_data->l_env;
 	exec->pipe_to = NULL;
 	exec->pipe_from = NULL;
-	exec->fd_new[0] = -2;
-	exec->fd_new[1] = -2;
+	exec->fd_new[0] = 0;
+	exec->fd_new[1] = 1;
 	exec->ret = 0;
 	return (exec);
 }
