@@ -61,8 +61,6 @@ int put_export_err(char *arg)
 ssize_t	b_export(char **argv, int fd)
 {
 	int i;
-	int ret;
-	char **key_value;
 
 	if (!argv[1])
 		put_export_env(fd);

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/26 01:26:26 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/27 21:30:15 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ typedef struct			s_exec
 {
 	char				*name;
 	char				*path;
+	char				*name_and_path;
 	//[0] - exe name | [n] - NULL
 	char				**argv;
 	char				**env;
@@ -67,4 +68,9 @@ void					free_data(void);
 void					free_exec(t_exec *exec);
 void					handle_signals(void);
 
+
+int						is_builtin(t_exec *exec);
+int						ft_preprocess(t_exec *exec);
+char					*s_in_path(char **path_val, char *name);
+int						folder_search(char *path, char *name);
 #endif

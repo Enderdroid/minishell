@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:57 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/24 21:04:02 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/27 21:32:28 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	free_exec(t_exec *exec)
 		free(exec->name);
 	if (exec->path)
 		free(exec->path);
+	if (exec->name_and_path)
+		free(exec->name_and_path);
 	if (exec->argv)
 		free_arr(exec->argv);
 	if (exec->pipe_to)

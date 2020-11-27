@@ -5,9 +5,10 @@
 //N_PATH - аргумент
 //скорее всего неправильный
 
-void	put_echo_err() //int put_echo_err()?
+int put_cd_err()
 {
 	ft_putstr_fd("too many argc\n", 2);
+	return 0;
 }
 
 int		b_cd(char **argv)
@@ -16,8 +17,8 @@ int		b_cd(char **argv)
 	char	c_path_buf[PATH_MAX];
 	char	*c_path;
 
-	if (argv[2])
-		put_echo_err();
+	//if (argv[2])
+	//	put_cd_err();
 	getcwd(c_path_buf, PATH_MAX);
 	c_path = (char*)malloc(ft_strlen(c_path_buf) * sizeof(char));
 	ret = chdir(argv[1]);

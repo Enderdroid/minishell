@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:53:59 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 23:33:10 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/27 21:40:04 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,10 @@ static void	fill_name_path(char *str, t_exec *exec)
 {
 	char *s;
 
-	if (*(str + 1) == '/')
-	{
-		if (*str == '.')
-			if (!(exec->path = find_env(ft_strdup("PWD"))))
-				parser_exit(ERRNO, NULL);
-	}
+	exec->name_and_path = ft_strdup(str);
+	if (*str == '.' && *(str + 1) == '/')
+		if (!(exec->path = find_env(ft_strdup("PWD"))))
+			parser_exit(ERRNO, NULL);
 	s = ft_strrchr(str, '/');
 	exec->name = (s) ? ft_strdup((s + 1)) : ft_strdup(str);
 	if (!exec->name)
@@ -47,8 +45,8 @@ void		find_name(t_dlist **lptr, t_exec *exec, char **arg)
 		if (!(*arg = ft_strdup(exec->name)))
 			parser_exit(ERRNO, NULL);
 
-		printf("name = %s\n", exec->name);//
-		printf("path = %s\n", exec->path);//
+		//printf("name = %s\n", exec->name);//
+		//printf("path = %s\n", exec->path);//
 /*
 		printf("head name = %s\n", g_data->exec->name);//
 		if (g_data->exec->pipe_to)

@@ -11,7 +11,7 @@ int get_env_count()
 	return (size);
 }
 
-void	add_env(char *key, char *value) //int add_env
+int add_env(char *key, char *value)
 {
 	t_env *env;
 	int		old_size;
@@ -22,6 +22,7 @@ void	add_env(char *key, char *value) //int add_env
 	env->value = value;
 	realloc_env((old_size + 1), old_size);
 	g_data->env_arr[old_size] = env;
+	return 0;
 }
 
 int del_env(t_env *env)

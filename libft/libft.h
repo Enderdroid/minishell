@@ -71,7 +71,9 @@ int						ft_min(int x, int y);
 int						countdigits(int n);
 int						countdigits_base_ll(long long n, long long bs);
 
-typedef struct			s_list
+char					*ft_pipe_strjoin(char const *s1, char const *s2);
+
+typedef struct s_list
 {
 	void				*content;
 	struct s_list		*next;

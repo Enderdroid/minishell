@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/26 00:32:53 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/11/27 21:41:49 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@ void	parse_line(char **line, int last_char)
 
 	q_closed = get_tokens(*line, last_char);
 	free_and_null(line);
-	print_list(g_data->lst);//
+	//print_list(g_data->lst);//
 	validate_tokens(q_closed);
 	correct_tokens();
-	print_list(g_data->lst);//
+	//print_list(g_data->lst);//
 	analise_tokens();
-	//free_tokens(lst);//
 }
 
 void	parse_input(int unfinished)
@@ -55,7 +54,7 @@ void	parse_input(int unfinished)
 	int		ret;
 	char	*line;
 
-	//line = ft_strdup("abc");//
+	//line = ft_strdup("abc;");//
 	if (!unfinished)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);

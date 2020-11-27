@@ -3,48 +3,38 @@
 #include "../../include/error.h"
 #include <stdio.h>
 
-void ft_pipe(t_exec *from, t_exec *to)
+void ft_pipe_proc(t_exec *from, t_exec *to)
 {
-	int ind;
 	char buf[256];
 	char *j_buf;
 
-	ft_execute(from);
-	close(from->fd_new[1]);
-	while (to->argv[ind])
-		++ind;
-	while (read(from->fd_new[0], buf, 256))
-	{
-		j_buf = to->argv[ind];
-		to->argv[ind] = ft_strjoin(j_buf, buf);
-		free(j_buf);
-	}
-	ft_execute(to);
+	int fd_new[2];
+	pipe(fd_new);
+	from->fd_new[0] = fd_new[0];
+	from->fd_new[1] = fd_new[1];
+	to->fd_new[0] = fd_new[0];
+	to->fd_new[1] = fd_new[1];
+	ft_pipe(from, to);
 }
 
-int ft_preprocess(t_exec *exec)
+int is_builtin(t_exec *exec)
 {
-	int ret;
-
 	if (!(ft_strcmp(exec->name, "cd")))
-		return (b_cd(exec->argv));
-	if (!(ft_strcmp(exec->name, "echo")))
-		return(b_echo(exec->argv, 1));
-	if (!(ft_strcmp(exec->name, "env")))
-		return(b_env(1));
+		return (1);
+	else if (!(ft_strcmp(exec->name, "echo")))
+		return (1);
+	else if (!(ft_strcmp(exec->name, "env")))
+		return (1);
 	// if (!(ft_strcmp(exec->name, "exit")))
-		// ret = b_exit();
-	if (!(ft_strcmp(exec->name, "export")))
-		return(b_export(exec->argv, 1));
-	if (!(ft_strcmp(exec->name, "pwd")))
-		return(b_pwd(1));
-	if (!(ft_strcmp(exec->name, "unset")))
-		return(b_unset(exec->argv));
-	exec->path = s_in_path(g_data->u_env->path_content, exec->name);
-	if (!(exec->path))
-		//printf("%s: command not found", exec->name);
-		error_msg_custom(exec->name, "command not found", 127);
-	return (0);
+	// ret = b_exit();
+	else if (!(ft_strcmp(exec->name, "export")))
+		return (1);
+	else if (!(ft_strcmp(exec->name, "pwd")))
+		return (1);
+	else if (!(ft_strcmp(exec->name, "unset")))
+		return (1);
+	else
+		return (0);
 }
 
 //Дописать обработку пайпа билтинов и пайпа PATH
@@ -52,18 +42,19 @@ int ft_preprocess(t_exec *exec)
 int ft_processor(t_exec *exec)
 {
 	t_exec *exec_buf;
+	int fd_new[2];
 
 	printf("\n[Processor started]\n");
-	if (!exec->path)
-		ft_preprocess(exec);
-	if (!(exec->pipe_to))
-		ft_execute(exec);
+	//ft_preprocess(exec);
 	exec_buf = exec;
-	while (exec_buf->pipe_to)
-	{
-		ft_pipe(exec_buf, exec_buf->pipe_to);
-		exec_buf = exec_buf->pipe_to;
-	}
+	if (exec->pipe_to)
+		while (exec->pipe_to)
+		{
+			ft_pipe_proc(exec, exec->pipe_to);
+			exec = exec->pipe_to;
+		}
+	else if (exec && exec->name) // добавила && exec->name, тк exec->name мб NULL, в пайпе надо тоже предусмотреть!
+		ft_no_pipe(exec);
 	printf("\n[Processor ended]\n");
 	return (0);
 }

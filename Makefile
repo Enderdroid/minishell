@@ -29,6 +29,7 @@ SRC			=	init_data.c\
 				p_execute.c\
 				reallocs.c\
 				processor.c\
+				preprocess.c\
 				env_utils.c\
 				path_utils.c\
 				main.c
