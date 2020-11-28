@@ -21,7 +21,8 @@ int	ft_preprocess(t_exec *exec) // поменять на void?
 	}
 	else if (!(fs = folder_search(exec->path, exec->name)))
 	{
-		error_msg_custom(exec->name_and_path, "No such file or directory", 127);
+		execve(exec->name_and_path, exec->argv, exec->env);
+		error_msg_auto(exec->name_and_path, (errno == 63) ? 126 : 127);
 		free_and_null(&exec->name);
 	}
 	else if (fs == 2)

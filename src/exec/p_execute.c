@@ -38,7 +38,6 @@ int ft_execute(t_exec *exec, int fd, int rv)
 		//exec->name_and_path ? это строка без разбиения на path и name
 		if (!f_name)
 			free_and_exit(ERRNO); //для выхода по ошибке
-		execve(f_name, exec->argv, exec->env);
 		exit (rv);
 	}
 	else
