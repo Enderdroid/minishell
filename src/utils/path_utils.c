@@ -50,7 +50,11 @@ int			folder_search(char *path, char *name)
 	{
 		while ((ent = readdir(dir)) != NULL)
 			if (ft_strcmp(ent->d_name, name) == 0)
+			{
 				++found;
+				if (ent->d_type == DT_DIR)
+					++found;
+			}
 		closedir(dir);
 	}
 	//else

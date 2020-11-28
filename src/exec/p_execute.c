@@ -1,4 +1,5 @@
 #include "../../include/libincludes.h"
+#include "../../include/error.h"
 
 int builtin_call(t_exec *exec)
 {

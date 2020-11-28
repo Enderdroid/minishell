@@ -4,7 +4,7 @@
 
 int	ft_preprocess(t_exec *exec) // поменять на void?
 {
-	int ret;
+	int fs;
 
 	if (!exec->name)
 		return (0);
@@ -19,9 +19,14 @@ int	ft_preprocess(t_exec *exec) // поменять на void?
 			free_and_null(&exec->name);
 		}
 	}
-	else if (!folder_search(exec->path, exec->name))
+	else if (!(fs = folder_search(exec->path, exec->name)))
 	{
 		error_msg_custom(exec->name_and_path, "No such file or directory", 127);
+		free_and_null(&exec->name);
+	}
+	else if (fs == 2)
+	{
+		error_msg_custom(exec->name_and_path, "is a directory", 126);
 		free_and_null(&exec->name);
 	}
 	return (0);
