@@ -27,18 +27,12 @@ static void	search_dir(t_exec *exec, int fs)
 		//printf("fs=%i\n", fs);
 		execve(exec->path, exec->argv, exec->env);
 		error_msg_auto(exec->full_name, (errno == 2) ? 127 : 126);
-		free_and_null(&exec->name);
 	}
 	else if (fs == 2)
-	{
 		error_msg_custom(exec->full_name, "is a directory", 126);
-		free_and_null(&exec->name);
-	}
 	else
-	{
 		error_msg_custom(exec->full_name, "Not a directory", 126);
-		free_and_null(&exec->name);
-	}
+	free_and_null(&exec->name);
 }
 
 static void	check_dir(t_exec *exec)
