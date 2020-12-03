@@ -12,12 +12,10 @@ int change_env_value(t_env *env, const char *value);
 t_env *find_env_unset(char *key);
 
 	int b_cd(char **n_path);
-ssize_t b_echo(char **str, int fd);
-int b_env(int fd);
-ssize_t b_export(char **argv, int fd);
+ssize_t b_echo(char **str);
+ssize_t b_env(int fd);
+ssize_t b_export(char **argv);
 int b_pwd(int fd);
 ssize_t b_unset(char **key);
-
-char *ft_pipe_strjoin(char const *s1, char const *s2);
 
 #endif

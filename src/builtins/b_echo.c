@@ -1,6 +1,6 @@
 #include "../../include/libbuiltins.h"
 
-ssize_t	b_echo(char **str, int fd)
+ssize_t	b_echo(char **str)
 {
 	ssize_t m_ret;
 	ssize_t n_ret;
@@ -16,10 +16,10 @@ ssize_t	b_echo(char **str, int fd)
 		flag = 0;
 	}
 	while (str[++ind] && m_ret > 0)
-		m_ret = write(fd, str[ind], ft_strlen(str[ind]));
+		m_ret = write(1, str[ind], ft_strlen(str[ind]));
 	//IF m_ret == -1 -> ERROR
-	if (flag)
-		n_ret = write(fd, "\n", 1);
+	if (!flag)
+		n_ret = write(1, "\n", 1);
 	//IF n_ret == -1 -> ERROR
 	return (m_ret + n_ret);
 }

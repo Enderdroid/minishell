@@ -13,11 +13,11 @@
 # include "libbuiltins.h"
 # include "libstruct.h"
 
-int ft_execute(t_exec *exec, int fd, int rv);
+int ft_execute(t_exec *exec);
 int builtin_call(t_exec *exec);
+int ft_pipe(t_exec *pipe_list);
+int ft_redir_execute(t_exec *exec);
 int ft_no_pipe(t_exec *exec);
-int ft_pipe(t_exec *from, t_exec *to);
-
 void ft_pipe_proc(t_exec *from, t_exec *to);
 int re_execute(t_exec *from, t_exec *to);
 

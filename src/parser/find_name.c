@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:53:59 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/28 00:55:22 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/03 15:17:27 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,11 @@
 static void	fill_name_path(char *str, t_exec *exec)
 {
 	char *s;
-
-	exec->name_and_path = ft_strdup(str);
 	/*if (*str == '.' && *(str + 1) == '/')
 		if (!(exec->path = find_env(ft_strdup("PWD"))))
 			parser_exit(ERRNO, NULL);*/
 	s = ft_strrchr(str, '/');
-	exec->name = (s) ? ft_strdup((s + 1)) : ft_strdup(str);
+	exec->name = (s) ? ft_strdup(s + 1) : ft_strdup(str);
 	if (!exec->name)
 		parser_exit(ERRNO, NULL);
 	if (s)
@@ -32,7 +30,11 @@ static void	fill_name_path(char *str, t_exec *exec)
 			exec->path = ft_substr(str, 0, s - str);
 		if (!exec->path)
 			parser_exit(ERRNO, NULL);
+
 	}
+	if (exec->path)
+		exec->full_name = ft_strdup(str);
+	//printf("]path=%s\n", exec->path);
 }
 
 void		find_name(t_dlist **lptr, t_exec *exec, char **arg)

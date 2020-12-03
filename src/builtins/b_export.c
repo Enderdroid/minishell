@@ -58,12 +58,14 @@ int put_export_err(char *arg)
 	return (0);
 }
 
-ssize_t	b_export(char **argv, int fd)
+ssize_t	b_export(char **argv)
 {
 	int i;
+	int ret;
+	char **key_value;
 
 	if (!argv[1])
-		put_export_env(fd);
+		put_export_env(1);
 	i = 0;
 	while (argv[++i])
 		parse_export(argv[i]);

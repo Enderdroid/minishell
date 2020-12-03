@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/28 00:36:15 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/03 13:44:54 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_exec	*exec_init(void)
 		return (NULL);
 	exec->name = NULL;
 	exec->path = NULL;
-	exec->name_and_path = NULL;
+	exec->full_name = NULL;
 	exec->argv = NULL;
 	exec->env = g_data->l_env;
 	exec->pipe_to = NULL;

@@ -1,19 +1,17 @@
 #include "../../include/libincludes.h"
-#include "../../include/error.h"
 
 int builtin_call(t_exec *exec)
 {
 	if (!(ft_strcmp(exec->name, "cd")))
 		return (b_cd(exec->argv));
 	else if (!(ft_strcmp(exec->name, "echo")))
-		return (b_echo(exec->argv, exec->fd_new[1]));
+		return (b_echo(exec->argv));
 	else if (!(ft_strcmp(exec->name, "env")))
 		return (b_env(1));
 	// if (!(ft_strcmp(exec->name, "exit")))
 	// ret = b_exit();
-	//return(free_and_exit(0)); если нужна функция для выхода из проги
 	else if (!(ft_strcmp(exec->name, "export")))
-		return (b_export(exec->argv, exec->fd_new[1]));
+		return (b_export(exec->argv));
 	else if (!(ft_strcmp(exec->name, "pwd")))
 		return (b_pwd(1));
 	else if (!(ft_strcmp(exec->name, "unset")))
@@ -22,72 +20,103 @@ int builtin_call(t_exec *exec)
 		return (-1);
 }
 
-int ft_execute(t_exec *exec, int fd, int rv)
+void pipe_env(t_exec *exec, int *p_fd, int fd, int rv)
 {
 	char *f_name;
 
-	if (exec->fd_new[0] != 0 && exec->fd_new[1] != 1)
+	if (p_fd)
 	{
-		dup2(exec->fd_new[fd], fd);
-		close(exec->fd_new[0]);
-		close(exec->fd_new[1]);
+		dup2(p_fd[fd], fd);
+		if (exec->fd_new[0] != 0)
+			close(p_fd[0]);
+		if (exec->fd_new[1] != 1)
+			close(p_fd[1]);
 	}
-	if (exec->path)
-	{
-		f_name = ft_strjoin(exec->path, exec->name);
-		//exec->name_and_path ? это строка без разбиения на path и name
-		if (!f_name)
-			free_and_exit(ERRNO); //для выхода по ошибке
-		execve(f_name, exec->argv, exec->env);
-		exit (rv);
-	}
+	if (exec->full_name)
+		execve(exec->full_name, exec->argv, exec->env);
 	else
-		exec->ret = builtin_call(exec);
+		builtin_call(exec);
+	exit(rv);
+}
+
+int			ft_pipe_part(t_exec *exec, int *p_fd, int fd)
+{
+	int		pid;
+	int		rv;
+
+	rv = 0;
+	//exec->full_name = ft_strjoin(exec->path, exec->name);
+	if (!(pid = fork()))
+		pipe_env(exec, p_fd, fd, rv);
+	g_data->pid = pid;
+	if (fd == 0)
+		close(p_fd[0]);
+	if (fd == 0)
+		close(p_fd[1]);
+	wait(0);
+	g_data->pid = 0;
+	if (exec->full_name)
+		exec->ret = WEXITSTATUS(rv);
+	else
+		exec->ret = rv;
 	return (exec->ret);
 }
 
-int ft_no_pipe(t_exec *exec)
+int			ft_execute(t_exec *exec)
 {
-	int f_ret;
-	int rv;
-	char *f_name;
+	int		pid;
+	int		rv;
 
-	if (!(f_ret = fork()))
-		ft_execute(exec, -1, rv);
+	rv = 0;
+	//exec->full_name = ft_strjoin(exec->path, exec->name);
+	if (!(pid = fork()))
+		pipe_env(exec, NULL, 0, rv);
+	g_data->pid = pid;
+	wait(0);
+	g_data->pid = 0;
+	if (exec->full_name)
+		exec->ret = WEXITSTATUS(rv);
 	else
-	{
-		g_data->pid = f_ret;
-		wait(0);
-		g_data->pid = 0;
-		if (!is_builtin(exec))
-			exec->ret = WEXITSTATUS(rv);
-	}
+		exec->ret = rv;
 	return (rv);
 }
 
-int ft_pipe(t_exec *from, t_exec *to)
+int			ft_redir_execute(t_exec *exec)
 {
-	int f_ret[2];
-	int rv[2];
-	char *f_name;
+	int pid;
+	int rv;
 
-	if (!(f_ret[0] = fork()))
-		ft_execute(from, 1, rv[1]);
+	rv = 0;
+	printf("fd--from %i -- fd--new %i\n", exec->fd_new[0], exec->fd_new[1]);
+	//exec->full_name = ft_strjoin(exec->path, exec->name);
+	if (!(pid = fork()))
+		pipe_env(exec, exec->fd_new, 1, rv);
+	g_data->pid = pid;
+	if (exec->fd_new[0] != 0)
+		close(exec->fd_new[0]);
+	if (exec->fd_new[1] != 1)
+		close(exec->fd_new[1]);
+	wait(0);
+	g_data->pid = 0;
+	if (exec->full_name)
+		exec->ret = WEXITSTATUS(rv);
 	else
+		exec->ret = rv;
+	return (rv);
+}
+
+int ft_pipe(t_exec *pipe_list)
+{
+	int p_fd_new[2];
+
+	while (pipe_list->pipe_to)
 	{
-		if (!(f_ret[1] == fork()))
-			ft_execute(to, 0, rv[0]);
-		else
-		{
-			close(from->fd_new[0]);
-			close(from->fd_new[1]);
-			wait(0);
-			if (!is_builtin(from))
-				from->ret = WEXITSTATUS(rv[1]);
-			if (!is_builtin(to))
-				to->ret = WEXITSTATUS(rv[0]);
-		}
+		pipe(p_fd_new);
+		pipe_list->fd_new[0] = p_fd_new[0];
+		pipe_list->fd_new[1] = p_fd_new[1];
+		pipe_list->ret = ft_pipe_part(pipe_list, p_fd_new, 1);
+		pipe_list->pipe_to->ret = ft_pipe_part(pipe_list->pipe_to, p_fd_new, 0);
+		pipe_list = pipe_list->pipe_to;
 	}
-	printf("\nEXEC ENDED\n");
 	return (0);
 }
