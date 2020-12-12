@@ -1,65 +1,69 @@
 #include "../../include/libincludes.h"
 
-int builtin_call(t_exec *exec)
+ssize_t builtin_call(t_exec *exec)
 {
 	if (!(ft_strcmp(exec->name, "cd")))
-		return (b_cd(exec->argv));
+		return (b_cd(exec));
 	else if (!(ft_strcmp(exec->name, "echo")))
-		return (b_echo(exec->argv));
+		return (b_echo(exec));
 	else if (!(ft_strcmp(exec->name, "env")))
-		return (b_env(1));
+		return (b_env(exec));
 	// if (!(ft_strcmp(exec->name, "exit")))
 	// ret = b_exit();
 	else if (!(ft_strcmp(exec->name, "export")))
-		return (b_export(exec->argv));
+		return (b_export(exec));
 	else if (!(ft_strcmp(exec->name, "pwd")))
-		return (b_pwd(1));
+		return (b_pwd(exec));
 	else if (!(ft_strcmp(exec->name, "unset")))
-		return (b_unset(exec->argv));
+		return (b_unset(exec));
 	else
 		return (-1);
 }
 
-void pipe_env(t_exec *exec, int *p_fd, int fd, int rv)
+int sub_exec(t_exec *exec, int *p_fd, int fd, int *rv)
 {
 	char *f_name;
+	int pid;
 
-	if (p_fd)
-	{
-		dup2(p_fd[fd], fd);
-		if (exec->fd_new[0] != 0)
-			close(p_fd[0]);
-		if (exec->fd_new[1] != 1)
-			close(p_fd[1]);
-	}
 	if (exec->full_name)
-		execve(exec->full_name, exec->argv, exec->env);
-	else
-		builtin_call(exec);
-	exit(rv);
+	{
+		if (!(pid = fork()))
+		{
+			if (p_fd)
+			{
+				dup2(p_fd[fd], fd);
+				close(p_fd[0]);
+				close(p_fd[1]);
+			}
+			execve(exec->full_name, exec->argv, exec->env);
+			exit(*rv);
+		}
+		g_data->pid = pid;
+		return (0);
+	}
+	*rv = builtin_call(exec);
+	return (0);
 }
 
 int			ft_pipe_part(t_exec *exec, int *p_fd, int fd)
 {
-	int		pid;
 	int		rv;
 
 	rv = 0;
-	//exec->full_name = ft_strjoin(exec->path, exec->name);
-	if (!(pid = fork()))
-		pipe_env(exec, p_fd, fd, rv);
-	g_data->pid = pid;
+	sub_exec(exec, p_fd, fd, &rv);
 	if (fd == 0)
 		close(p_fd[0]);
 	if (fd == 0)
 		close(p_fd[1]);
-	wait(0);
-	g_data->pid = 0;
 	if (exec->full_name)
+	{
+		wait(0);
+		g_data->pid = 0;
 		exec->ret = WEXITSTATUS(rv);
+	}
 	else
 		exec->ret = rv;
-	return (exec->ret);
+	return (rv);
 }
 
 int			ft_execute(t_exec *exec)
@@ -68,14 +72,13 @@ int			ft_execute(t_exec *exec)
 	int		rv;
 
 	rv = 0;
-	//exec->full_name = ft_strjoin(exec->path, exec->name);
-	if (!(pid = fork()))
-		pipe_env(exec, NULL, 0, rv);
-	g_data->pid = pid;
-	wait(0);
-	g_data->pid = 0;
+	sub_exec(exec, NULL, 0, &rv);
 	if (exec->full_name)
+	{
+		wait(0);
+		g_data->pid = 0;
 		exec->ret = WEXITSTATUS(rv);
+	}
 	else
 		exec->ret = rv;
 	return (rv);
@@ -87,19 +90,19 @@ int			ft_redir_execute(t_exec *exec)
 	int rv;
 
 	rv = 0;
-	printf("fd--from %i -- fd--new %i\n", exec->fd_new[0], exec->fd_new[1]);
-	//exec->full_name = ft_strjoin(exec->path, exec->name);
-	if (!(pid = fork()))
-		pipe_env(exec, exec->fd_new, 1, rv);
-	g_data->pid = pid;
+	// printf("fd--from %i -- fd--new %i\n", exec->fd_new[0], exec->fd_new[1]);
+	
+	sub_exec(exec, exec->fd_new, 1, &rv);
 	if (exec->fd_new[0] != 0)
 		close(exec->fd_new[0]);
 	if (exec->fd_new[1] != 1)
 		close(exec->fd_new[1]);
-	wait(0);
-	g_data->pid = 0;
 	if (exec->full_name)
+	{
+		wait(0);
+		g_data->pid = 0;
 		exec->ret = WEXITSTATUS(rv);
+	}
 	else
 		exec->ret = rv;
 	return (rv);

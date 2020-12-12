@@ -1,25 +1,21 @@
 #include "../../include/libbuiltins.h"
 
-ssize_t	b_echo(char **str)
+int	b_echo(t_exec *exec)
 {
-	ssize_t m_ret;
-	ssize_t n_ret;
 	int ind;
 	int flag;
 
-	flag = 1;
-	ind = 1;
-	n_ret = 0;
-	if (ft_strcmp(str[1], "-n"))
+	flag = 0;
+	ind = 0;
+	while (exec->argv[++ind] && !(ft_strcmp(exec->argv[ind], "-n")))
+		flag = 1;
+	while (exec->argv[ind])
 	{
-		ind = 0;
-		flag = 0;
+		ft_putstr_fd(exec->argv[ind], exec->fd_new[1]);
+		++ind;
 	}
-	while (str[++ind] && m_ret > 0)
-		m_ret = write(1, str[ind], ft_strlen(str[ind]));
-	//IF m_ret == -1 -> ERROR
 	if (!flag)
-		n_ret = write(1, "\n", 1);
-	//IF n_ret == -1 -> ERROR
-	return (m_ret + n_ret);
+		ft_putstr_fd("\n", exec->fd_new[1]);
+	g_data->code = 0;
+	return (0);
 }

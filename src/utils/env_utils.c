@@ -1,9 +1,9 @@
 #include "../../include/libstruct.h"
 #include "../../include/libincludes.h"
 
-int get_env_count()
+int			get_env_count()
 {
-	int size;
+	int		size;
 
 	size = 0;
 	while (g_data->env_arr[size])
@@ -11,36 +11,45 @@ int get_env_count()
 	return (size);
 }
 
-int add_env(char *key, char *value)
+int			add_env(char *key, char *value)
 {
-	t_env *env;
+	t_env	*env;
 	int		old_size;
 
 	old_size = get_env_count();
-	env = (t_env *)malloc(sizeof(t_env));
+	if ((realloc_env((old_size + 1), old_size)) == -1  ||
+		!(env = (t_env *)malloc(sizeof(t_env))))
+	{
+			free(key);
+			if (value)
+				free(value);
+			free_and_exit(ERRNO);
+	}
 	env->key = key;
 	env->value = value;
-	realloc_env((old_size + 1), old_size);
 	g_data->env_arr[old_size] = env;
-	return 0;
+	return (0);
 }
 
-int del_env(t_env *env)
+int			del_env(t_env *env)
 {
-	int old_size;
+	int		old_size;
+	int		ret;
 
 	old_size = get_env_count();
+	if ((ret = realloc_env((old_size - 1), old_size)) == -1)
+		free_and_exit(ERRNO);
 	free(env->key);
 	free(env->value);
-	env = NULL;
-	realloc_env((old_size - 1), old_size);
 	free(env);
 	return (0);
 }
 
-int change_env_value(t_env *env, const char *value)
+int			change_env_value(t_env *env, char *value)
 {
 	free(env->value);
-	env->value = ft_strdup(value);
+	env->value = NULL;
+	if (value && !(env->value = ft_strdup(value)))
+		exit_with_errno();
 	return (0);
 }

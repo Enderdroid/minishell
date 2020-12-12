@@ -9,12 +9,27 @@ char		*add_to_folder(char *c_path, char *name, int slash)
 
 	if (slash)
 	{
-		buf = ft_strjoin(c_path, "/");
-		ret = ft_strjoin(buf, name);
-		free (buf);
+
+		if (!(buf = ft_strjoin(c_path, "/")))
+		{
+			free(g_data);
+			exit_with_errno();
+		}
+		if (!(ret = ft_strjoin(buf, name)))
+		{
+			free(buf);
+			free(g_data);
+			exit_with_errno();
+		}
+		free(buf);
 	}
 	else
-		ret = ft_strjoin(c_path, name);
+		if (!(ret = ft_strjoin(c_path, name)))
+		{
+			free(buf);
+			free(g_data);
+			exit_with_errno();
+		}
 	return (ret);
 }
 
@@ -25,7 +40,11 @@ char		*rm_from_folder(char *path)
 	int		s_ind;
 	char	*ret;
 
-	ret = ft_strdup(path);
+	if (!(ret = ft_strdup(path)))
+	{
+		free(g_data);
+		exit_with_errno();
+	}
 	ind = 0;
 	while (ret[ind])
 	{

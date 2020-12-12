@@ -33,7 +33,7 @@ static int	process_rdr_right(t_exec *exec, char *filename, int cmd)
 										O_APPEND, S_IRWXU | S_IROTH);
 	if (cmd == C_RDR_R)
 		exec->fd_new[1] = open(filename, O_CREAT | O_WRONLY | \
-										O_APPEND, S_IRWXU | S_IROTH);
+										O_TRUNC, S_IRWXU | S_IROTH);
 	if (exec->fd_new[1] < 0)
 		return (error_msg_auto(filename, 1));
 	return (1);

@@ -32,6 +32,8 @@ SRC			=	init_data.c\
 				preprocess.c\
 				env_utils.c\
 				path_utils.c\
+				builtin_utils.c\
+				remake_lenv.c\
 				main.c
 
 O_DIR		=	./bin

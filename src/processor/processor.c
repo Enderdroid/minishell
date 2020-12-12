@@ -26,25 +26,18 @@ int is_builtin(t_exec *exec)
 //Дописать обработку пайпа билтинов и пайпа PATH
 int ft_processor(t_exec *exec)
 {
-	int fd_new[2];
-	t_exec *exec_buf;
-
 	printf("\n[Processor started]\n");
 
-	exec_buf = exec;
-	printf("PATH == %s | NAME == %s\n", exec->path, exec->name);
-	while (exec_buf)
-	{
-		ft_preprocess(exec_buf);
-		exec_buf = exec_buf->pipe_to;
-	}
-	printf("fd--from %i -- fd--new %i\n", exec->fd_new[0], exec->fd_new[1]);
 	if (exec->pipe_to)
 		ft_pipe(exec);
 	else if (exec->fd_new[0] == 0 && exec->fd_new[1] == 1)
+	{
+		// printf("EXEC\n");
 		ft_execute(exec);
+	}
 	else
 		ft_redir_execute(exec);
+
 	printf("\n[Processor ended]\n");
 	return (0);
 }

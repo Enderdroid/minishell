@@ -12,62 +12,57 @@ void put_export_env(int fd)
 		var = g_data->env_arr[ind];
 		ft_putstr_fd("declare -x ", fd);
 		ft_putstr_fd(var->key, fd);
-		if (var->value[0])
+		if (var->value)
 		{
 			ft_putstr_fd("=", fd);
 			ft_putstr_fd("\"", fd);
 			ft_putstr_fd(var->value, fd);
-			ft_putendl_fd("\"", fd);
+			ft_putstr_fd("\"", fd);
 		}
-		else
-			ft_putstr_fd("\n", fd);
+		ft_putstr_fd("\n", fd);
 	}
 }
 
-int put_export_err(char *arg)
-{
-	int i;
-
-	i = 0;
-	ft_putstr_fd("bash: export : \'", 2);
-	while (arg[i] != '=')
-		++i;
-	write(2, arg, i);
-	ft_putendl_fd("\': not a valid identifier", 2);
-	return (0);
-}
-
-	int parse_export(char *arg)
-{
-	int i;
-	char **key_value;
-
-	i = -1;
-	while (arg[++i] && arg[i] != '=')
-		if (arg[i] == ' ')
-			return (put_export_err(arg));
-	if (arg[i] != '=')
-		add_env(arg, NULL);
-	else if (!arg[i + 1])
-		add_env(arg, strdup(""));
-	else
-	{
-		key_value = ft_split(arg, '=');
-		add_env(key_value[0], key_value[1]);
-	}
-	return (0);
-}
-
-ssize_t	b_export(char **argv)
+void parse_export(char *arg, int *code_buf)
 {
 	int i;
 	int ret;
-	char **key_value;
+	char **env_buf;
+	t_env *c_env;
 
-	if (!argv[1])
-		put_export_env(1);
+	i = -1;
+	if ((ret = is_env(arg)) == -1)
+	{
+		*code_buf = 1;
+		return (b_put_error("export", arg, "not a valid identifier", 1));
+	}
+	if (!(env_buf = ft_split(arg, '=')))
+		free_and_exit(ERRNO);
+	c_env = find_env_unset(env_buf[0]);
+	if (c_env && ret == 1)
+		change_env_value(c_env, env_buf[1]);
+	else if (c_env && ret == 0)
+		change_env_value(c_env, NULL);
+	else if (!c_env && ret == 1)
+		add_env(env_buf[0], env_buf[1]);
+	else
+		add_env(env_buf[0], NULL);
+}
+
+ssize_t	b_export(t_exec *exec)
+{
+	int i;
+	int ret;
+	int code_buf;
+
+	code_buf = 0;
+	if (!exec->argv[1])
+		put_export_env(exec->fd_new[1]);
 	i = 0;
-	while (argv[++i])
-		parse_export(argv[i]);
+	while (exec->argv[++i])
+		parse_export(exec->argv[i], &code_buf);
+	// if (exec->argv[1])
+		// remake_lenv();
+	g_data->code = code_buf;
 	return (0);
 }

@@ -1,32 +1,30 @@
 #include "../../include/libbuiltins.h"
 
-int put_unset_err(char *arg)
-{
-	int i;
-
-	i = 0;
-	ft_putstr_fd("bash: export : \'", 2);
-	ft_putstr_fd(arg, 2);
-	ft_putendl_fd("\': not a valid identifier", 2);
-	return (-1);
-}
-
-ssize_t		b_unset(char **argv)
+ssize_t		b_unset(t_exec *exec)
 {
 	t_env *env;
 	int	i;
+	int code_buf;
 
 	i = 0;
-	while (argv[++i])
+	code_buf = 0;
+	while (exec->argv[++i])
 	{
-		// if (!(is_env(argv[++i])))
-			// return (put_unset_err(argv[++i]));
-		// else
-		// {
-			env = find_env_unset(argv[++i]);
+		if (is_env(exec->argv[i]) == -1)
+		{
+			code_buf = 1;
+			b_put_error("unset", exec->argv[i], "not a valid identifier", 1);
+			continue;
+		}
+		else
+		{
+			env = find_env_unset(exec->argv[i]);
 			if (env)
 				del_env(env);
-		// }
+		}
 	}
+	// if (exec->argv[1])
+		// remake_lenv();
+	g_data->code = code_buf;
 	return (0);
 }
