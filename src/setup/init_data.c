@@ -6,24 +6,13 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/26 03:10:42 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/12 16:14:44 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-static void		paste_oldpwd(t_env **env, int i)
-{
-	if (!(env[i] = (t_env *)malloc(sizeof(t_env))))
-		free_and_exit(ERRNO);
-	env[i]->key = ft_strdup("OLDPWD");
-	//printf("%s\n", env[i]->key);//
-	env[i]->value = NULL;
-	if (!env[i]->key)
-		free_and_exit(ERRNO);
-}
-
-static void		fill_env_arr(t_env **env, char **envp, int oldpwd)
+static void		fill_env_arr(t_env **env, char **l_env, char **envp)
 {
 	int		i;
 	char	**tmp;
@@ -31,35 +20,41 @@ static void		fill_env_arr(t_env **env, char **envp, int oldpwd)
 	i = -1;
 	while (envp[++i])
 	{
+		if (!(l_env[i] = ft_strdup(envp[i])))
+			free_and_exit(ERRNO);
 		if (!(env[i] = (t_env *)malloc(sizeof(t_env))))
 			free_and_exit(ERRNO);
 		if (!(tmp = ft_split(envp[i], '=')))
 			free_and_exit(ERRNO);
 		env[i]->key = ft_strdup(tmp[0]);
-		env[i]->value = (tmp[1]) ? ft_strdup(tmp[1]) : NULL;
-		if (!env[i]->key || (!env[i]->value && tmp[1]))
-		{
-			free_arr(tmp);
-			free_and_exit(ERRNO);
-		}
+		env[i]->value = (tmp[1]) ? ft_strdup(tmp[1]) : ft_strdup("");
 		free_arr(tmp);
-		//printf("key=%s, value=%s\n", env[i]->key,env[i]->value);//
+		if (!env[i]->key || !env[i]->value)
+			free_and_exit(ERRNO);
 	}
-	if (oldpwd)
-		paste_oldpwd(env, i++);
-	env[i] = NULL;
 }
 
-static t_env	**parse_env(char **envp, int size, int oldpwd)
+static t_env	**parse_env(char **envp, int size)
 {
 	t_env	**env;
 
-	if (!(env = (t_env **)malloc(sizeof(t_env *) * (size + 1))))
+	if (!(env = (t_env **)ft_calloc(sizeof(t_env *), (size + 1))))
 	{
 		free(g_data);
 		exit_with_errno();
 	}
-	fill_env_arr(env, envp, oldpwd);
+	if (!(g_data->l_env = (char **)ft_calloc(sizeof(char *), (size + 1))))
+	{
+		free(g_data);
+		free(env);
+		exit_with_errno();
+	}
+	fill_env_arr(env, g_data->l_env, envp);
+	/*for(int i = 0; i < size+1; ++i)
+	{
+		printf("%s\n", g_data->l_env[i]);
+		printf("key=%s, value=%s\n", env[i]->key,env[i]->value);//
+	}*/
 	return (env);
 }
 
@@ -95,24 +90,14 @@ static t_u_env	*parse_u_env(t_env **env, int size)
 void			init_data(char **envp)
 {
 	int		size;
-	int		oldpwd;
 	t_env	**env;
 
 	if (!(g_data = (t_data *)malloc(sizeof(t_data))))
 		exit_with_errno();
 	size = 0;
-	oldpwd = 1;
 	while (envp[size])
-	{
-		if (ft_memcmp(envp[size], "OLDPWD", 6) == 0)
-			oldpwd = 0;
-		//printf("%s\n", envp[size]);
-		++size;
-	}
-	//printf("!!!!%i\n", oldpwd);
-	if (oldpwd)
-		++size;
-	env = parse_env(envp, size, oldpwd);
+		++size; //printf("%s\n", envp[size]);
+	env = parse_env(envp, size);
 	g_data->env_arr = env;
 	g_data->u_env = parse_u_env(env, size);
 	g_data->exec = NULL;

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/03 13:44:54 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/12 16:31:32 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,12 @@ t_exec	*exec_init(void)
 	return (exec);
 }
 
-static int		cmd_len(t_dlist *lptr, t_exec *exec)
+static int		cmd_len(t_dlist *lptr)
 {
 	int len;
 	int cmd;
 
-	len = (exec->pipe_from) ? 1 : 0;
+	len = 0;
 	while (lptr)
 	{
 		if ((cmd = ((t_token *)lptr->content)->len) < 0)
@@ -73,7 +73,7 @@ t_dlist	*process_pipe(t_dlist *newlst, t_exec *exec)
 	//printf("NEW=%s\n", ((t_token *)((*lst)->content))->str);
 	newexec = exec_init();
 	if (!newexec)
-		parser_exit(ERRNO, NULL);
+		free_and_exit(ERRNO);
 	exec->pipe_to = newexec;
 	newexec->pipe_from = exec;
 	return (exec_fill(newexec));
@@ -121,7 +121,7 @@ static t_dlist	*exec_arr_fill(t_dlist *lptr, t_exec *exec, char **argv)
 		else if ((cmd = ((t_token *)lptr->content)->len) > 0)
 		{
 			if (!(argv[++i] = ft_strdup(((t_token *)lptr->content)->str)))
-				parser_exit(ERRNO, NULL);
+				free_and_exit(ERRNO);
 			//printf("%s, %i\n", argv[i], i);//
 		}
 		lptr = lptr->next;
@@ -136,11 +136,11 @@ t_dlist	*exec_fill(t_exec *exec)
 	int		len;
 
 //printf("NEW=%s\n", ((t_token *)((*lst)->content))->str);
-	len = cmd_len(g_data->lst, exec);
+	len = cmd_len(g_data->lst);
 	//printf("len=%i\n", len);
 	if (!(exec->argv = (char **)ft_calloc(sizeof(char *), len + 1)))
 	//if (!(exec->argv = (char **)malloc(sizeof(char) * (len + 1))))
-		parser_exit(ERRNO, NULL);
+		free_and_exit(ERRNO);
 	lptr = g_data->lst;
 	find_name(&lptr, exec, &(exec->argv[0]));
 	//printf("argv[0]=%s\n", exec->argv[0]);

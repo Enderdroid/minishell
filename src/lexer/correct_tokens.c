@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:18:11 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/27 21:39:20 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/12 15:03:12 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static char	*corrected_str(t_token *token)
 	char *res;
 
 	if (!(mask = str_mask(token->str, token->len)))
-		parser_exit(ERRNO, NULL);
+		free_and_exit(ERRNO);
 	if (!(res = ft_strdup("")))
 		parser_exit(ERRNO, &mask);
 	correct_str(token, &res, &mask);

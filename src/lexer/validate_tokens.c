@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:29 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/25 23:56:14 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/12 15:03:27 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	check_last(t_token *token)
 	if (token->str[token->len - 1] == '\\')
 	{
 		if (!(mask = str_mask(token->str, token->len)))
-			parser_exit(ERRNO, NULL);
+			free_and_exit(ERRNO);
 		if (mask[token->len - 1] == '0')
 		{
 			free(mask);

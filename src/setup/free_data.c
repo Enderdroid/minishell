@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:57 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/03 13:44:40 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/12 15:15:23 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ void	free_data(void)
 			free_arr(g_data->u_env->path_content);
 		free(g_data->u_env);
 	}
+	if (g_data->l_env)
+		free_arr(g_data->l_env);
 	if (g_data->exec)
 		free_exec(g_data->exec);
 	if (g_data->lst)
