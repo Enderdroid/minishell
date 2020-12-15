@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/12 16:31:37 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/15 11:20:21 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void					handle_signals(void);
 char					*find_env(char *key);
 
 int						is_builtin(t_exec *exec);
-int						ft_preprocess(t_exec *exec);
+void					ft_preprocess(t_exec *exec);
 char					*s_in_path(char **path_val, char *name);
 int						folder_search(char *path, char *name);
 #endif

@@ -16,4 +16,5 @@ ssize_t b_env(t_exec *exec)
 		if (g_data->env_arr[ind]->value)
 			b_put_env(g_data->env_arr[ind], exec->fd_new[1]);
 	g_data->code = 0;
+	return (0);
 }

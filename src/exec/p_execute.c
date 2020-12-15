@@ -8,8 +8,8 @@ ssize_t builtin_call(t_exec *exec)
 		return (b_echo(exec));
 	else if (!(ft_strcmp(exec->name, "env")))
 		return (b_env(exec));
-	// if (!(ft_strcmp(exec->name, "exit")))
-	// ret = b_exit();
+	else if (!(ft_strcmp(exec->name, "exit")))
+		return (b_exit());
 	else if (!(ft_strcmp(exec->name, "export")))
 		return (b_export(exec));
 	else if (!(ft_strcmp(exec->name, "pwd")))
@@ -64,7 +64,7 @@ int			ft_pipe_part(t_exec *exec, int *p_fd, int fd)
 	int		ret;
 
 	rv = 0;
-	if (ret = sub_exec(exec, p_fd, fd, &rv))
+	if ((ret = sub_exec(exec, p_fd, fd, &rv)))
 		pipe_b_exec(exec, p_fd, fd, &rv);
 	if (fd == 0 && !ret)
 		close(p_fd[0]);
@@ -107,7 +107,7 @@ int			ft_redir_execute(t_exec *exec)
 
 	rv = 0;
 	// printf("fd--from %i -- fd--new %i\n", exec->fd_new[0], exec->fd_new[1]);
-	
+
 	if (sub_exec(exec, exec->fd_new, 1, &rv))
 		rv = builtin_call(exec);
 	if (exec->fd_new[0] != 0)
@@ -131,7 +131,7 @@ int ft_pipe(t_exec *pipe_list)
 
 	while (pipe_list->pipe_to)
 	{
-		
+
 		pipe(p_fd_new);
 		pipe_list->fd_new[0] = p_fd_new[0];
 		pipe_list->fd_new[1] = p_fd_new[1];

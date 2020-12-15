@@ -11,30 +11,15 @@ static void	check_filepath(t_exec *exec, int mode, int fs)
 			execve(exec->full_name, exec->argv, exec->env);
 		else
 			execve(exec->path, exec->argv, exec->env);
-		error_msg_auto(exec->full_name, (errno == 2) ? 127 : 126);
+		error_msg_auto(&exec->ret, exec->full_name, (errno == 2) ? 127 : 126);
 		free_and_null(&exec->name);
 	}
 	else if (fs == 2)
 	{
-		error_msg_custom(exec->full_name, "is a directory", 126);
+		error_msg_custom(&exec->ret, exec->full_name, "is a directory", 126);
 		free_and_null(&exec->name);
 	}
 }
-
-/*static void	search_dir(t_exec *exec, int fs)
-{
-	if (fs == 0)
-	{
-		//printf("fs=%i\n", fs);
-		execve(exec->path, exec->argv, exec->env);
-		error_msg_auto(exec->full_name, (errno == 2) ? 127 : 126);
-	}
-	else if (fs == 2)
-		error_msg_custom(exec->full_name, "is a directory", 126);
-	else
-		error_msg_custom(exec->full_name, "Not a directory", 126);
-	free_and_null(&exec->name);
-}*/
 
 static void	check_dir(t_exec *exec)
 {
@@ -56,7 +41,7 @@ static void	check_dir(t_exec *exec)
 		free_and_exit(ERRNO);
 	if ((fs = folder_search(new_path, exec->name)) == 1)
 	{
-		error_msg_custom(exec->full_name, "Not a directory", 126);
+		error_msg_custom(&exec->ret, exec->full_name, "Not a directory", 126);
 		free_and_null(&exec->name);
 	}
 	else
@@ -64,29 +49,31 @@ static void	check_dir(t_exec *exec)
 	free(new_path);
 }
 
-int			ft_preprocess(t_exec *exec) // поменять на void?
+void		ft_preprocess(t_exec *exec) // поменять на void?
 {
 	if (!exec->name)
-		return (0);
-	if (!exec->path)
+	{
+		if (!exec->ret)//== -1
+			g_data->code = 0; //exec->ret = 0;
+	}
+	else if (!exec->path)
 	{
 		if (is_builtin(exec))
-			return (1);
-		exec->path = s_in_path(g_data->u_env->path_content, exec->name);
-		exec->full_name = ft_strjoin(exec->path, exec->name);
-		if (!(exec->path))
+			return ;
+		if (!(exec->path = s_in_path(g_data->u_env->path_content, exec->name)))
 		{
-			error_msg_custom(exec->name, "command not found", 127);
+			error_msg_custom(&exec->ret, exec->name, "command not found", 127);
 			free_and_null(&exec->name);
 		}
+		else if (!(exec->full_name = ft_strjoin(exec->path, exec->name)))
+			free_and_exit(ERRNO);
 	}
 	else if (!ft_strcmp(exec->name, ""))
 	{
 		free_and_null(&exec->name);
 		(ft_strcmp(exec->path, "")) ? check_dir(exec) : \
-				error_msg_custom(exec->full_name, "is a directory", 126);
+		error_msg_custom(&exec->ret, exec->full_name, "is a directory", 126);
 	}
 	else
 		check_filepath(exec, 'n', folder_search(exec->path, exec->name));
-	return (0);
 }

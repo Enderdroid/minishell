@@ -26,6 +26,7 @@ SRC			=	init_data.c\
 				b_export.c\
 				b_pwd.c\
 				b_unset.c\
+				b_exit.c\
 				p_execute.c\
 				reallocs.c\
 				processor.c\

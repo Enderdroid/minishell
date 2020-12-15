@@ -3,7 +3,7 @@
 
 void b_put_error(char *name, char *arg, char *message, int code)
 {
-	ft_putstr_fd("bash: ", 2);
+	ft_putstr_fd("minishell: ", 2);
 	ft_putstr_fd(name, 2);
 	ft_putstr_fd(": ", 2);
 	if (arg)

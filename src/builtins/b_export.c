@@ -23,7 +23,7 @@ void put_export_env(int fd)
 	}
 }
 
-void parse_export(char *arg, int *code_buf)
+void	parse_export(char *arg, int *code_buf)
 {
 	int i;
 	int ret;
@@ -65,7 +65,7 @@ ssize_t	b_export(t_exec *exec)
 		parse_export(exec->argv[i], &code_buf);
 	if (exec->argv[1] && g_data->pid)
 		remake_lenv();
-	if (!(g_data->pid))
+	//if (!(g_data->pid))
 		g_data->code = code_buf;
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:52:49 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/27 21:47:42 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/15 11:44:46 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,10 @@ static int	process_rdr_left(t_exec *exec, char *filename)
 		close(exec->fd_new[0]);
 	exec->fd_new[0] = open(filename, O_RDONLY);
 	if (exec->fd_new[0] < 0)
-		return (error_msg_auto(filename, 1));
+	{
+		error_msg_auto(&exec->ret, filename, 1);
+		return (0);
+	}
 	return (1);
 }
 
@@ -35,7 +38,10 @@ static int	process_rdr_right(t_exec *exec, char *filename, int cmd)
 		exec->fd_new[1] = open(filename, O_CREAT | O_WRONLY | \
 										O_TRUNC, S_IRWXU | S_IROTH);
 	if (exec->fd_new[1] < 0)
-		return (error_msg_auto(filename, 1));
+	{
+		error_msg_auto(&exec->ret, filename, 1);
+		return (0);
+	}
 	return (1);
 }
 
@@ -51,7 +57,7 @@ int			process_rdr(t_exec *exec, t_dlist **lptr, char **arr)
 	if (!((t_token *)((*lptr)->content))->len)
 	{
 		exec->fd_new[1] = -1;
-		error_msg_custom(filename, "ambiguous redirect", 1);
+		error_msg_custom(&exec->ret, filename, "ambiguous redirect", 1);
 		return (0);
 	}
 	if (cmd == C_RDR_L)

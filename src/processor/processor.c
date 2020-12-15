@@ -1,9 +1,9 @@
 #include "../../include/libincludes.h"
 #include "../../include/libbuiltins.h"
 #include "../../include/error.h"
-#include <stdio.h>
+#include <stdio.h>//
 
-int is_builtin(t_exec *exec)
+int	is_builtin(t_exec *exec)
 {
 	if (!(ft_strcmp(exec->name, "cd")))
 		return (1);
@@ -11,8 +11,8 @@ int is_builtin(t_exec *exec)
 		return (1);
 	else if (!(ft_strcmp(exec->name, "env")))
 		return (1);
-	// if (!(ft_strcmp(exec->name, "exit")))
-	// ret = b_exit();
+	else if (!(ft_strcmp(exec->name, "exit")))
+		return (1);
 	else if (!(ft_strcmp(exec->name, "export")))
 		return (1);
 	else if (!(ft_strcmp(exec->name, "pwd")))

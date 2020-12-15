@@ -17,6 +17,7 @@ ssize_t b_env(t_exec *exec);
 ssize_t b_export(t_exec *exec);
 ssize_t b_pwd(t_exec *exec);
 ssize_t b_unset(t_exec *exec);
+int b_exit(void);
 
 void b_put_error(char *name, char *arg, char *message, int code);
 int is_env(char *arg);

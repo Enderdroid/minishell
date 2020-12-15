@@ -1,20 +1,20 @@
 #include "../../include/libstruct.h"
 #include "../../include/error.h"
 
-int		error_msg_auto(char *filename, int code)
+void	error_msg_auto(int *ret, char *filename, int code)
 {
 	g_data->code = code;
 	error_msg_prompt(filename);
 	ft_putendl_fd(strerror(errno), 2);
-	return (0);
+	*ret = code;
 }
 
-int		error_msg_custom(char *filename, char *message, int code)
+void	error_msg_custom(int *ret, char *filename, char *message, int code)
 {
 	g_data->code = code;
 	error_msg_prompt(filename);
 	ft_putendl_fd(message, 2);
-	return (0);
+	*ret = code;
 }
 
 void	error_msg_prompt(char *filename)

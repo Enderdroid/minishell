@@ -13,11 +13,8 @@ int			home_arg()
 	char *home;
 
 	key = ft_strdup("HOME");
-	if (!key || !(home = find_env(key)))
-	{
-		free(key);
+	if (!(home = find_env(key)))
 		free_and_exit(ERRNO);
-	}
 	ret = chdir(home);
 	free(home);
 	return (ret);
@@ -25,7 +22,7 @@ int			home_arg()
 
 int			cd_errno(t_exec *exec)
 {
-	ft_putstr_fd("bash: cd: ", 2);
+	ft_putstr_fd("minishell: cd: ", 2);
 	ft_putstr_fd(exec->argv[1], 2);
 	ft_putstr_fd(": ", 2);
 	ft_putendl_fd(strerror(errno), 2);
@@ -50,8 +47,9 @@ ssize_t		b_cd(t_exec *exec)
 			g_data->u_env->l_old_pwd = change_env_value(g_data->u_env->l_old_pwd, "OLDPWD", c_path_buf);
 			getcwd(c_path_buf, PATH_MAX);
 			g_data->u_env->l_pwd = change_env_value(g_data->u_env->l_pwd, "PWD", c_path_buf);
-			g_data->code = 0;
 		}
+		g_data->code = 0;
+		//printf("g_data->code= %i\n", g_data->code);//
 	}
 	else
 		g_data->code = cd_errno(exec);
