@@ -33,9 +33,10 @@ int ft_processor(t_exec *exec)
 	else if (exec->fd_new[0] == 0 && exec->fd_new[1] == 1)
 	{
 		// printf("EXEC\n");
-		ft_execute(exec);
+		if (exec->name)
+			ft_execute(exec);
 	}
-	else
+	else if (exec->name)
 		ft_redir_execute(exec);
 
 	printf("\n[Processor ended]\n");

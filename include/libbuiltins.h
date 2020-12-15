@@ -6,10 +6,10 @@
 #define PATH_MAX 1024
 
 int get_env_count();
-int add_env(char *key, char *value);
+t_env *add_env(char *key, char *value);
 int del_env(t_env *env);
-int change_env_value(t_env *env, char *value);
-t_env *find_env_unset(char *key);
+t_env *change_env_value(t_env *env, char *key, char *value);
+t_env *find_env_b(char *key);
 
 ssize_t b_cd(t_exec *exec);
 int b_echo(t_exec *exec);

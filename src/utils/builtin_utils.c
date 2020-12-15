@@ -8,10 +8,12 @@ void b_put_error(char *name, char *arg, char *message, int code)
 	ft_putstr_fd(": ", 2);
 	if (arg)
 	{
+		ft_putchar_fd('\'', 2);
 		ft_putstr_fd(arg, 2);
+		ft_putchar_fd('\'', 2);
 		ft_putstr_fd(": ", 2);
 	}
-	ft_putstr_fd(message, 2);
+	ft_putendl_fd(message, 2);
 	g_data->code = code;
 }
 

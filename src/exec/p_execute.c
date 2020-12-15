@@ -35,27 +35,42 @@ int sub_exec(t_exec *exec, int *p_fd, int fd, int *rv)
 				close(p_fd[0]);
 				close(p_fd[1]);
 			}
-			execve(exec->full_name, exec->argv, exec->env);
+			execve(exec->full_name, exec->argv, g_data->l_env);
 			exit(*rv);
 		}
 		g_data->pid = pid;
 		return (0);
 	}
-	*rv = builtin_call(exec);
+	return (1);
+}
+
+int pipe_b_exec(t_exec *exec, int *p_fd, int fd, int *rv)
+{
+	char *f_name;
+	int pid;
+
+	if (!(pid = fork()))
+	{
+		*rv = builtin_call(exec);
+		exit(*rv);
+	}
+	g_data->pid = pid;
 	return (0);
 }
 
 int			ft_pipe_part(t_exec *exec, int *p_fd, int fd)
 {
 	int		rv;
+	int		ret;
 
 	rv = 0;
-	sub_exec(exec, p_fd, fd, &rv);
-	if (fd == 0)
+	if (ret = sub_exec(exec, p_fd, fd, &rv))
+		pipe_b_exec(exec, p_fd, fd, &rv);
+	if (fd == 0 && !ret)
 		close(p_fd[0]);
-	if (fd == 0)
+	if (fd == 0 && !ret)
 		close(p_fd[1]);
-	if (exec->full_name)
+	if (exec->full_name || ret)
 	{
 		wait(0);
 		g_data->pid = 0;
@@ -72,7 +87,8 @@ int			ft_execute(t_exec *exec)
 	int		rv;
 
 	rv = 0;
-	sub_exec(exec, NULL, 0, &rv);
+	if (sub_exec(exec, NULL, 0, &rv))
+		rv = builtin_call(exec);
 	if (exec->full_name)
 	{
 		wait(0);
@@ -92,7 +108,8 @@ int			ft_redir_execute(t_exec *exec)
 	rv = 0;
 	// printf("fd--from %i -- fd--new %i\n", exec->fd_new[0], exec->fd_new[1]);
 	
-	sub_exec(exec, exec->fd_new, 1, &rv);
+	if (sub_exec(exec, exec->fd_new, 1, &rv))
+		rv = builtin_call(exec);
 	if (exec->fd_new[0] != 0)
 		close(exec->fd_new[0]);
 	if (exec->fd_new[1] != 1)
@@ -114,11 +131,14 @@ int ft_pipe(t_exec *pipe_list)
 
 	while (pipe_list->pipe_to)
 	{
+		
 		pipe(p_fd_new);
 		pipe_list->fd_new[0] = p_fd_new[0];
 		pipe_list->fd_new[1] = p_fd_new[1];
-		pipe_list->ret = ft_pipe_part(pipe_list, p_fd_new, 1);
-		pipe_list->pipe_to->ret = ft_pipe_part(pipe_list->pipe_to, p_fd_new, 0);
+		if (pipe_list->name)
+			pipe_list->ret = ft_pipe_part(pipe_list, p_fd_new, 1);
+		if (pipe_list->pipe_to->name)
+			pipe_list->pipe_to->ret = ft_pipe_part(pipe_list->pipe_to, p_fd_new, 0);
 		pipe_list = pipe_list->pipe_to;
 	}
 	return (0);

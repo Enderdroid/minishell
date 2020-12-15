@@ -12,7 +12,7 @@
 
 #include "../../include/libstruct.h"
 
-t_env	*find_env_unset(char *key)
+t_env	*find_env_b(char *key)
 {
 	int i;
 

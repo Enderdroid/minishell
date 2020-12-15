@@ -11,7 +11,7 @@ int			get_env_count()
 	return (size);
 }
 
-int			add_env(char *key, char *value)
+t_env		*add_env(char *key, char *value)
 {
 	t_env	*env;
 	int		old_size;
@@ -28,7 +28,7 @@ int			add_env(char *key, char *value)
 	env->key = key;
 	env->value = value;
 	g_data->env_arr[old_size] = env;
-	return (0);
+	return (g_data->env_arr[old_size]);
 }
 
 int			del_env(t_env *env)
@@ -45,11 +45,27 @@ int			del_env(t_env *env)
 	return (0);
 }
 
-int			change_env_value(t_env *env, char *value)
+t_env		*change_env_value(t_env *env, char *key, char *value)
 {
-	free(env->value);
-	env->value = NULL;
-	if (value && !(env->value = ft_strdup(value)))
-		exit_with_errno();
-	return (0);
+	char *val_buf;
+	char *key_buf;
+
+	if (value)
+		if (!(val_buf = ft_strdup(value)))
+			free_and_exit(ERRNO);
+	if (key && !env)
+		if (!(key_buf = ft_strdup(key)))
+		{
+			if (value)
+				free(val_buf);
+			free_and_exit(ERRNO);
+		}
+	if (env)
+	{
+		free(env->value);
+		env->value = val_buf;
+	}
+	else
+		return(add_env(key_buf, val_buf));
+	return (env);
 }

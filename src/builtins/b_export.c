@@ -36,13 +36,15 @@ void parse_export(char *arg, int *code_buf)
 		*code_buf = 1;
 		return (b_put_error("export", arg, "not a valid identifier", 1));
 	}
+	if (g_data->pid)
+		return;
 	if (!(env_buf = ft_split(arg, '=')))
 		free_and_exit(ERRNO);
-	c_env = find_env_unset(env_buf[0]);
+	c_env = find_env_b(env_buf[0]);
 	if (c_env && ret == 1)
-		change_env_value(c_env, env_buf[1]);
+		change_env_value(c_env, NULL, env_buf[1]);
 	else if (c_env && ret == 0)
-		change_env_value(c_env, NULL);
+		change_env_value(c_env, NULL, NULL);
 	else if (!c_env && ret == 1)
 		add_env(env_buf[0], env_buf[1]);
 	else
@@ -61,8 +63,9 @@ ssize_t	b_export(t_exec *exec)
 	i = 0;
 	while (exec->argv[++i])
 		parse_export(exec->argv[i], &code_buf);
-	// if (exec->argv[1])
-		// remake_lenv();
-	g_data->code = code_buf;
+	if (exec->argv[1] && g_data->pid)
+		remake_lenv();
+	if (!(g_data->pid))
+		g_data->code = code_buf;
 	return (0);
 }
