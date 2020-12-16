@@ -44,6 +44,50 @@ int sub_exec(t_exec *exec, int *p_fd, int fd, int *rv)
 	return (1);
 }
 
+int ft_execute(t_exec *exec)
+{
+	int pid;
+	int rv;
+	int ret;
+
+	rv = 0;
+	if (sub_exec(exec, NULL, 0, &rv))
+		rv = builtin_call(exec);
+	if (exec->full_name)
+	{
+		wait(0);
+		g_data->pid = 0;
+		ret = WEXITSTATUS(rv);
+	}
+	else
+		ret = rv;
+	return (ret);
+}
+
+int ft_redir_execute(t_exec *exec)
+{
+	int pid;
+	int rv;
+	int ret;
+
+	rv = 0;
+	if (sub_exec(exec, exec->fd_new, 1, &rv))
+		rv = builtin_call(exec);
+	if (exec->fd_new[0] != 0)
+		close(exec->fd_new[0]);
+	if (exec->fd_new[1] != 1)
+		close(exec->fd_new[1]);
+	if (exec->full_name)
+	{
+		wait(0);
+		g_data->pid = 0;
+		ret = WEXITSTATUS(rv);
+	}
+	else
+		ret = rv;
+	return (ret);
+}
+
 int pipe_b_exec(t_exec *exec, int *p_fd, int fd, int *rv)
 {
 	char *f_name;
@@ -64,65 +108,11 @@ int			ft_pipe_part(t_exec *exec, int *p_fd, int fd)
 	int		ret;
 
 	rv = 0;
+	if (exec->fd_new[0] != 0 && exec->fd_new[0] != 1)
+		return (ft_redir_execute(exec));
 	if ((ret = sub_exec(exec, p_fd, fd, &rv)))
-		pipe_b_exec(exec, p_fd, fd, &rv);
-	if (fd == 0 && !ret)
-		close(p_fd[0]);
-	if (fd == 0 && !ret)
-		close(p_fd[1]);
-	if (exec->full_name || ret)
-	{
-		wait(0);
-		g_data->pid = 0;
-		exec->ret = WEXITSTATUS(rv);
-	}
-	else
-		exec->ret = rv;
-	return (rv);
-}
-
-int			ft_execute(t_exec *exec)
-{
-	int		pid;
-	int		rv;
-
-	rv = 0;
-	if (sub_exec(exec, NULL, 0, &rv))
-		rv = builtin_call(exec);
-	if (exec->full_name)
-	{
-		wait(0);
-		g_data->pid = 0;
-		exec->ret = WEXITSTATUS(rv);
-	}
-	else
-		exec->ret = rv;
-	return (rv);
-}
-
-int			ft_redir_execute(t_exec *exec)
-{
-	int pid;
-	int rv;
-
-	rv = 0;
-	// printf("fd--from %i -- fd--new %i\n", exec->fd_new[0], exec->fd_new[1]);
-
-	if (sub_exec(exec, exec->fd_new, 1, &rv))
-		rv = builtin_call(exec);
-	if (exec->fd_new[0] != 0)
-		close(exec->fd_new[0]);
-	if (exec->fd_new[1] != 1)
-		close(exec->fd_new[1]);
-	if (exec->full_name)
-	{
-		wait(0);
-		g_data->pid = 0;
-		exec->ret = WEXITSTATUS(rv);
-	}
-	else
-		exec->ret = rv;
-	return (rv);
+			pipe_b_exec(exec, p_fd, fd, &rv);
+	return (WEXITSTATUS(rv));
 }
 
 int ft_pipe(t_exec *pipe_list)
@@ -131,14 +121,22 @@ int ft_pipe(t_exec *pipe_list)
 
 	while (pipe_list->pipe_to)
 	{
-
 		pipe(p_fd_new);
-		pipe_list->fd_new[0] = p_fd_new[0];
-		pipe_list->fd_new[1] = p_fd_new[1];
 		if (pipe_list->name)
+		{
 			pipe_list->ret = ft_pipe_part(pipe_list, p_fd_new, 1);
+			wait(0);
+		}
+		g_data->pid = 0;
+		g_data->code = pipe_list->ret;
 		if (pipe_list->pipe_to->name)
 			pipe_list->pipe_to->ret = ft_pipe_part(pipe_list->pipe_to, p_fd_new, 0);
+		close(p_fd_new[0]);
+		close(p_fd_new[1]);
+		if (pipe_list->pipe_to->name)
+			wait(0);
+		g_data->pid = 0;
+		g_data->code = pipe_list->pipe_to->ret;
 		pipe_list = pipe_list->pipe_to;
 	}
 	return (0);

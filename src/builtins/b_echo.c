@@ -16,6 +16,5 @@ int	b_echo(t_exec *exec)
 	}
 	if (!flag)
 		ft_putstr_fd("\n", exec->fd_new[1]);
-	g_data->code = 0;
 	return (0);
 }

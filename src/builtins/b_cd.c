@@ -39,21 +39,14 @@ ssize_t		b_cd(t_exec *exec)
 		ret = home_arg();
 	else
 		ret = chdir(exec->argv[1]);
-
-	if (ret != -1)
+	if (ret != -1 && !(g_data->pid))
 	{
-		if (!(g_data->pid))
-		{
-			g_data->u_env->l_old_pwd = change_env_value(g_data->u_env->l_old_pwd, "OLDPWD", c_path_buf);
-			getcwd(c_path_buf, PATH_MAX);
-			g_data->u_env->l_pwd = change_env_value(g_data->u_env->l_pwd, "PWD", c_path_buf);
-		}
-		g_data->code = 0;
-		//printf("g_data->code= %i\n", g_data->code);//
-	}
-	else
-		g_data->code = cd_errno(exec);
-	if (!(g_data->pid))
+		g_data->u_env->l_old_pwd = change_env_value(g_data->u_env->l_old_pwd, "OLDPWD", c_path_buf);
+		getcwd(c_path_buf, PATH_MAX);
+		g_data->u_env->l_pwd = change_env_value(g_data->u_env->l_pwd, "PWD", c_path_buf);
 		remake_lenv();
+	}
+	else if (ret == -1)
+		return (cd_errno(exec));		
 	return (0);
 }

@@ -65,7 +65,5 @@ ssize_t	b_export(t_exec *exec)
 		parse_export(exec->argv[i], &code_buf);
 	if (exec->argv[1] && g_data->pid)
 		remake_lenv();
-	//if (!(g_data->pid))
-		g_data->code = code_buf;
-	return (0);
+	return (code_buf);
 }
