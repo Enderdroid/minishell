@@ -16,7 +16,7 @@
 int ft_execute(t_exec *exec);
 ssize_t builtin_call(t_exec *exec);
 int ft_pipe(t_exec *pipe_list);
-int ft_redir_execute(t_exec *exec);
+int redir_execute(t_exec *exec);
 int ft_no_pipe(t_exec *exec);
 void ft_pipe_proc(t_exec *from, t_exec *to);
 int re_execute(t_exec *from, t_exec *to);

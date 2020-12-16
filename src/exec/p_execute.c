@@ -64,7 +64,7 @@ int ft_execute(t_exec *exec)
 	return (ret);
 }
 
-int ft_redir_execute(t_exec *exec)
+int redir_execute(t_exec *exec)
 {
 	int pid;
 	int rv;
@@ -88,7 +88,7 @@ int ft_redir_execute(t_exec *exec)
 	return (ret);
 }
 
-int pipe_b_exec(t_exec *exec, int *p_fd, int fd, int *rv)
+int pipe_b_exec(t_exec *exec, int *rv)
 {
 	char *f_name;
 	int pid;
@@ -102,16 +102,35 @@ int pipe_b_exec(t_exec *exec, int *p_fd, int fd, int *rv)
 	return (0);
 }
 
+int p_redir_execute(t_exec *exec)
+{
+	int pid;
+	int rv;
+	int ret;
+
+	rv = 0;
+	if (sub_exec(exec, exec->fd_new, 1, &rv))
+		pipe_b_exec(exec, &rv);
+	if (exec->fd_new[0] != 0)
+		close(exec->fd_new[0]);
+	if (exec->fd_new[1] != 1)
+		close(exec->fd_new[1]);
+	wait(0);
+	g_data->pid = 0;
+	ret = WEXITSTATUS(rv);
+	return (ret);
+}
+
 int			ft_pipe_part(t_exec *exec, int *p_fd, int fd)
 {
 	int		rv;
 	int		ret;
 
 	rv = 0;
-	if (exec->fd_new[0] != 0 && exec->fd_new[0] != 1)
-		return (ft_redir_execute(exec));
+	if (exec->fd_new[0] != 0 || exec->fd_new[1] != 1)
+		return (p_redir_execute(exec));
 	if ((ret = sub_exec(exec, p_fd, fd, &rv)))
-			pipe_b_exec(exec, p_fd, fd, &rv);
+			pipe_b_exec(exec, &rv);
 	return (WEXITSTATUS(rv));
 }
 

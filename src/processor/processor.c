@@ -36,7 +36,7 @@ int ft_processor(t_exec *exec)
 			g_data->code = ft_execute(exec);
 	}
 	else if (exec->name)
-		g_data->code = ft_redir_execute(exec);
+		g_data->code = redir_execute(exec);
 
 	printf("\n[Processor ended]\n");
 	return (0);
