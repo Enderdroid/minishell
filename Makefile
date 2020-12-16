@@ -45,7 +45,7 @@ INCLUDES	=	$(H_DIR)/*
 
 LIB			=	./libft/libft.a \
 
-FLAGS		= -g #-Wall -Wextra -Werror
+FLAGS		= -g -Wall -Wextra -Werror
 
 all : $(NAME)
 
@@ -56,13 +56,14 @@ lib:
 	@make bonus -C ./libft/
 
 $(O_DIR)/%.o: ./src/*/%.c $(INCLUDES) | $(O_DIR)
-	@gcc $(FLAGS) -I $(H_DIR) -c $< -o $@
+	@clang $(FLAGS) -I $(H_DIR) -c $< -o $@
 
 $(O_DIR):
 	@mkdir $(O_DIR)
 
 clean:
-	@rm -rf $(O_DIR)
+	@rm -rf $(OBJ)
+	@rmdir $(O_DIR)
 	@echo "$(NAME) object files deleted"
 
 fclean: clean

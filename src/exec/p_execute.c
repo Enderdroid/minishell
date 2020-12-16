@@ -22,7 +22,6 @@ ssize_t builtin_call(t_exec *exec)
 
 int sub_exec(t_exec *exec, int *p_fd, int fd, int *rv)
 {
-	char *f_name;
 	int pid;
 
 	if (exec->full_name)
@@ -46,7 +45,6 @@ int sub_exec(t_exec *exec, int *p_fd, int fd, int *rv)
 
 int ft_execute(t_exec *exec)
 {
-	int pid;
 	int rv;
 	int ret;
 
@@ -66,7 +64,6 @@ int ft_execute(t_exec *exec)
 
 int redir_execute(t_exec *exec)
 {
-	int pid;
 	int rv;
 	int ret;
 
@@ -90,7 +87,6 @@ int redir_execute(t_exec *exec)
 
 int pipe_b_exec(t_exec *exec, int *rv)
 {
-	char *f_name;
 	int pid;
 
 	if (!(pid = fork()))
@@ -104,7 +100,6 @@ int pipe_b_exec(t_exec *exec, int *rv)
 
 int p_redir_execute(t_exec *exec)
 {
-	int pid;
 	int rv;
 	int ret;
 

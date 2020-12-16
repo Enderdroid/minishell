@@ -54,7 +54,6 @@ void	parse_export(char *arg, int *code_buf)
 ssize_t	b_export(t_exec *exec)
 {
 	int i;
-	int ret;
 	int code_buf;
 
 	code_buf = 0;
