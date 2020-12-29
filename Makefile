@@ -35,6 +35,8 @@ SRC			=	init_data.c\
 				path_utils.c\
 				builtin_utils.c\
 				remake_lenv.c\
+				pipe_exec.c\
+				redirect_exec.c\
 				main.c
 
 O_DIR		=	./bin
@@ -45,12 +47,12 @@ INCLUDES	=	$(H_DIR)/*
 
 LIB			=	./libft/libft.a \
 
-FLAGS		= -g -Wall -Wextra -Werror
+FLAGS		= -g# -Wall -Wextra -Werror
 
 all : $(NAME)
 
 $(NAME)	:	$(OBJ) lib
-	@gcc $(FLAGS) -o $(NAME) $(OBJ) -I $(H_DIR) $(LIB)
+	@clang $(FLAGS) -o $(NAME) $(OBJ) -I $(H_DIR) $(LIB)
 
 lib:
 	@make bonus -C ./libft/

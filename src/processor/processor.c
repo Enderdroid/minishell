@@ -33,11 +33,16 @@ int ft_processor(t_exec *exec)
 	else if (exec->fd_new[0] == 0 && exec->fd_new[1] == 1)
 	{
 		if (exec->name)
+		{
 			g_data->code = ft_execute(exec);
+			// printf("\n[GCODE == %i]\n", g_data->code);
+		}
 	}
 	else if (exec->name)
+	{
 		g_data->code = redir_execute(exec);
-
+		// printf("\n[GCODE == %i]\n", g_data->code);
+	}
 	printf("\n[Processor ended]\n");
 	return (0);
 }

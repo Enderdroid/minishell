@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:29 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/12 15:03:27 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/18 04:52:15 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static void	check_last(t_token *token)
 			free(mask);
 			parse_input('\\');
 		}
-		free(mask);
+		else
+			free(mask);
 	}
 }
 

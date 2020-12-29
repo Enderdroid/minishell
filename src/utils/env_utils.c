@@ -13,21 +13,21 @@ int			get_env_count()
 
 t_env		*add_env(char *key, char *value)
 {
-	t_env	*env;
+	t_env	*env_buf;
 	int		old_size;
 
 	old_size = get_env_count();
-	if ((realloc_env((old_size + 1), old_size)) == -1  ||
-		!(env = (t_env *)malloc(sizeof(t_env))))
+	env_buf = NULL;
+	if ((realloc_env((old_size + 1), old_size)) == -1 || !(env_buf = (t_env *)malloc(sizeof(t_env))))
 	{
 			free(key);
 			if (value)
 				free(value);
 			free_and_exit(ERRNO);
 	}
-	env->key = key;
-	env->value = value;
-	g_data->env_arr[old_size] = env;
+	env_buf->key = key;
+	env_buf->value = value;
+	g_data->env_arr[old_size] = env_buf;
 	return (g_data->env_arr[old_size]);
 }
 

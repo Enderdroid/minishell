@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/12 17:07:10 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/18 05:05:06 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	analise_tokens(void)
 			g_data->exec = NULL;//
 		}
 	}
-	//parse_input(0);
+	parse_input(0);
 }
 
 void	parse_line(char **line, int last_char)
@@ -54,7 +54,7 @@ void	parse_input(int unfinished)
 	int		ret;
 	char	*line;
 
-	//line = ft_strdup("abc");//
+	//line = ft_strdup("\\");//
 	if (!unfinished)
 		write(1, "minishell", 9);
 	write(1, "> ", 2);

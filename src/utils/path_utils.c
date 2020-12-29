@@ -2,7 +2,7 @@
 #include <dirent.h>
 
 
-char		*add_to_folder(char *c_path, char *name, int slash)
+/* char		*add_to_folder(char *c_path, char *name, int slash)
 {
 	char	*buf;
 	char	*ret;
@@ -23,13 +23,12 @@ char		*add_to_folder(char *c_path, char *name, int slash)
 		}
 		free(buf);
 	}
-	else
-		if (!(ret = ft_strjoin(c_path, name)))
-		{
-			free(buf);
-			free(g_data);
-			exit_with_errno();
-		}
+	else if (!(ret = ft_strjoin(c_path, name)))
+	{
+		free(buf);
+		free(g_data);
+		exit_with_errno();
+	}
 	return (ret);
 }
 
@@ -56,7 +55,7 @@ char		*rm_from_folder(char *path)
 	while (ret[ind])
 		ret[ind++] = 0;
 	return (ret);
-}
+} */
 
 int			folder_search(char *path, char *name)
 {

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/15 11:18:38 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/18 05:16:08 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_exec	*exec_init(void)
 	exec->pipe_from = NULL;
 	exec->fd_new[0] = 0;
 	exec->fd_new[1] = 1;
-	exec->ret = 0;
+	exec->ret = 0;//-1
 	return (exec);
 }
 

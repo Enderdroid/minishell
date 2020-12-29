@@ -14,8 +14,6 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	t_dlist	*lst;
-
 	(void)ac;
 	(void)av;
 	init_data(envp);
