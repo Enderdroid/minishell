@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/10/19 15:59:48 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/18 05:05:06 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/29 23:22:29 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	parse_line(char **line, int last_char)
 	analise_tokens();
 }
 
-void	parse_input(int unfinished)
+void	parse_input(char unfinished)
 {
 	int		ret;
 	char	*line;

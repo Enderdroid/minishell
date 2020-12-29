@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   b_exit.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/29 23:02:32 by ttamesha          #+#    #+#             */
+/*   Updated: 2020/12/29 23:17:55 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libbuiltins.h"
 #include "../../include/error.h"
 
@@ -29,27 +41,24 @@ static int	code_extracted(char *s)
 
 int			b_exit(t_exec *exec)//void?
 {
-	int code;
 	//printf("pid=%i\n", g_data->pid);//
 	if (!exec->pipe_from && !exec->pipe_to)
 		write(1, "exit\n", 5);
-	code = 0;
 	if (exec->argv[1])
 	{
-		if ((code = code_extracted(exec->argv[1])) == -1)
+		if ((g_data->code = code_extracted(exec->argv[1])) == -1)
 		{
-			code = 255;
-			error_msg_custom(&exec->ret, "exit", "numeric argument required", 255);
-			//(exec->argv[1], "exit", "numeric argument required", 255)
+			write(2, "minishell: exit: ", 17);
+			ft_putstr_fd(exec->argv[1], 2);
+			write(2, ": ", 2);
+			write(2, "numeric argument required\n", 26);
+			g_data->code = 255;
 		}
 		else if (exec->argv[2])
-		{
-			code = 1;
 			error_msg_custom(&exec->ret, "exit", "too many arguments", 1);
-		}
 	}
-	//printf("code=%i\n", code);//
-	if (!(g_data->pid))
-		free_and_exit(code);
+	else
+		g_data->code = 0;//printf("code=%i\n", code);//
+	free_and_exit(g_data->code);
 	return (0);
 }

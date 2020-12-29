@@ -2,7 +2,7 @@
 #include "../../include/libstruct.h"
 #include "../../include/error.h"
 
-static void	check_filepath(t_exec *exec, int mode, int fs)
+static void	check_filepath(t_exec *exec, char mode, int fs)
 {
 	if (fs == 0)
 	{

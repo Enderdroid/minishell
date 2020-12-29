@@ -47,6 +47,6 @@ ssize_t		b_cd(t_exec *exec)
 		remake_lenv();
 	}
 	else if (ret == -1)
-		return (cd_errno(exec));		
+		return (cd_errno(exec));
 	return (0);
 }

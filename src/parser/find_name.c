@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:53:59 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/18 04:58:47 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/29 23:19:54 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static char	*del_double_slash(char *str)
 	char	*new;
 
 	if ((l = new_len(str)) == -1)
-		return (str);
+		return (ft_strdup(str));
 	if (!(new = (char *)malloc(sizeof(char) * (l + 1))))
 		free_and_exit(ERRNO);
 	i = -1;
