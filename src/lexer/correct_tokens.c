@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   correct_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:18:11 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/12 15:03:12 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/30 18:39:31 by tkleiner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,14 +124,16 @@ static char	*corrected_str(t_token *token)
 	return (res);
 }
 
-void		correct_tokens(void)
+void		correct_tokens(t_dlist *lst)
 {
 	t_dlist	*lptr;
 	char	*newstr;
 
-	lptr = g_data->lst;
+	lptr = lst;
 	while (lptr)
 	{
+		if (((t_token *)(lptr->content))->len == C_END)
+			return ;
 		if (((t_token *)(lptr->content))->len > 0)
 		{
 			if ((newstr = corrected_str((t_token *)(lptr->content))))

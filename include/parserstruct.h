@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parserstruct.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:01 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/29 23:22:20 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/30 20:35:40 by tkleiner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 # define PARSERSTRUCT_H
 
 # include "libstruct.h"
-#include <signal.h>
+# include <signal.h>
+
 typedef struct	s_token
 {
 	char		*str;
@@ -32,8 +33,6 @@ enum
 
 void			parse_input(char unfinished);
 void			free_tokens(t_dlist **lst);
-
-//int				stradd(char **str, char *new);
 void			print_list(t_dlist *lst); //del
 
 #endif

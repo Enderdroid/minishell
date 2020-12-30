@@ -8,7 +8,7 @@ void b_put_error(char *name, char *arg, char *message, int code)
 	ft_putstr_fd(": ", 2);
 	if (arg)
 	{
-		ft_putchar_fd('\'', 2);
+		ft_putchar_fd('`', 2);
 		ft_putstr_fd(arg, 2);
 		ft_putchar_fd('\'', 2);
 		ft_putstr_fd(": ", 2);
@@ -22,6 +22,8 @@ int is_env(char *arg)
 	int ind;
 
 	ind = -1;
+	if (!ft_isalpha(arg[0]) && arg[0] != '_')
+		return(-1);
 	while (arg[++ind] && arg[ind] != '=')
 		if (!ft_isalnum(arg[ind]) && arg[ind] != '_')
 			return (-1);

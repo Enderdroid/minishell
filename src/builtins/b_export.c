@@ -51,7 +51,7 @@ void	parse_export(char *arg, int *code_buf)
 		add_env(env_buf[0], NULL);
 }
 
-ssize_t	b_export(t_exec *exec)
+int	b_export(t_exec *exec)
 {
 	int i;
 	int code_buf;

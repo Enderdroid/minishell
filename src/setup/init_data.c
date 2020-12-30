@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/12 16:14:44 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/30 17:54:05 by tkleiner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static t_env	**parse_env(char **envp, int size)
 	fill_env_arr(env, g_data->l_env, envp);
 	/*for(int i = 0; i < size+1; ++i)
 	{
-		printf("%s\n", g_data->l_env[i]);
+		printf("%s\n", g_data->env_arr[i]);
 		printf("key=%s, value=%s\n", env[i]->key,env[i]->value);//
 	}*/
 	return (env);

@@ -26,7 +26,7 @@ int	is_builtin(t_exec *exec)
 //Дописать обработку пайпа билтинов и пайпа PATH
 int ft_processor(t_exec *exec)
 {
-	printf("\n[Processor started]\n");
+	//printf("\n[Processor started]\n");
 
 	if (exec->pipe_to)
 		ft_pipe(exec);
@@ -43,6 +43,6 @@ int ft_processor(t_exec *exec)
 		g_data->code = redir_execute(exec);
 		// printf("\n[GCODE == %i]\n", g_data->code);
 	}
-	printf("\n[Processor ended]\n");
+	//printf("\n[Processor ended]\n");
 	return (0);
 }

@@ -6,7 +6,19 @@
 //N_PATH - аргумент
 //скорее всего неправильный
 
-int			home_arg()
+int			cd_errno(t_exec *exec, char *arg)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	if (!arg)
+		ft_putstr_fd(exec->argv[1], 2);
+	else
+		ft_putstr_fd(arg, 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(strerror(errno), 2);
+	return (1);
+}
+
+int			home_arg(t_exec *exec)
 {
 	int ret;
 	char *key;
@@ -16,27 +28,23 @@ int			home_arg()
 	if (!(home = find_env(key)))
 		free_and_exit(ERRNO);
 	ret = chdir(home);
+	if (ret == -1)
+		cd_errno(exec, home);
 	free(home);
 	return (ret);
 }
 
-int			cd_errno(t_exec *exec)
-{
-	ft_putstr_fd("minishell: cd: ", 2);
-	ft_putstr_fd(exec->argv[1], 2);
-	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(strerror(errno), 2);
-	return (1);
-}
-
-ssize_t		b_cd(t_exec *exec)
+int		b_cd(t_exec *exec)
 {
 	int		ret;
 	char	c_path_buf[PATH_MAX];
 
 	getcwd(c_path_buf, PATH_MAX);
 	if (!exec->argv[1])
-		ret = home_arg();
+	{
+		if ((ret = home_arg(exec)) == -1)
+			return (1);
+	}
 	else
 		ret = chdir(exec->argv[1]);
 	if (ret != -1 && !(g_data->pid))
@@ -46,7 +54,7 @@ ssize_t		b_cd(t_exec *exec)
 		g_data->u_env->l_pwd = change_env_value(g_data->u_env->l_pwd, "PWD", c_path_buf);
 		remake_lenv();
 	}
-	else if (ret == -1)
-		return (cd_errno(exec));
+	if (ret == -1)
+		return (cd_errno(exec, NULL));
 	return (0);
 }

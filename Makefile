@@ -16,6 +16,7 @@ SRC			=	init_data.c\
 				find_env_unset.c\
 				correct_tokens.c\
 				free_data.c\
+				exec_init.c\
 				exec_fill.c\
 				process_redirect.c\
 				find_name.c\
@@ -47,18 +48,19 @@ INCLUDES	=	$(H_DIR)/*
 
 LIB			=	./libft/libft.a \
 
-FLAGS		= -g -Wall -Wextra -Werror
+FLAGS		=	-g #-Wall -Wextra -Werror
+COMP		=	gcc
 
 all : $(NAME)
 
 $(NAME)	:	$(OBJ) lib
-	@clang $(FLAGS) -o $(NAME) $(OBJ) -I $(H_DIR) $(LIB)
+	$(COMP) $(FLAGS) -o $(NAME) $(OBJ) -I $(H_DIR) $(LIB)
 
 lib:
 	@make bonus -C ./libft/
 
 $(O_DIR)/%.o: ./src/*/%.c $(INCLUDES) | $(O_DIR)
-	@clang $(FLAGS) -I $(H_DIR) -c $< -o $@
+	@$(COMP) $(FLAGS) -I $(H_DIR) -c $< -o $@
 
 $(O_DIR):
 	@mkdir $(O_DIR)

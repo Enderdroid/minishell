@@ -1,6 +1,6 @@
 #include "../../include/libincludes.h"
 
-ssize_t builtin_call(t_exec *exec)
+int builtin_call(t_exec *exec)
 {
 	if (!(ft_strcmp(exec->name, "cd")))
 		return (b_cd(exec));

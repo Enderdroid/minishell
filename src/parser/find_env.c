@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/26 01:40:50 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/26 01:40:55 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/30 18:40:14 by tkleiner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ char	*find_env(char *key)
 		return (NULL);
 	i = -1;
 	value = NULL;
+	//printf("\nkey=%s", key);
 	//printf("%s\n", (g_data->env_arr)[1]->key);
 	while (g_data->env_arr[++i])
 	{
@@ -31,6 +32,7 @@ char	*find_env(char *key)
 			{
 				if (!(value = ft_strdup(g_data->env_arr[i]->value)))
 					return (NULL);
+				//printf("\nval=%s", value);
 			}
 			break ;
 		}

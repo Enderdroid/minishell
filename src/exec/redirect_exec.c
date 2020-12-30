@@ -30,8 +30,8 @@ int redir_execute(t_exec *exec)
 	int ret;
 
 	rv = 0;
-	printf("\nREDIR\n");
-	printf("%s -- %s\n", exec->argv[0], exec->argv[1]);
+	//printf("\nREDIR\n");
+	//printf("%s -- %s\n", exec->argv[0], exec->argv[1]);
 	if (exec->full_name)
 		r_sub_exec(exec, exec->fd_new, &rv);
 	else

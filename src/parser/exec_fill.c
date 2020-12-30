@@ -3,34 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_fill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/18 05:16:08 by ttamesha         ###   ########.fr       */
+/*   Updated: 2020/12/30 20:39:28 by tkleiner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
-
-t_exec	*exec_init(void)
-{
-	t_exec *exec;
-
-	exec = (t_exec *)malloc(sizeof(t_exec));
-	if (!exec)
-		return (NULL);
-	exec->name = NULL;
-	exec->path = NULL;
-	exec->full_name = NULL;
-	exec->argv = NULL;
-	exec->env = g_data->l_env;
-	exec->pipe_to = NULL;
-	exec->pipe_from = NULL;
-	exec->fd_new[0] = 0;
-	exec->fd_new[1] = 1;
-	exec->ret = 0;//-1
-	return (exec);
-}
 
 static int		cmd_len(t_dlist *lptr)
 {
@@ -64,24 +44,10 @@ static void		go_to_cmd_end(t_dlist **lptr)
 	}
 }
 
-t_dlist	*process_pipe(t_dlist *newlst, t_exec *exec)
-{
-	t_exec *newexec;
-
-	free_tokens(&(g_data->lst));
-	g_data->lst = newlst;
-	//printf("NEW=%s\n", ((t_token *)((*lst)->content))->str);
-	newexec = exec_init();
-	if (!newexec)
-		free_and_exit(ERRNO);
-	exec->pipe_to = newexec;
-	newexec->pipe_from = exec;
-	return (exec_fill(newexec));
-}
-
-t_dlist	*end_cmd(t_dlist *lptr, t_exec *exec, int cmd)
+static t_dlist	*end_cmd(t_dlist *lptr, t_exec *exec, int cmd)
 {
 	t_dlist	*newlst;
+	t_exec *newexec;
 
 	newlst = NULL;
 	if (lptr)
@@ -91,7 +57,17 @@ t_dlist	*end_cmd(t_dlist *lptr, t_exec *exec, int cmd)
 	}
 	ft_preprocess(exec);
 	if (cmd == C_PIPE)
-		return (process_pipe(newlst, exec));
+	{
+		free_tokens(&(g_data->lst));
+		g_data->lst = newlst;
+		//printf("NEW=%s\n", ((t_token *)((*lst)->content))->str);
+		newexec = exec_init();
+		if (!newexec)
+			free_and_exit(ERRNO);
+		exec->pipe_to = newexec;
+		newexec->pipe_from = exec;
+		return (exec_fill(newexec));
+	}
 	else
 		return (newlst);
 }
@@ -130,7 +106,7 @@ static t_dlist	*exec_arr_fill(t_dlist *lptr, t_exec *exec, char **argv)
 	//return (NULL);
 }
 
-t_dlist	*exec_fill(t_exec *exec)
+t_dlist			*exec_fill(t_exec *exec)
 {
 	t_dlist *lptr;
 	int		len;

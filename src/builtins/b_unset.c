@@ -1,6 +1,6 @@
 #include "../../include/libbuiltins.h"
 
-ssize_t		b_unset(t_exec *exec)
+int		b_unset(t_exec *exec)
 {
 	t_env *env;
 	int	i;
@@ -18,11 +18,15 @@ ssize_t		b_unset(t_exec *exec)
 		}
 		else if (!(g_data->pid))
 		{
+			printf("\n\nSEARCHING\n\n");
 			env = find_env_b(exec->argv[i]);
+			printf("\n\nFOUND\n\n");
 			if (env)
 				del_env(env);
+			printf("\n\nDELETED\n\n");
 		}
 	}
+	printf("\n\nENDED\n\n");
 	if (exec->argv[1] && g_data->pid)
 		remake_lenv();
 	return (code_buf);

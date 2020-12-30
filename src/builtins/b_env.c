@@ -7,7 +7,7 @@ void	b_put_env(t_env *var, int fd)
 	ft_putendl_fd(var->value, fd);
 }
 
-ssize_t b_env(t_exec *exec)
+int b_env(t_exec *exec)
 {
 	int	ind;
 

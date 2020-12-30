@@ -1,31 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   find_env_unset.c                                   :+:      :+:    :+:   */
+/*   exec_init.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/19 01:44:22 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/30 20:55:45 by tkleiner         ###   ########.fr       */
+/*   Created: 2020/12/30 20:26:42 by tkleiner          #+#    #+#             */
+/*   Updated: 2020/12/30 20:37:52 by tkleiner         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/libstruct.h"
+#include "../../include/parser.h"
 
-t_env	*find_env_b(char *key)
+t_exec	*exec_init(void)
 {
-	int i;
+	t_exec *exec;
 
-	if (!key)
+	exec = (t_exec *)malloc(sizeof(t_exec));
+	if (!exec)
 		return (NULL);
-	i = -1;
-	//printf("%s\n", (g_data->env_arr)[1]->key);
-	while (g_data->env_arr[++i])
-	{
-		printf("\n%i -- %s\n", i, g_data->env_arr[i]->key);
-		//printf("%s, %i\n", g_data->env_arr[i]->key, i);//
-		if (ft_strcmp(g_data->env_arr[i]->key, key) == 0)
-			return (g_data->env_arr[i]);
-	}
-	return (NULL);
+	exec->name = NULL;
+	exec->path = NULL;
+	exec->full_name = NULL;
+	exec->argv = NULL;
+	exec->env = g_data->l_env;
+	exec->pipe_to = NULL;
+	exec->pipe_from = NULL;
+	exec->fd_new[0] = 0;
+	exec->fd_new[1] = 1;
+	exec->ret = 0;
+	return (exec);
 }

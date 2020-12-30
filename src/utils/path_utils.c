@@ -1,62 +1,6 @@
 #include "../../include/libincludes.h"
 #include <dirent.h>
 
-
-/* char		*add_to_folder(char *c_path, char *name, int slash)
-{
-	char	*buf;
-	char	*ret;
-
-	if (slash)
-	{
-
-		if (!(buf = ft_strjoin(c_path, "/")))
-		{
-			free(g_data);
-			exit_with_errno();
-		}
-		if (!(ret = ft_strjoin(buf, name)))
-		{
-			free(buf);
-			free(g_data);
-			exit_with_errno();
-		}
-		free(buf);
-	}
-	else if (!(ret = ft_strjoin(c_path, name)))
-	{
-		free(buf);
-		free(g_data);
-		exit_with_errno();
-	}
-	return (ret);
-}
-
-char		*rm_from_folder(char *path)
-{
-	int		ind;
-	int		len;
-	int		s_ind;
-	char	*ret;
-
-	if (!(ret = ft_strdup(path)))
-	{
-		free(g_data);
-		exit_with_errno();
-	}
-	ind = 0;
-	while (ret[ind])
-	{
-		if (ret[ind] == '/')
-			s_ind = ind;
-		++ind;
-	}
-	ind = s_ind;
-	while (ret[ind])
-		ret[ind++] = 0;
-	return (ret);
-} */
-
 int			folder_search(char *path, char *name)
 {
 	DIR				*dir;
@@ -75,8 +19,8 @@ int			folder_search(char *path, char *name)
 			}
 		closedir(dir);
 	}
-	//else
-		//ERROR
+	else
+		free_and_exit(ERRNO);
 	return (found);
 }
 
