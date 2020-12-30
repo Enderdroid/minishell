@@ -19,8 +19,8 @@ int			folder_search(char *path, char *name)
 			}
 		closedir(dir);
 	}
-	else
-		free_and_exit(ERRNO);
+//	else
+
 	return (found);
 }
 
