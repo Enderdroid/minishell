@@ -60,7 +60,7 @@ void		ft_preprocess(t_exec *exec) // поменять на void?
 	{
 		if (is_builtin(exec))
 			return ;
-		if (!(exec->path = s_in_path(g_data->u_env->path_content, exec->name)))
+		if (!(exec->path = s_in_path(exec->name)))
 		{
 			error_msg_custom(&exec->ret, exec->name, "command not found", 127);
 			free_and_null(&exec->name);

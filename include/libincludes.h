@@ -18,7 +18,8 @@ int		ft_no_pipe(t_exec *exec);
 void	ft_pipe_proc(t_exec *from, t_exec *to);
 int		re_execute(t_exec *from, t_exec *to);
 
-int		realloc_env(int new_size, int old_size);
+int		sub_add_env(int old_size);
+int		sub_del_env(int old_size, t_env *env);
 char	*ft_realloc(char *str, int new_size);
 int		ft_processor(t_exec *exec);
 

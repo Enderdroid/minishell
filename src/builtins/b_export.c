@@ -42,13 +42,12 @@ void	parse_export(char *arg, int *code_buf)
 		free_and_exit(ERRNO);
 	c_env = find_env_b(env_buf[0]);
 	if (c_env && ret == 1)
-		change_env_value(c_env, NULL, env_buf[1]);
-	else if (c_env && ret == 0)
-		change_env_value(c_env, NULL, NULL);
+		change_env_value(c_env, NULL, env_buf[1], env_buf);
 	else if (!c_env && ret == 1)
-		add_env(env_buf[0], env_buf[1]);
-	else
-		add_env(env_buf[0], NULL);
+		add_env(env_buf[0], env_buf[1], env_buf);
+	else if (!c_env && ret == 0)
+		add_env(env_buf[0], NULL, env_buf);
+	free_arr(env_buf);
 }
 
 int	b_export(t_exec *exec)

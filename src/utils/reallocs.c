@@ -1,20 +1,40 @@
 #include "../../include/libincludes.h"
+#include "../../include/libstruct.h"
 
-//CAN RETURN -1
-int realloc_env(int new_size, int old_size)
+int		sub_add_env(int old_size)
 {
 	t_env **new_arr;
 	int i;
 	int j;
 
 	i = -1;
-	j = -1;
-	if (!(new_arr = (t_env**)malloc(sizeof(t_env*) * (new_size + 1))))
+	if (!(new_arr = (t_env**)malloc(sizeof(t_env*) * (old_size + 2))))
 		return (-1);
-	while (i < old_size && i < new_size)
-		new_arr[++j] = g_data->env_arr[++i];
-	while (i < new_size + 1)
-		new_arr[i++] = NULL;
+	while (++i <= old_size)
+		new_arr[i] = g_data->env_arr[i];
+	new_arr[old_size + 1] = NULL;
+	free(g_data->env_arr);
+	g_data->env_arr = new_arr;
+	return (0);
+}
+
+int		sub_del_env(int old_size, t_env *env)
+{
+	t_env **new_arr;
+	int i;
+	int j;
+
+	i = 0;
+	j = -1;
+	if (!(new_arr = (t_env**)malloc(sizeof(t_env*) * (old_size))))
+		return (-1);
+	while (i <= old_size)
+	{
+		if (g_data->env_arr[i] != env)
+			new_arr[++j] = g_data->env_arr[i];
+		++i;
+	}
+	new_arr[old_size - 1] = NULL;
 	free(g_data->env_arr);
 	g_data->env_arr = new_arr;
 	return (0);

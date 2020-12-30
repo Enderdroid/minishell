@@ -49,9 +49,9 @@ int		b_cd(t_exec *exec)
 		ret = chdir(exec->argv[1]);
 	if (ret != -1 && !(g_data->pid))
 	{
-		g_data->u_env->l_old_pwd = change_env_value(g_data->u_env->l_old_pwd, "OLDPWD", c_path_buf);
+		g_data->u_env->l_old_pwd = change_env_value(g_data->u_env->l_old_pwd, "OLDPWD", c_path_buf, NULL);
 		getcwd(c_path_buf, PATH_MAX);
-		g_data->u_env->l_pwd = change_env_value(g_data->u_env->l_pwd, "PWD", c_path_buf);
+		g_data->u_env->l_pwd = change_env_value(g_data->u_env->l_pwd, "PWD", c_path_buf, NULL);
 		remake_lenv();
 	}
 	if (ret == -1)

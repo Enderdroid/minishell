@@ -14,7 +14,8 @@ int	b_echo(t_exec *exec)
 	while (exec->argv[ind])
 	{
 		ft_putstr_fd(exec->argv[ind], exec->fd_new[1]);
-		++ind;
+		if (exec->argv[++ind])
+			ft_putchar_fd(' ', exec->fd_new[1]);
 	}
 	if (!flag)
 		ft_putstr_fd("\n", exec->fd_new[1]);
