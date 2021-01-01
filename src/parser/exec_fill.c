@@ -80,6 +80,7 @@ static t_dlist	*exec_arr_fill(t_dlist *lptr, t_exec *exec, char **argv)
 	//if (argv[0])
 		//printf("argv[0]=%s\n", argv[0]);//
 	//printf("argv[0]=%s,%i\n", exec->argv[0], 0);
+	cmd=C_END;
 	i = 0;
 	while (lptr)
 	{

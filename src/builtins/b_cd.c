@@ -18,19 +18,50 @@ int			cd_errno(t_exec *exec, char *arg)
 	return (1);
 }
 
-int			home_arg(t_exec *exec)
+int		cd_not_set(char *key, char *option)
+{
+	ft_putstr_fd("minishell: cd: ", 2);
+	if (key)
+	{
+		ft_putstr_fd(key, 2);
+		ft_putendl_fd(" not set", 2);
+		return (1);
+	}
+	ft_putchar_fd(option[0], 2);
+	ft_putchar_fd(option[1], 2);
+	ft_putendl_fd(": invalid option", 2);
+	return (2);
+}
+
+int		env_arg(char *key, t_exec *exec)
 {
 	int ret;
-	char *key;
-	char *home;
+	t_env *env;
 
-	key = ft_strdup("HOME");
-	if (!(home = find_env(key)))
-		free_and_exit(ERRNO);
-	ret = chdir(home);
+	env = find_env_b(key);
+	if (env == NULL)
+		return (cd_not_set(key, NULL));
+	else if (env->value == NULL)
+		return (cd_not_set(key, NULL));
+	ret = chdir(env->value);
 	if (ret == -1)
-		cd_errno(exec, home);
-	free(home);
+		cd_errno(exec, env->value);
+	return (0);
+}
+
+int do_chdir(char *argv, t_exec *exec)
+{
+	int ret;
+
+	if (!argv)
+		return (env_arg("HOME", exec));
+	else if (!ft_strcmp(argv, "-"))
+		return (env_arg("OLDPWD", exec));
+	else if (argv[0] == '-' && argv[1])
+		return (cd_not_set(NULL, argv));
+	ret = chdir(argv);
+	if (ret == -1)
+		cd_errno(exec, argv);
 	return (ret);
 }
 
@@ -40,14 +71,8 @@ int		b_cd(t_exec *exec)
 	char	c_path_buf[PATH_MAX];
 
 	getcwd(c_path_buf, PATH_MAX);
-	if (!exec->argv[1])
-	{
-		if ((ret = home_arg(exec)) == -1)
-			return (1);
-	}
-	else
-		ret = chdir(exec->argv[1]);
-	if (ret != -1 && !(g_data->pid))
+	ret = do_chdir(exec->argv[1], exec);
+	if (!ret && !(g_data->pid))
 	{
 		g_data->u_env->l_old_pwd = change_env_value(g_data->u_env->l_old_pwd, "OLDPWD", c_path_buf, NULL);
 		getcwd(c_path_buf, PATH_MAX);
@@ -55,6 +80,6 @@ int		b_cd(t_exec *exec)
 		remake_lenv();
 	}
 	if (ret == -1)
-		return (cd_errno(exec, NULL));
-	return (0);
+		ret = 1;
+	return (ret);
 }

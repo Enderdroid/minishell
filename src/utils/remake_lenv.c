@@ -43,6 +43,7 @@ int			fill_lenv(int new_size, char **new_lenv)
 				free(val_buf);
 				return (-1);
 			}
+			free(val_buf);
 			++filled_ind;
 		}
 	return (0);
@@ -67,6 +68,7 @@ void	remake_lenv()
 	{
 		while (g_data->l_env[++ind])
 			free(g_data->l_env[ind]);
+		free(g_data->l_env);
 	}
 	g_data->l_env = new_lenv;
 }

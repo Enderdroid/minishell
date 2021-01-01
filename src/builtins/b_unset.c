@@ -1,5 +1,18 @@
 #include "../../include/libbuiltins.h"
 
+int u_is_env(char *arg)
+{
+	int ind;
+
+	ind = -1;
+	if (!ft_isalpha(arg[0]) && arg[0] != '_')
+		return (-1);
+	while (arg[++ind])
+		if (!ft_isalnum(arg[ind]))
+			return (-1);
+	return (0);
+}
+
 int		b_unset(t_exec *exec)
 {
 	t_env *env;
@@ -10,7 +23,7 @@ int		b_unset(t_exec *exec)
 	code_buf = 0;
 	while (exec->argv[++i])
 	{
-		if (is_env(exec->argv[i]) == -1)
+		if (u_is_env(exec->argv[i]) == -1)
 		{
 			code_buf = 1;
 			b_put_error("unset", exec->argv[i], "not a valid identifier", 1);
