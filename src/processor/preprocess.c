@@ -65,12 +65,12 @@ static void	set_full_name(t_exec *exec)
 		free_and_exit(ERRNO);
 }
 
-void		ft_preprocess(t_exec *exec) // поменять на void?
+void		ft_preprocess(t_exec *exec)
 {
 	if (!exec->name)
 	{
-		if (!exec->ret)//== -1
-			g_data->code = 0; //exec->ret = 0;
+		if (!exec->ret)
+			g_data->code = 0;
 	}
 	else if (!exec->path)
 	{

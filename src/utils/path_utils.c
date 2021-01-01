@@ -23,17 +23,26 @@ int			folder_search(char *path, char *name)
 	return (found);
 }
 
-char *s_in_path(char *name)
+static char	*check_path()
 {
-	int i;
-	char **path_content;
-	char *path;
-	t_env *l_path;
+	char	*path;
+
+	path = ft_strdup("");
+	if (!path)
+		free_and_exit(ERRNO);
+	return (path);
+}
+
+char		*s_in_path(char *name)
+{
+	int		i;
+	char	**path_content;
+	char	*path;
+	t_env	*l_path;
 
 	if (!(l_path = find_env_b("PATH")) || !l_path->value || !l_path->value[0])
-		return (ft_strdup(""));
-	path_content = ft_split(l_path->value, ':');
-	if (!path_content)
+		return (check_path());
+	if (!(path_content = ft_split(l_path->value, ':')))
 		free_and_exit(ERRNO);
 	i = 0;
 	while (path_content[i])
