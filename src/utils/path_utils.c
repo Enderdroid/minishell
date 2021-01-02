@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 23:36:39 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/02 23:36:40 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/02 23:39:35 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,16 +40,17 @@ char	*s_in_path(char *name, t_env *l_path)
 	char	**path_content;
 	char	*path;
 
-	path_content = ft_split(l_path->value, ':');
-	if (!path_content)
+	if (!(path_content = ft_split(l_path->value, ':')))
 		free_and_exit(ERRNO);
 	i = 0;
 	while (path_content[i])
 	{
 		if (folder_search(path_content[i], name))
 		{
-			path = ft_strjoin(path_content[i], "/");//defend
+			path = ft_strjoin(path_content[i], "/");
 			free_arr(path_content);
+			if (!path)
+				free_and_exit(ERRNO);
 			return (path);
 		}
 		++i;
