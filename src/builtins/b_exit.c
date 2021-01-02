@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/29 23:02:32 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/03 00:39:30 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/03 00:41:55 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int			b_exit(t_exec *exec)
 		else if (exec->argv[2])
 		{
 			error_msg_custom(&exec->ret, "exit", "too many arguments", 1);
-			return (0);
+			return (1);
 		}
 	}
 	else
