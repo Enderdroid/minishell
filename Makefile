@@ -53,11 +53,9 @@ COMP		=	gcc
 
 all : $(NAME)
 
-$(NAME)	:	$(OBJ) lib
-	$(COMP) $(FLAGS) -o $(NAME) $(OBJ) -I $(H_DIR) $(LIB)
-
-lib:
+$(NAME)	:	$(OBJ) $(INCLUDES)
 	@make bonus -C ./libft/
+	$(COMP) $(FLAGS) -o $(NAME) $(OBJ) -I $(H_DIR) $(LIB)
 
 $(O_DIR)/%.o: ./src/*/%.c $(INCLUDES) | $(O_DIR)
 	@$(COMP) $(FLAGS) -I $(H_DIR) -c $< -o $@
