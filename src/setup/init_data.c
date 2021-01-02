@@ -92,6 +92,7 @@ void			init_data(char **envp)
 	int		size;
 	t_env	**env;
 
+	g_data = NULL;
 	if (!(g_data = (t_data *)malloc(sizeof(t_data))))
 		exit_with_errno();
 	size = 0;

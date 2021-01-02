@@ -64,22 +64,42 @@ void	free_data(void)
 	while(g_data->env_arr[++i])
 	{
 		free(g_data->env_arr[i]->key);
+		g_data->env_arr[i]->key = NULL;
 		if (g_data->env_arr[i]->value)
+		{
 			free(g_data->env_arr[i]->value);
+			g_data->env_arr[i]->value = NULL;
+		}
 		free(g_data->env_arr[i]);
+		g_data->env_arr[i] = NULL;
 	}
 	free(g_data->env_arr);
+	g_data->env_arr = NULL;
 	if (g_data->u_env)
 	{
 		if (g_data->u_env->path_content)
+		{
 			free_arr(g_data->u_env->path_content);
+			g_data->u_env->path_content = NULL;
+		}
 		free(g_data->u_env);
+		g_data->u_env = NULL;
 	}
 	if (g_data->l_env)
+	{
 		free_arr(g_data->l_env);
+		g_data->l_env = NULL;
+	}
 	if (g_data->exec)
+	{
 		free_exec(g_data->exec);
+		g_data->exec = NULL;
+	}
 	if (g_data->lst)
+	{
 		free_tokens(&(g_data->lst));
+		g_data->lst = NULL;
+	}
 	free(g_data);
+	g_data = NULL;
 }

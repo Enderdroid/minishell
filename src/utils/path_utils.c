@@ -1,6 +1,5 @@
 #include "../../include/libincludes.h"
 #include <dirent.h>
-#include "../../include/error.h"
 
 int			folder_search(char *path, char *name)
 {
@@ -20,39 +19,30 @@ int			folder_search(char *path, char *name)
 			}
 		closedir(dir);
 	}
+//	else
+
 	return (found);
 }
 
-static char	*check_path()
+char *s_in_path(char *name)
 {
-	char	*path;
+	int i;
+	char **path_content;
+	char *path;
+	t_env *l_path;
 
-	path = ft_strdup("");
-	if (!path)
-		free_and_exit(ERRNO);
-	return (path);
-}
-
-char		*s_in_path(char *name)
-{
-	int		i;
-	char	**path_content;
-	char	*path;
-	t_env	*l_path;
-
-	if (!(l_path = find_env_b("PATH")) || !l_path->value || !l_path->value[0])
-		return (check_path());
-	if (!(path_content = ft_split(l_path->value, ':')))
+	if (!(l_path = find_env_b("PATH")))
+		return (NULL);
+	path_content = ft_split(l_path->value, ':');
+	if (!path_content)
 		free_and_exit(ERRNO);
 	i = 0;
 	while (path_content[i])
 	{
 		if (folder_search(path_content[i], name))
 		{
-			path = ft_strjoin(path_content[i], "/");
+			path = ft_strjoin(path_content[i], "/");//defend
 			free_arr(path_content);
-			if (!path)
-				free_and_exit(ERRNO);
 			return (path);
 		}
 		++i;

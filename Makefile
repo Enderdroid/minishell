@@ -66,7 +66,8 @@ $(O_DIR):
 	@mkdir $(O_DIR)
 
 clean:
-	@rm -rf $(O_DIR)
+	@rm -rf $(OBJ)
+	@rmdir $(O_DIR)
 	@echo "$(NAME) object files deleted"
 
 fclean: clean
