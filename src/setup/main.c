@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:22 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 23:12:36 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/02 23:27:04 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int ac, char **av, char **envp)
 
 	while(42)
 	{
-		handle_signals();
+		catch_signals();
 		parse_input(0);
 	}
 	//free_data();//

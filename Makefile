@@ -20,7 +20,7 @@ SRC			=	init_data.c\
 				exec_fill.c\
 				process_redirect.c\
 				find_name.c\
-				handle_signals.c\
+				catch_signals.c\
 				b_cd.c\
 				b_echo.c\
 				b_env.c\
@@ -48,7 +48,7 @@ INCLUDES	=	$(H_DIR)/*
 
 LIB			=	./libft/libft.a \
 
-FLAGS		=	-g #-Wall -Wextra -Werror
+FLAGS		=	-g -Wall -Wextra -Werror
 COMP		=	gcc
 
 all : $(NAME)
@@ -66,8 +66,7 @@ $(O_DIR):
 	@mkdir $(O_DIR)
 
 clean:
-	@rm -rf $(OBJ)
-	@rmdir $(O_DIR)
+	@rm -rf $(O_DIR)
 	@echo "$(NAME) object files deleted"
 
 fclean: clean

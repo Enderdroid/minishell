@@ -1,4 +1,15 @@
-//#include "../../include/libincludes.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   preprocess.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/02 23:05:06 by ttamesha          #+#    #+#             */
+/*   Updated: 2021/01/02 23:19:58 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libstruct.h"
 #include "../../include/error.h"
 
@@ -6,7 +17,6 @@ static void	check_filepath(t_exec *exec, char mode, int fs)
 {
 	if (fs == 0)
 	{
-		//printf("fs=%i\n", fs);
 		if (mode == 'n')
 			execve(exec->full_name, exec->argv, exec->env);
 		else
@@ -49,24 +59,36 @@ static void	check_dir(t_exec *exec)
 	free(new_path);
 }
 
-void		ft_preprocess(t_exec *exec) // поменять на void?
+static void	set_full_name(t_exec *exec)
+{
+	t_env	*l_path;
+
+	if (!(l_path = find_env_b("PATH")) || !l_path->value || !l_path->value[0])
+	{
+		error_msg_custom(&exec->ret, exec->name, "No such file or directory", 127);
+		free_and_null(&exec->name);
+	}
+	else if (!(exec->path = s_in_path(exec->name, l_path)))
+	{
+		error_msg_custom(&exec->ret, exec->name, "command not found", 127);
+		free_and_null(&exec->name);
+	}
+	else if (!(exec->full_name = ft_strjoin(exec->path, exec->name)))
+		free_and_exit(ERRNO);
+}
+
+void		ft_preprocess(t_exec *exec)
 {
 	if (!exec->name)
 	{
-		if (!exec->ret)//== -1
-			g_data->code = 0; //exec->ret = 0;
+		if (!exec->ret)
+			g_data->code = 0;
 	}
 	else if (!exec->path)
 	{
 		if (is_builtin(exec))
 			return ;
-		if (!(exec->path = s_in_path(exec->name)))
-		{
-			error_msg_custom(&exec->ret, exec->name, "command not found", 127);
-			free_and_null(&exec->name);
-		}
-		else if (!(exec->full_name = ft_strjoin(exec->path, exec->name)))
-			free_and_exit(ERRNO);
+		set_full_name(exec);
 	}
 	else if (!ft_strcmp(exec->name, ""))
 	{

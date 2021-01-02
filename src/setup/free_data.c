@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:57 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/30 23:25:14 by tkleiner         ###   ########.fr       */
+/*   Updated: 2021/01/02 23:30:04 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	free_tokens(t_dlist **lst)
 
 void	free_exec(t_exec *exec)
 {
-	//printf("exec->name: %s\n", exec->name);
 	if (exec->name)
 		free(exec->name);
 	if (exec->path)
@@ -103,3 +102,33 @@ void	free_data(void)
 	free(g_data);
 	g_data = NULL;
 }
+
+/*
+void	free_data(void)
+{
+	int i;
+	
+	i = -1;
+	while(g_data->env_arr[++i])
+	{
+		free(g_data->env_arr[i]->key);
+		if (g_data->env_arr[i]->value)
+			free(g_data->env_arr[i]->value);
+		free(g_data->env_arr[i]);
+	}
+	free(g_data->env_arr);
+	if (g_data->u_env)
+	{
+		if (g_data->u_env->path_content)
+			free_arr(g_data->u_env->path_content);
+		free(g_data->u_env);
+	}
+	if (g_data->l_env)
+		free_arr(g_data->l_env);
+	if (g_data->exec)
+		free_exec(g_data->exec);
+	if (g_data->lst)
+		free_tokens(&(g_data->lst));
+	free(g_data);
+}
+*/

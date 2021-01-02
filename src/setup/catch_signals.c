@@ -6,13 +6,13 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:52 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/26 03:15:56 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/02 23:28:12 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parserstruct.h"
 
-static void	handle_sigint(int signal)
+static void	catch_sigint(int signal)
 {
 	if (g_data->pid)
 	{
@@ -32,7 +32,7 @@ static void	handle_sigint(int signal)
 
 }
 
-static void	handle_sigquit(int signal)
+static void	catch_sigquit(int signal)
 {
 	if (g_data->pid)
 	{
@@ -45,10 +45,10 @@ static void	handle_sigquit(int signal)
 		write(1, "\b\b", 2);
 }
 
-void			handle_signals(void)
+void			catch_signals(void)
 {
-	if (signal(SIGINT, &handle_sigint) == SIG_ERR)
+	if (signal(SIGINT, &catch_sigint) == SIG_ERR)
 		free_and_exit(ERRNO);
-	if (signal(SIGQUIT, &handle_sigquit) == SIG_ERR)
+	if (signal(SIGQUIT, &catch_sigquit) == SIG_ERR)
 		free_and_exit(ERRNO);
 }

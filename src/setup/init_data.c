@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_data.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/30 23:31:55 by tkleiner         ###   ########.fr       */
+/*   Updated: 2021/01/02 23:04:32 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void			init_data(char **envp)
 		exit_with_errno();
 	size = 0;
 	while (envp[size])
-		++size; //printf("%s\n", envp[size]);
+		++size;
 	env = parse_env(envp, size);
 	g_data->env_arr = env;
 	g_data->u_env = parse_u_env(env, size);

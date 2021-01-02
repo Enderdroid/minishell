@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_fill.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/30 20:39:28 by tkleiner         ###   ########.fr       */
+/*   Updated: 2021/01/02 23:32:59 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ static t_dlist	*exec_arr_fill(t_dlist *lptr, t_exec *exec, char **argv)
 		lptr = lptr->next;
 	}
 	return (end_cmd(lptr, exec, cmd));
-	//return (NULL);
 }
 
 t_dlist			*exec_fill(t_exec *exec)

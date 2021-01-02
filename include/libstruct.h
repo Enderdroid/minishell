@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libstruct.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/30 22:35:33 by tkleiner         ###   ########.fr       */
+/*   Updated: 2021/01/02 23:27:59 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ t_data *g_data;
 void					init_data(char **envp);
 void					free_data(void);
 void					free_exec(t_exec *exec);
-void					handle_signals(void);
+void					catch_signals(void);
+t_env					*find_env_b(char *key);
 char					*find_env(char *key);
-
 int						is_builtin(t_exec *exec);
 void					ft_preprocess(t_exec *exec);
-char					*s_in_path(char *name);
+char					*s_in_path(char *name, t_env *l_path);
 int						folder_search(char *path, char *name);
 #endif

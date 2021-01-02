@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   path_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/02 23:36:39 by ttamesha          #+#    #+#             */
+/*   Updated: 2021/01/02 23:36:40 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libincludes.h"
 #include <dirent.h>
 
-int			folder_search(char *path, char *name)
+int		folder_search(char *path, char *name)
 {
 	DIR				*dir;
 	struct dirent	*ent;
@@ -19,20 +31,15 @@ int			folder_search(char *path, char *name)
 			}
 		closedir(dir);
 	}
-//	else
-
 	return (found);
 }
 
-char *s_in_path(char *name)
+char	*s_in_path(char *name, t_env *l_path)
 {
-	int i;
-	char **path_content;
-	char *path;
-	t_env *l_path;
+	int		i;
+	char	**path_content;
+	char	*path;
 
-	if (!(l_path = find_env_b("PATH")))
-		return (NULL);
 	path_content = ft_split(l_path->value, ':');
 	if (!path_content)
 		free_and_exit(ERRNO);

@@ -5,7 +5,6 @@ int		sub_add_env(int old_size)
 {
 	t_env **new_arr;
 	int i;
-	int j;
 
 	i = -1;
 	if (!(new_arr = (t_env**)malloc(sizeof(t_env*) * (old_size + 2))))

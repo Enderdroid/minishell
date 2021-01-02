@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/14 19:28:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/02 22:50:53 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/02 23:05:30 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int exit_custom_err(int error_num)
 
 int free_and_exit(int error_num)
 {
-	g_data->code = error_num;
 	free_data();
 	if (error_num == ERRNO)
 		return (exit_with_errno());
