@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:29 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/29 22:59:58 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/03 18:56:15 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	check_last(t_token *token)
 
 	if (token->len == C_PIPE)
 		parse_input('|');
-	if (token->str[token->len - 1] == '\\')
+	if (token->len > 0 && token->str[token->len - 1] == '\\')
 	{
 		if (!(mask = str_mask(token->str, token->len)))
 			free_and_exit(ERRNO);
@@ -46,12 +46,11 @@ static void	check_last(t_token *token)
 void		validate_tokens(int q_closed)
 {
 	t_dlist	*last;
-//printf("q %i\n", q_closed);// //printf("*%s, %i\n", ((t_token *)((*lst)->content))->str, ((t_token *)((*lst)->content))->len);
+
 	last = NULL;
 	check_syntax_error(&last);
 	if (!q_closed)
 		unclosed_q_msg();
 	if (last)
 		check_last((t_token *)(last->content));
-	//printf("##%s\n", ((t_token *)((*lst)->content))->str);//
 }

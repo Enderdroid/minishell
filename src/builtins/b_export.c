@@ -25,12 +25,10 @@ void put_export_env(int fd)
 
 void	parse_export(char *arg, int *code_buf)
 {
-	int i;
 	int ret;
 	char **env_buf;
 	t_env *c_env;
 
-	i = -1;
 	if ((ret = is_env(arg)) == -1)
 	{
 		*code_buf = 1;

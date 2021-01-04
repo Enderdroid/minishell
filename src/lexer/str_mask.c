@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:26 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 09:55:05 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/03 04:57:09 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void	process_single_quote(char *str, char *mask, int *i)
 
 static void	check_env(char *str, char *mask, int i, int q)
 {
-	if (str[i] == '$' && !ft_strchr("~:/. ,^+=\\%\0", str[i + 1]) \
+	if (str[i] == '$' && !ft_strchr("~:/.,^+=\\%\0", str[i + 1]) \
+		&& !ft_isspace(str[i + 1]) \
 		&& !(str[i + 1] == '\"' && q))
 		mask[i] = '$';
 	else if (str[i] == '~' && i == 0 && ft_strchr("/\0", str[i + 1]))

@@ -48,7 +48,7 @@ INCLUDES	=	$(H_DIR)/*
 
 LIB			=	./libft/libft.a \
 
-FLAGS		=	-g -Wall -Wextra -Werror
+FLAGS		=	-g #-Wall -Wextra -Werror
 COMP		=	gcc
 
 all : $(NAME)

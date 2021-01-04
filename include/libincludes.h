@@ -22,5 +22,4 @@ int		sub_add_env(int old_size);
 int		sub_del_env(int old_size, t_env *env);
 char	*ft_realloc(char *str, int new_size);
 int		ft_processor(t_exec *exec);
-
 #endif
