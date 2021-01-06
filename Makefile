@@ -15,6 +15,7 @@ SRC			=	init_data.c\
 				find_env.c\
 				find_env_unset.c\
 				correct_tokens.c\
+				corrected_str.c\
 				free_data.c\
 				exec_init.c\
 				exec_fill.c\

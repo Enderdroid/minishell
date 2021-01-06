@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:52:49 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/15 11:44:46 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/06 21:56:31 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int			process_rdr(t_exec *exec, t_dlist **lptr, char **arr)
 	cmd = ((t_token *)((*lptr)->content))->len;
 	*lptr = (*lptr)->next;
 	filename = ((t_token *)((*lptr)->content))->str;
-	//printf("rdr=%s\n", filename);//
 	if (!((t_token *)((*lptr)->content))->len)
 	{
 		exec->fd_new[1] = -1;

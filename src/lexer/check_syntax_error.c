@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:45:18 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/25 23:56:14 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/06 21:54:00 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static int	syntax_err_msg(const char *token)
 }
 
 static void	check_token(char *prv, char *nxt)
-{//printf("in:prv=%s,nxt=%s\n", prv, nxt);//
+{
 	int			i;
 	int			j;
 	const t_vld	vld[7] = { {"\0", {";", "|", NULL} }, \
@@ -41,15 +41,11 @@ static void	check_token(char *prv, char *nxt)
 	while (++i < 7)
 	{
 		j = -1;
-		//printf("in:prv=%s,nxt=%s, prv=%s,%i\n", prv, nxt,vld[i].prv, i);
 		if (!ft_strcmp(prv, vld[i].prv))
 		{
-			//printf("res:prv=%s,nxt=%s, prv=%s,%i\n", prv, nxt,vld[i].prv, i);
 			while (vld[i].nxt[++j])
-			//{	//printf("?prv=%s,nxt=%s, i=%i,j=%i\n", vld[i].prv, vld[i].nxt[j], i, j);
 				if (!ft_strcmp((char *)(vld[i].nxt[j]), nxt))
 					syntax_err_msg(vld[i].nxt[j]);
-			//}
 		}
 	}
 }
@@ -74,8 +70,7 @@ void		check_syntax_error(t_dlist **last)
 			}
 			if (!ptr->next)
 				*last = ptr;
-				//printf("last=%s\n", ((t_token *)((*last)->content))->str);}
 			ptr = ptr->next;
 		}
-	}//printf("*!%s\n", ((t_token *)(last->content))->str);
+	}
 }

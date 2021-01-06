@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:53:59 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/29 23:19:54 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/06 21:55:24 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static char	*del_double_slash(char *str)
 			new[l++] = str[i];
 	}
 	new[l] = '\0';
-	//printf("!!%s\n", new);//
 	return (new);
 }
 
@@ -75,7 +74,6 @@ static void	fill_name_path(char *str, t_exec *exec)
 		if (!(exec->full_name = ft_strdup(str)))
 			free_and_exit(ERRNO);
 	}
-	//printf("]path=%s\n", exec->path);
 }
 
 void		find_name(t_dlist **lptr, t_exec *exec, char **arg)
@@ -87,14 +85,6 @@ void		find_name(t_dlist **lptr, t_exec *exec, char **arg)
 		fill_name_path(((t_token *)(*lptr)->content)->str, exec);
 		if (!(*arg = ft_strdup(exec->name)))
 			free_and_exit(ERRNO);
-
-		//printf("name = %s\n", exec->name);//
-		//printf("path = %s\n", exec->path);//
-/*
-		printf("head name = %s\n", g_data->exec->name);//
-		if (g_data->exec->pipe_to)
-			printf("next name = %s\n", ((t_exec *)(g_data->exec->pipe_to))->name);//
-		printf("head path = %s\n", g_data->exec->path);*/
 		(*lptr) = (*lptr)->next;
 	}
 }

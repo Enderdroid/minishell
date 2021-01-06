@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:57 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/06 19:06:46 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/06 21:53:08 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	free_tokens(t_dlist **lst)
 	while (lptr)
 	{
 		tmp = lptr->next;
-		//printf("str to free: %s\n", ((t_token *)(lptr->content))->str);
 		if (((t_token *)(lptr->content))->str)
 		{
 			free(((t_token *)(lptr->content))->str);
@@ -82,7 +81,8 @@ void	free_data(void)
 			g_data->u_env->path_content = NULL;
 		}
 		if (g_data->u_env->home)
-			free(g_data->u_env->home);
+			{free(g_data->u_env->home);
+			g_data->u_env->home= NULL;}
 		free(g_data->u_env);
 		g_data->u_env = NULL;
 	}

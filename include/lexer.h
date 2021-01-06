@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:56 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/30 18:24:31 by tkleiner         ###   ########.fr       */
+/*   Updated: 2021/01/06 21:59:09 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef struct	s_vld
 }				t_vld;
 
 void			correct_tokens(t_dlist *lst);
+char			*corrected_str(t_token *token);
 int				split_line(char *line, int mode);
 int				get_tokens(char *line, int last_char);
 char			*str_mask(char *str, int len);

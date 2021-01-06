@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/06 19:05:47 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/06 21:52:21 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,15 @@ static t_env	**parse_env(char **envp, int size)
 		exit_with_errno();
 	}
 	fill_env_arr(env, g_data->l_env, envp);
-	/*for(int i = 0; i < size+1; ++i)
-	{
-		printf("%s\n", g_data->env_arr[i]);
-		printf("key=%s, value=%s\n", env[i]->key,env[i]->value);//
-	}*/
 	return (env);
+}
+
+static void		null_path_env(t_u_env *path_env)
+{
+	path_env->l_pwd = NULL;
+	path_env->l_old_pwd = NULL;
+	path_env->l_path = NULL;
+	path_env->path_content = NULL;
 }
 
 static t_u_env	*parse_u_env(t_env **env, int size)
@@ -65,10 +68,7 @@ static t_u_env	*parse_u_env(t_env **env, int size)
 
 	if (!(path_env = (t_u_env *)malloc(sizeof(t_u_env))))
 		free_and_exit(ERRNO);
-	path_env->l_pwd = NULL;
-	path_env->l_old_pwd = NULL;
-	path_env->l_path = NULL;
-	path_env->path_content = NULL;
+	null_path_env(path_env);
 	i = -1;
 	while (++i < size)
 	{
