@@ -43,7 +43,7 @@ int p_sub_exec(t_exec *exec, int p_fd[2], int *rv, int f_pipe[2][2])
 		open_close(f_pipe, 0, 'c');
 		if (!exec->full_name)
 			*rv = builtin_call(exec);
-		else if (ret = execve(exec->full_name, exec->argv, g_data->l_env))
+		else if ((ret = execve(exec->full_name, exec->argv, g_data->l_env)))
 			if (ret == -1 && ERRNO == -2)
 				error_msg_auto(rv, exec->full_name, 126);
 		free_and_exit(*rv);

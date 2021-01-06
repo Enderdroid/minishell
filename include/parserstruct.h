@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parserstruct.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:01 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/30 20:35:40 by tkleiner         ###   ########.fr       */
+/*   Updated: 2021/01/06 18:33:31 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,9 @@
 
 # include "libstruct.h"
 # include <signal.h>
+
+# define COLOR "\e[0;36m"
+# define RESET "\e[0m"
 
 typedef struct	s_token
 {
