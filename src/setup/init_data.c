@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/02 23:04:32 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/06 19:05:47 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,9 @@ static t_u_env	*parse_u_env(t_env **env, int size)
 			if (!path_env->path_content)
 				free_and_exit(ERRNO);
 		}
+		if (ft_strcmp(env[i]->key, "HOME") == 0)
+			if (!(path_env->home = ft_strdup(env[i]->value)))
+				free_and_exit(ERRNO);
 	}
 	return (path_env);
 }

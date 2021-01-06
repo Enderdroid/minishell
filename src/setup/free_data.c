@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:57 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/02 23:30:04 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/06 19:06:46 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	free_data(void)
 			free_arr(g_data->u_env->path_content);
 			g_data->u_env->path_content = NULL;
 		}
+		if (g_data->u_env->home)
+			free(g_data->u_env->home);
 		free(g_data->u_env);
 		g_data->u_env = NULL;
 	}
@@ -107,7 +109,7 @@ void	free_data(void)
 void	free_data(void)
 {
 	int i;
-	
+
 	i = -1;
 	while(g_data->env_arr[++i])
 	{
@@ -121,6 +123,8 @@ void	free_data(void)
 	{
 		if (g_data->u_env->path_content)
 			free_arr(g_data->u_env->path_content);
+		if (g_data->u_env->home)
+			free(g_data->u_env->home);
 		free(g_data->u_env);
 	}
 	if (g_data->l_env)

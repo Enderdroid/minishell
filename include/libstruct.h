@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/02 23:27:59 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/06 18:59:58 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef	struct			s_u_env
 	t_env				*l_old_pwd;
 	t_env				*l_path;
 	char				**path_content;
+	char				*home;
 }						t_u_env;
 
 typedef	struct			s_data

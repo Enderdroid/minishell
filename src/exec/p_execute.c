@@ -21,7 +21,7 @@ int builtin_call(t_exec *exec)
 		return (-1);
 }
 
-int sub_exec(t_exec *exec, int fd, int *rv)
+int sub_exec(t_exec *exec, int *rv)
 {
 	int pid;
 	int ret;
@@ -48,7 +48,7 @@ int ft_execute(t_exec *exec)
 
 	// printf("%s -- %s\n", exec->argv[0], exec->argv[1]);
 	rv = 0;
-	if (sub_exec(exec, 0, &rv))
+	if (sub_exec(exec, &rv))
 		rv = builtin_call(exec);
 	if (exec->full_name)
 	{

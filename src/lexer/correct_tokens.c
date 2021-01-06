@@ -3,14 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   correct_tokens.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/18 19:18:11 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/12/30 18:39:31 by tkleiner         ###   ########.fr       */
+/*   Updated: 2021/01/06 19:31:38 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lexer.h"
+
+int		process_tilde(char **new)
+{
+	t_env *env;
+
+	env = find_env_b("HOME");
+	if (env && env->value)
+	{
+		if (!(*new = ft_strdup(env->value)))
+			return (0);
+	}
+	else if (!(*new = ft_strdup(g_data->u_env->home)))
+			return(0);
+	return (1);
+}
 
 static int	paste_env(char *str, int *start, int *end, char **res)
 {
@@ -22,7 +37,8 @@ static int	paste_env(char *str, int *start, int *end, char **res)
 	{
 		if (str[*start] == '~')
 		{
-			new = find_env(ft_strdup("HOME"));
+			if (process_tilde(&new) == 0)
+				return (0);
 			*start = (*end)--;
 		}
 		else if (str[*end] == '?')
