@@ -1,4 +1,5 @@
 #include "../../include/libincludes.h"
+#include "../../include/error.h"
 
 int builtin_call(t_exec *exec)
 {
@@ -20,22 +21,19 @@ int builtin_call(t_exec *exec)
 		return (-1);
 }
 
-int sub_exec(t_exec *exec, int *p_fd, int fd, int *rv)
+int sub_exec(t_exec *exec, int fd, int *rv)
 {
 	int pid;
+	int ret;
 
 	if (exec->full_name)
 	{
 		if (!(pid = fork()))
 		{
-			if (p_fd)
-			{
-				dup2(p_fd[fd], fd);
-				close(p_fd[0]);
-				close(p_fd[1]);
-			}
-			execve(exec->full_name, exec->argv, g_data->l_env);
-			exit(*rv);
+			ret = execve(exec->full_name, exec->argv, g_data->l_env);
+			if (ret == -1 && ERRNO == -2)
+				error_msg_auto(rv, exec->full_name, 126);
+			free_and_exit(*rv);
 		}
 		g_data->pid = pid;
 		return (0);
@@ -50,14 +48,13 @@ int ft_execute(t_exec *exec)
 
 	// printf("%s -- %s\n", exec->argv[0], exec->argv[1]);
 	rv = 0;
-	if (sub_exec(exec, NULL, 0, &rv))
+	if (sub_exec(exec, 0, &rv))
 		rv = builtin_call(exec);
 	if (exec->full_name)
 	{
 		waitpid(g_data->pid, &rv, 0);
 		g_data->pid = 0;
 		ret = WEXITSTATUS(rv);
-		// printf ("RET = %i\n", ret);
 	}
 	else
 		ret = rv;

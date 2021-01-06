@@ -1,4 +1,5 @@
 #include "../../include/libincludes.h"
+#include "../../include/error.h"
 
 void open_close(int fd_buf[2][2], int dot_close, char mode)
 {
@@ -30,6 +31,7 @@ void open_close(int fd_buf[2][2], int dot_close, char mode)
 int p_sub_exec(t_exec *exec, int p_fd[2], int *rv, int f_pipe[2][2])
 {
 	int pid;
+	int ret;
 
 	*rv = 0;
 	if (!(pid = fork()))
@@ -39,10 +41,11 @@ int p_sub_exec(t_exec *exec, int p_fd[2], int *rv, int f_pipe[2][2])
 		if (p_fd[1] != 1)
 			dup2(p_fd[1], 1);
 		open_close(f_pipe, 0, 'c');
-		if (exec->full_name)
-			execve(exec->full_name, exec->argv, g_data->l_env);
-		else
+		if (!exec->full_name)
 			*rv = builtin_call(exec);
+		else if (ret = execve(exec->full_name, exec->argv, g_data->l_env))
+			if (ret == -1 && ERRNO == -2)
+				error_msg_auto(rv, exec->full_name, 126);
 		free_and_exit(*rv);
 	}
 	else

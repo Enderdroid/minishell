@@ -1,8 +1,10 @@
 #include "../../include/libincludes.h"
+#include "../../include/error.h"
 
 int r_sub_exec(t_exec *exec, int p_fd[2], int *rv)
 {
 	int pid;
+	int ret;
 
 	*rv = 0;
 	if (!(pid = fork()))
@@ -15,8 +17,10 @@ int r_sub_exec(t_exec *exec, int p_fd[2], int *rv)
 			close(p_fd[0]);
 		if (p_fd[1] != 1)
 			close(p_fd[1]);
-		execve(exec->full_name, exec->argv, g_data->l_env);
-		exit(*rv);
+		ret = execve(exec->full_name, exec->argv, g_data->l_env);
+		if (ret == -1 && ERRNO == -2)
+			error_msg_auto(rv, exec->full_name, 126);
+		free_and_exit(*rv);
 	}
 	else
 		return (-1);
