@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   remake_lenv.c                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 17:51:58 by tkleiner          #+#    #+#             */
+/*   Updated: 2021/01/07 17:51:58 by tkleiner         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libstruct.h"
 #include "../../include/libincludes.h"
 
-int		get_lenv_size()
+static int	get_lenv_size(void)
 {
-	int size;
-	int ind;
+	int		size;
+	int		ind;
 
 	ind = -1;
 	size = 0;
@@ -14,9 +26,9 @@ int		get_lenv_size()
 	return (size);
 }
 
-void		exit_from_lenv(char ***l_env)
+static void	exit_from_lenv(char ***l_env)
 {
-	int ind;
+	int		ind;
 
 	ind = -1;
 	while (*l_env[++ind])
@@ -25,11 +37,11 @@ void		exit_from_lenv(char ***l_env)
 	free_and_exit(ERRNO);
 }
 
-int			fill_lenv(int new_size, char **new_lenv)
+static int	fill_lenv(int new_size, char **new_lenv)
 {
-	int ind;
-	int filled_ind;
-	char *val_buf;
+	int		ind;
+	int		filled_ind;
+	char	*val_buf;
 
 	ind = -1;
 	filled_ind = 0;
@@ -38,7 +50,8 @@ int			fill_lenv(int new_size, char **new_lenv)
 		{
 			if (!(val_buf = ft_strjoin(g_data->env_arr[ind]->key, "=")))
 				return (-1);
-			if (!(new_lenv[filled_ind] = ft_strjoin(val_buf, g_data->env_arr[ind]->value)))
+			if (!(new_lenv[filled_ind] =
+			ft_strjoin(val_buf, g_data->env_arr[ind]->value)))
 			{
 				free(val_buf);
 				return (-1);
@@ -49,7 +62,7 @@ int			fill_lenv(int new_size, char **new_lenv)
 	return (0);
 }
 
-void	remake_lenv()
+void		remake_lenv(void)
 {
 	char	**new_lenv;
 	int		new_size;

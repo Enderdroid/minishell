@@ -13,7 +13,7 @@
 #include "../../include/libincludes.h"
 #include <dirent.h>
 
-int		folder_search(char *path, char *name)
+int					folder_search(char *path, char *name)
 {
 	DIR				*dir;
 	struct dirent	*ent;
@@ -34,11 +34,11 @@ int		folder_search(char *path, char *name)
 	return (found);
 }
 
-char	*s_in_path(char *name, t_env *l_path)
+char				*s_in_path(char *name, t_env *l_path)
 {
-	int		i;
-	char	**path_content;
-	char	*path;
+	int				i;
+	char			**path_content;
+	char			*path;
 
 	if (!(path_content = ft_split(l_path->value, ':')))
 		free_and_exit(ERRNO);

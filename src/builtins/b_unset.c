@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   b_unset.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 17:51:25 by tkleiner          #+#    #+#             */
+/*   Updated: 2021/01/07 17:51:25 by tkleiner         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libbuiltins.h"
 
-int u_is_env(char *arg)
+static int	u_is_env(char *arg)
 {
-	int ind;
+	int		ind;
 
 	ind = -1;
 	if (!ft_isalpha(arg[0]) && arg[0] != '_')
@@ -13,11 +25,11 @@ int u_is_env(char *arg)
 	return (0);
 }
 
-int		b_unset(t_exec *exec)
+int			b_unset(t_exec *exec)
 {
-	t_env *env;
-	int	i;
-	int code_buf;
+	t_env	*env;
+	int		i;
+	int		code_buf;
 
 	i = 0;
 	code_buf = 0;
@@ -31,15 +43,11 @@ int		b_unset(t_exec *exec)
 		}
 		else if (!(g_data->pid))
 		{
-			//printf("\n\nSEARCHING\n\n");
 			env = find_env_b(exec->argv[i]);
-			//printf("\n\nFOUND\n\n");
 			if (env)
 				del_env(env);
-			//printf("\n\nDELETED\n\n");
 		}
 	}
-	//printf("\n\nENDED\n\n");
 	if (exec->argv[1] && g_data->pid)
 		remake_lenv();
 	return (code_buf);

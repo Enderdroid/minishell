@@ -1,11 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   b_echo.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 17:50:59 by tkleiner          #+#    #+#             */
+/*   Updated: 2021/01/07 17:50:59 by tkleiner         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libbuiltins.h"
 
-int	b_echo(t_exec *exec)
+int			b_echo(t_exec *exec)
 {
-	int ind;
-	int flag;
-
-	//printf("argv == %s -- %s\n", exec->argv[0], exec->argv[1]);
+	int		ind;
+	int		flag;
 
 	flag = 0;
 	ind = 0;

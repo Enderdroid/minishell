@@ -12,20 +12,15 @@
 
 #include "../../include/libstruct.h"
 
-t_env	*find_env_b(char *key)
+t_env		*find_env_b(char *key)
 {
-	int i;
+	int		i;
 
 	if (!key)
 		return (NULL);
 	i = -1;
-	//printf("%s\n", (g_data->env_arr)[1]->key);
 	while (g_data->env_arr[++i])
-	{
-		//printf("\n%i -- %s\n", i, g_data->env_arr[i]->key);
-		//printf("%s, %i\n", g_data->env_arr[i]->key, i);//
 		if (ft_strcmp(g_data->env_arr[i]->key, key) == 0)
 			return (g_data->env_arr[i]);
-	}
 	return (NULL);
 }

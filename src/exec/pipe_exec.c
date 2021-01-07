@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   pipe_exec.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 17:51:31 by tkleiner          #+#    #+#             */
+/*   Updated: 2021/01/07 17:51:31 by tkleiner         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libincludes.h"
 #include "../../include/error.h"
 
-void open_close(int fd_buf[2][2], int dot_close, char mode)
+static void	open_close(int fd_buf[2][2], int dot_close, char mode)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = -1;
 	j = -1;
@@ -28,10 +40,10 @@ void open_close(int fd_buf[2][2], int dot_close, char mode)
 	}
 }
 
-int p_sub_exec(t_exec *exec, int p_fd[2], int *rv, int f_pipe[2][2])
+static int	p_sub_exec(t_exec *exec, int p_fd[2], int *rv, int f_pipe[2][2])
 {
-	int pid;
-	int ret;
+	int		pid;
+	int		ret;
 
 	*rv = 0;
 	if (!(pid = fork()))
@@ -54,10 +66,10 @@ int p_sub_exec(t_exec *exec, int p_fd[2], int *rv, int f_pipe[2][2])
 	return (0);
 }
 
-int ft_pipe_part(t_exec *exec, int p_fd[2], int f_pipe[2][2])
+static int	ft_pipe_part(t_exec *exec, int p_fd[2], int f_pipe[2][2])
 {
-	int ret;
-	int rv;
+	int		ret;
+	int		rv;
 
 	if (exec->fd_new[0] != 0 || exec->fd_new[1] != 1)
 		p_fd = exec->fd_new;
@@ -70,7 +82,8 @@ int ft_pipe_part(t_exec *exec, int p_fd[2], int f_pipe[2][2])
 	return (ret);
 }
 
-void sub_ft_pipe(int fd, int fd_buf[2], int f_pipe[2][2], t_exec *pipe_list)
+static void	sub_ft_pipe(int fd, int fd_buf[2],
+int f_pipe[2][2], t_exec *pipe_list)
 {
 	if (fd == 1)
 		fd_buf[1] = f_pipe[1][1];
@@ -83,11 +96,11 @@ void sub_ft_pipe(int fd, int fd_buf[2], int f_pipe[2][2], t_exec *pipe_list)
 		fd_buf[1] = 1;
 }
 
-void ft_pipe(t_exec *pipe_list)
+void		ft_pipe(t_exec *pipe_list)
 {
-	int f_pipe[2][2];
-	int fd_buf[2];
-	int fd;
+	int		f_pipe[2][2];
+	int		fd_buf[2];
+	int		fd;
 
 	open_close(f_pipe, 0, 'i');
 	fd = 1;

@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   redirect_exec.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 17:51:33 by tkleiner          #+#    #+#             */
+/*   Updated: 2021/01/07 17:51:33 by tkleiner         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libincludes.h"
 #include "../../include/error.h"
 
-int r_sub_exec(t_exec *exec, int p_fd[2], int *rv)
+static int	r_sub_exec(t_exec *exec, int p_fd[2], int *rv)
 {
-	int pid;
-	int ret;
+	int		pid;
+	int		ret;
 
 	*rv = 0;
 	if (!(pid = fork()))
@@ -28,14 +40,12 @@ int r_sub_exec(t_exec *exec, int p_fd[2], int *rv)
 	return (0);
 }
 
-int redir_execute(t_exec *exec)
+int			redir_execute(t_exec *exec)
 {
-	int rv;
-	int ret;
+	int		rv;
+	int		ret;
 
 	rv = 0;
-	//printf("\nREDIR\n");
-	//printf("%s -- %s\n", exec->argv[0], exec->argv[1]);
 	if (exec->full_name)
 		r_sub_exec(exec, exec->fd_new, &rv);
 	else

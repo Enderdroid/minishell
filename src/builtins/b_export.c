@@ -1,12 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   b_export.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 17:51:19 by tkleiner          #+#    #+#             */
+/*   Updated: 2021/01/07 17:51:19 by tkleiner         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libbuiltins.h"
 
-void put_export_env(int fd)
+static void	put_export_env(int fd)
 {
-	int ind;
-	t_env *var;
+	int		ind;
+	t_env	*var;
 
 	ind = -1;
-
 	while (g_data->env_arr[++ind])
 	{
 		var = g_data->env_arr[ind];
@@ -23,11 +34,11 @@ void put_export_env(int fd)
 	}
 }
 
-void	parse_export(char *arg, int *code_buf)
+static void	parse_export(char *arg, int *code_buf)
 {
-	int ret;
-	char **env_buf;
-	t_env *c_env;
+	int		ret;
+	char	**env_buf;
+	t_env	*c_env;
 
 	if ((ret = is_env(arg)) == -1)
 	{
@@ -35,7 +46,7 @@ void	parse_export(char *arg, int *code_buf)
 		return (b_put_error("export", arg, "not a valid identifier", 1));
 	}
 	if (g_data->pid)
-		return;
+		return ;
 	if (!(env_buf = ft_split(arg, '=')))
 		free_and_exit(ERRNO);
 	c_env = find_env_b(env_buf[0]);
@@ -48,10 +59,10 @@ void	parse_export(char *arg, int *code_buf)
 	free_arr(env_buf);
 }
 
-int	b_export(t_exec *exec)
+int			b_export(t_exec *exec)
 {
-	int i;
-	int code_buf;
+	int		i;
+	int		code_buf;
 
 	code_buf = 0;
 	if (!exec->argv[1])

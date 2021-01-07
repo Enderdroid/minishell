@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   p_execute.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 17:51:28 by tkleiner          #+#    #+#             */
+/*   Updated: 2021/01/07 17:51:28 by tkleiner         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libincludes.h"
 #include "../../include/error.h"
 
-int builtin_call(t_exec *exec)
+int			builtin_call(t_exec *exec)
 {
 	if (!(ft_strcmp(exec->name, "cd")))
 		return (b_cd(exec));
@@ -21,10 +33,10 @@ int builtin_call(t_exec *exec)
 		return (-1);
 }
 
-int sub_exec(t_exec *exec, int *rv)
+static int	sub_exec(t_exec *exec, int *rv)
 {
-	int pid;
-	int ret;
+	int		pid;
+	int		ret;
 
 	if (exec->full_name)
 	{
@@ -41,12 +53,11 @@ int sub_exec(t_exec *exec, int *rv)
 	return (1);
 }
 
-int ft_execute(t_exec *exec)
+int			ft_execute(t_exec *exec)
 {
-	int rv;
-	int ret;
+	int		rv;
+	int		ret;
 
-	// printf("%s -- %s\n", exec->argv[0], exec->argv[1]);
 	rv = 0;
 	if (sub_exec(exec, &rv))
 		rv = builtin_call(exec);

@@ -60,9 +60,7 @@ typedef	struct			s_data
 	int					code;
 	int					pid;
 }						t_data;
-
-t_data *g_data;
-
+t_data					*g_data;
 void					init_data(char **envp);
 void					free_data(void);
 void					free_exec(t_exec *exec);

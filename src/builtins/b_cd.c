@@ -1,12 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   b_cd.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 17:50:54 by tkleiner          #+#    #+#             */
+/*   Updated: 2021/01/07 17:50:54 by tkleiner         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libbuiltins.h"
 #include <dirent.h>
 
-//C_PATH - нынешний путь
-//он всегда верен по совместительству является буфером, равным 1024
-//N_PATH - аргумент
-//скорее всего неправильный
-
-int			cd_errno(t_exec *exec, char *arg)
+static int	cd_errno(t_exec *exec, char *arg)
 {
 	ft_putstr_fd("minishell: cd: ", 2);
 	if (!arg)
@@ -18,7 +25,7 @@ int			cd_errno(t_exec *exec, char *arg)
 	return (1);
 }
 
-int		cd_not_set(char *key, char *option)
+static int	cd_not_set(char *key, char *option)
 {
 	ft_putstr_fd("minishell: cd: ", 2);
 	if (key)
@@ -33,10 +40,10 @@ int		cd_not_set(char *key, char *option)
 	return (2);
 }
 
-int		env_arg(char *key, t_exec *exec)
+static int	env_arg(char *key, t_exec *exec)
 {
-	int ret;
-	t_env *env;
+	int		ret;
+	t_env	*env;
 
 	env = find_env_b(key);
 	if (env == NULL)
@@ -49,9 +56,9 @@ int		env_arg(char *key, t_exec *exec)
 	return (0);
 }
 
-int do_chdir(char *argv, t_exec *exec)
+static int	do_chdir(char *argv, t_exec *exec)
 {
-	int ret;
+	int		ret;
 
 	if (!argv)
 		return (env_arg("HOME", exec));
@@ -65,7 +72,7 @@ int do_chdir(char *argv, t_exec *exec)
 	return (ret);
 }
 
-int		b_cd(t_exec *exec)
+int			b_cd(t_exec *exec)
 {
 	int		ret;
 	char	c_path_buf[PATH_MAX];
@@ -74,9 +81,11 @@ int		b_cd(t_exec *exec)
 	ret = do_chdir(exec->argv[1], exec);
 	if (!ret && !(g_data->pid))
 	{
-		g_data->u_env->l_old_pwd = change_env_value(g_data->u_env->l_old_pwd, "OLDPWD", c_path_buf, NULL);
+		g_data->u_env->l_old_pwd =
+		change_env_value(g_data->u_env->l_old_pwd, "OLDPWD", c_path_buf, NULL);
 		getcwd(c_path_buf, PATH_MAX);
-		g_data->u_env->l_pwd = change_env_value(g_data->u_env->l_pwd, "PWD", c_path_buf, NULL);
+		g_data->u_env->l_pwd =
+		change_env_value(g_data->u_env->l_pwd, "PWD", c_path_buf, NULL);
 		remake_lenv();
 	}
 	if (ret == -1)

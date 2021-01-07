@@ -1,7 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 17:51:43 by tkleiner          #+#    #+#             */
+/*   Updated: 2021/01/07 17:51:43 by tkleiner         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libstruct.h"
 #include "../../include/libincludes.h"
 
-void	env_free_arr(char **arr, char *key)
+static void	env_free_arr(char **arr, char *key)
 {
 	if (arr)
 		free_arr(arr);
@@ -10,7 +22,7 @@ void	env_free_arr(char **arr, char *key)
 	free_and_exit(ERRNO);
 }
 
-int			get_env_count()
+static int	get_env_count(void)
 {
 	int		size;
 
@@ -27,7 +39,8 @@ t_env		*add_env(char *key, char *value, char **to_free)
 
 	old_size = get_env_count();
 	env_buf = NULL;
-	if ((sub_add_env(old_size)) == -1 || !(env_buf = (t_env *)malloc(sizeof(t_env))))
+	if ((sub_add_env(old_size)) == -1 ||
+	!(env_buf = (t_env *)malloc(sizeof(t_env))))
 		env_free_arr(to_free, key);
 	if (!(env_buf->key = ft_strdup(key)))
 		env_free_arr(to_free, key);
@@ -53,9 +66,10 @@ int			del_env(t_env *env)
 	return (0);
 }
 
-t_env		*change_env_value(t_env *env, char *key, char *value, char **to_free)
+t_env		*change_env_value(t_env *env, char *key,
+char *value, char **to_free)
 {
-	char *val_buf;
+	char	*val_buf;
 
 	if (env)
 	{
@@ -68,8 +82,8 @@ t_env		*change_env_value(t_env *env, char *key, char *value, char **to_free)
 		env->value = val_buf;
 	}
 	else if (value)
-		return(add_env(key, value, to_free));
+		return (add_env(key, value, to_free));
 	else
-		return(add_env(key, "", to_free));
+		return (add_env(key, "", to_free));
 	return (env);
 }

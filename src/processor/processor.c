@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   processor.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 17:51:36 by tkleiner          #+#    #+#             */
+/*   Updated: 2021/01/07 17:51:36 by tkleiner         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/libincludes.h"
 #include "../../include/libbuiltins.h"
 #include "../../include/error.h"
-#include <stdio.h>//
+#include <stdio.h>
 
-int	is_builtin(t_exec *exec)
+int			is_builtin(t_exec *exec)
 {
 	if (!(ft_strcmp(exec->name, "cd")))
 		return (1);
@@ -23,26 +35,16 @@ int	is_builtin(t_exec *exec)
 		return (0);
 }
 
-//Дописать обработку пайпа билтинов и пайпа PATH
-int ft_processor(t_exec *exec)
+int			ft_processor(t_exec *exec)
 {
-	//printf("\n[Processor started]\n");
-
 	if (exec->pipe_to)
 		ft_pipe(exec);
 	else if (exec->fd_new[0] == 0 && exec->fd_new[1] == 1)
 	{
 		if (exec->name)
-		{
 			g_data->code = ft_execute(exec);
-			// printf("\n[GCODE == %i]\n", g_data->code);
-		}
 	}
 	else if (exec->name)
-	{
 		g_data->code = redir_execute(exec);
-		// printf("\n[GCODE == %i]\n", g_data->code);
-	}
-	//printf("\n[Processor ended]\n");
 	return (0);
 }
