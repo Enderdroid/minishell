@@ -50,7 +50,10 @@ static int	env_arg(char *key, t_exec *exec)
 		return (cd_not_set(key, NULL));
 	else if (env->value == NULL)
 		return (cd_not_set(key, NULL));
-	ret = chdir(env->value);
+	if (!env->value[0])
+		ret = chdir(".");
+	else
+		ret = chdir(env->value);
 	if (ret == -1)
 		cd_errno(exec, env->value);
 	return (0);
@@ -66,7 +69,10 @@ static int	do_chdir(char *argv, t_exec *exec)
 		return (env_arg("OLDPWD", exec));
 	else if (argv[0] == '-' && argv[1])
 		return (cd_not_set(NULL, argv));
-	ret = chdir(argv);
+	if (!argv[0])
+		ret = chdir(".");
+	else
+		ret = chdir(argv);
 	if (ret == -1)
 		cd_errno(exec, argv);
 	return (ret);
