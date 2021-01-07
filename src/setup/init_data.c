@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:41:34 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/06 22:34:30 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/07 16:49:10 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void		null_path_env(t_u_env *path_env)
 	path_env->l_old_pwd = NULL;
 	path_env->l_path = NULL;
 	path_env->path_content = NULL;
+	path_env->home = NULL;
 }
 
 static t_u_env	*parse_u_env(t_env **env, int size)
