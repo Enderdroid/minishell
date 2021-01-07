@@ -6,14 +6,13 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 16:34:45 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/07 16:34:46 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/07 16:46:19 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBINCLUDES_H
 # define LIBINCLUDES_H
 
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <sys/types.h>
