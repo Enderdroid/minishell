@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libbuiltins.h                                      :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/07 16:34:28 by ttamesha          #+#    #+#             */
+/*   Updated: 2021/01/07 16:34:39 by ttamesha         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBBUILTINS_H
 # define LIBBUILTINS_H
 
 # include "libincludes.h"
 
-#define PATH_MAX 1024
+# define PATH_MAX 1024
 
 int		get_env_count();
 t_env	*add_env(char *key, char *value, char **to_free);

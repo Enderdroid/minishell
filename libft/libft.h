@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/29 15:54:41 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/23 00:04:33 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/07 16:41:32 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,7 @@ int						ft_min(int x, int y);
 int						countdigits(int n);
 int						countdigits_base_ll(long long n, long long bs);
 
-char					*ft_pipe_strjoin(char const *s1, char const *s2);
-
-typedef struct s_list
+typedef struct			s_list
 {
 	void				*content;
 	struct s_list		*next;

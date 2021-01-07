@@ -6,32 +6,31 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:51 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/06 18:59:58 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/07 16:32:56 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBSTRUCT_H
 # define LIBSTRUCT_H
 
-# include <stdio.h> //
 # include "../libft/libft.h"
+# include "exit.h"
 # include <unistd.h>
 # include <stdlib.h>
-# include "exit.h"
+# include <signal.h>
+
+# define COLOR "\e[0;36m"
+# define RESET "\e[0m"
 
 typedef struct			s_exec
 {
 	char				*name;
 	char				*path;
 	char				*full_name;
-	//[0] - exe name | [n] - NULL
 	char				**argv;
 	char				**env;
-	//null if no
 	struct s_exec		*pipe_to;
 	struct s_exec		*pipe_from;
-	//[0] - read [1] - write or *FILL WITH STD*
-	//fd ofter pipe or redir; -2 if no
 	int					fd_new[2];
 	int					ret;
 }						t_exec;

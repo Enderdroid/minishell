@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/18 19:18:11 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/06 22:00:00 by ttamesha         ###   ########.fr       */
+/*   Created: 2021/01/07 16:12:29 by ttamesha          #+#    #+#             */
+/*   Updated: 2021/01/07 16:14:58 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,27 @@ static void	process_tilde(char **new, int *start, int *end)
 	*start = (*end)--;
 }
 
-static int	paste_env(char *str, int *start, int *end, char **res)
+static int	paste_env(char *s, int *start, int *end, char **res)
 {
 	char *new;
 
-	if (str[*start] == '$' && !ft_isalpha(str[*end]) && !ft_strchr("_?", str[*end]))
+	if (s[*start] == '$' && !ft_isalpha(s[*end]) && !ft_strchr("_?", s[*end]))
 		*start = *end + 1;
 	else
 	{
-		if (str[*start] == '~')
+		if (s[*start] == '~')
 			process_tilde(&new, start, end);
-		else if (str[*end] == '?')
+		else if (s[*end] == '?')
 		{
 			new = ft_itoa(g_data->code);
 			*start = *end + 1;
 		}
 		else
 		{
-			while (ft_isalpha(str[*end]) || \
-					ft_isdigit(str[*end]) || str[*end] == '_')
+			while (ft_isalpha(s[*end]) || \
+					ft_isdigit(s[*end]) || s[*end] == '_')
 				++(*end);
-			new = find_env(ft_substr(str, *start + 1, *end - *start - 1));
+			new = find_env(ft_substr(s, *start + 1, *end - *start - 1));
 			*start = (*end)--;
 		}
 		if (!stradd(res, new))
@@ -105,7 +105,7 @@ static void	correct_str(t_token *token, char **res, char **mask)
 	}
 }
 
-char	*corrected_str(t_token *token)
+char		*corrected_str(t_token *token)
 {
 	char *mask;
 	char *res;

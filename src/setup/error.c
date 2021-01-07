@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 23:28:35 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/02 23:28:36 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/07 15:56:56 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,4 +35,3 @@ void	error_msg_prompt(char *filename)
 	write(2, filename, ft_strlen(filename));
 	write(2, ": ", 2);
 }
-

@@ -6,58 +6,11 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:22 by ttamesha          #+#    #+#             */
-/*   Updated: 2020/11/22 23:18:11 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/07 16:28:52 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/lexer.h"
-
-static int	cmd_type(char *cmd)
-{
-	if (*cmd == '|')
-		return (C_PIPE);
-	if (*cmd == '>')
-	{
-		if (*(cmd + 1) == '>')
-			return (C_RDR_R_DBL);
-		return (C_RDR_R);
-	}
-	if (*cmd == '<')
-		return (C_RDR_L);
-	if (*cmd == ';')
-		return (C_END);
-	return (-1);
-}
-
-static void	to_lst(char *line, int start, int len, int *mode)
-{
-	t_token	*token;
-	t_dlist *last;
-	char	*str;
-
-	if (!len)
-		return ;
-	if (!(str = ft_substr(line, start, len)))
-		parser_exit(ERRNO, &line);
-	if (*mode == '\\')
-	{
-		last = ft_dlstlast(g_data->lst);
-		if (!stradd(&(((t_token *)(last->content))->str), str))
-			parser_exit(ERRNO, &line);
-		((t_token *)(last->content))->len = \
-							ft_strlen(((t_token *)(last->content))->str);
-		*mode = 0;
-		return ;
-	}
-	if (!(token = (t_token *)malloc(sizeof(t_token))))
-	{
-		free(str);
-		parser_exit(ERRNO, &line);
-	}
-	token->str = str;
-	token->len = (*mode == 'C') ? cmd_type(str) : len;
-	ft_dlstadd_back(&(g_data->lst), ft_dlstnew(token));
-}
 
 static void	add_cmd(char *line, int *start, int *end)
 {

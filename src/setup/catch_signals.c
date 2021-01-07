@@ -6,11 +6,11 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:52 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/06 18:33:12 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/07 16:31:47 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/parserstruct.h"
+#include "../../include/libstruct.h"
 
 static void	catch_sigint(int signal)
 {
@@ -30,7 +30,6 @@ static void	catch_sigint(int signal)
 			ft_putstr_fd("> "RESET, 1);
 		}
 	}
-
 }
 
 static void	catch_sigquit(int signal)
@@ -46,7 +45,7 @@ static void	catch_sigquit(int signal)
 		write(1, "\b\b", 2);
 }
 
-void			catch_signals(void)
+void		catch_signals(void)
 {
 	if (signal(SIGINT, &catch_sigint) == SIG_ERR)
 		free_and_exit(ERRNO);

@@ -6,13 +6,13 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:51:57 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/06 21:53:08 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/07 16:05:25 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/parser.h"
 
-void	free_tokens(t_dlist **lst)
+void		free_tokens(t_dlist **lst)
 {
 	t_dlist *tmp;
 	t_dlist *lptr;
@@ -35,7 +35,7 @@ void	free_tokens(t_dlist **lst)
 	*lst = NULL;
 }
 
-void	free_exec(t_exec *exec)
+void		free_exec(t_exec *exec)
 {
 	if (exec->name)
 		free(exec->name);
@@ -54,12 +54,12 @@ void	free_exec(t_exec *exec)
 	free(exec);
 }
 
-void	free_data(void)
+static void	free_env_arr(void)
 {
 	int i;
 
 	i = -1;
-	while(g_data->env_arr[++i])
+	while (g_data->env_arr[++i])
 	{
 		free(g_data->env_arr[i]->key);
 		g_data->env_arr[i]->key = NULL;
@@ -73,60 +73,29 @@ void	free_data(void)
 	}
 	free(g_data->env_arr);
 	g_data->env_arr = NULL;
-	if (g_data->u_env)
-	{
-		if (g_data->u_env->path_content)
-		{
-			free_arr(g_data->u_env->path_content);
-			g_data->u_env->path_content = NULL;
-		}
-		if (g_data->u_env->home)
-			{free(g_data->u_env->home);
-			g_data->u_env->home= NULL;}
-		free(g_data->u_env);
-		g_data->u_env = NULL;
-	}
-	if (g_data->l_env)
-	{
-		free_arr(g_data->l_env);
-		g_data->l_env = NULL;
-	}
-	if (g_data->exec)
-	{
-		free_exec(g_data->exec);
-		g_data->exec = NULL;
-	}
-	if (g_data->lst)
-	{
-		free_tokens(&(g_data->lst));
-		g_data->lst = NULL;
-	}
-	free(g_data);
-	g_data = NULL;
 }
 
-/*
-void	free_data(void)
+static void	free_u_env(void)
 {
-	int i;
+	if (g_data->u_env->path_content)
+	{
+		free_arr(g_data->u_env->path_content);
+		g_data->u_env->path_content = NULL;
+	}
+	if (g_data->u_env->home)
+	{
+		free(g_data->u_env->home);
+		g_data->u_env->home = NULL;
+	}
+	free(g_data->u_env);
+	g_data->u_env = NULL;
+}
 
-	i = -1;
-	while(g_data->env_arr[++i])
-	{
-		free(g_data->env_arr[i]->key);
-		if (g_data->env_arr[i]->value)
-			free(g_data->env_arr[i]->value);
-		free(g_data->env_arr[i]);
-	}
-	free(g_data->env_arr);
+void		free_data(void)
+{
+	free_env_arr();
 	if (g_data->u_env)
-	{
-		if (g_data->u_env->path_content)
-			free_arr(g_data->u_env->path_content);
-		if (g_data->u_env->home)
-			free(g_data->u_env->home);
-		free(g_data->u_env);
-	}
+		free_u_env();
 	if (g_data->l_env)
 		free_arr(g_data->l_env);
 	if (g_data->exec)
@@ -135,4 +104,3 @@ void	free_data(void)
 		free_tokens(&(g_data->lst));
 	free(g_data);
 }
-*/

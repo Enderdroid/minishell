@@ -6,8 +6,8 @@ SRC			=	init_data.c\
 				get_next_line.c\
 				exit.c\
 				error.c\
-				parser_utils.c\
 				split_line.c\
+				to_lst.c\
 				get_tokens.c\
 				str_mask.c\
 				validate_tokens.c\

@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/19 01:50:40 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/06 21:54:46 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/07 16:07:57 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ static void		go_to_cmd_end(t_dlist **lptr)
 
 	while (*lptr)
 	{
-		if ((cmd = ((t_token *)(*lptr)->content)->len) == C_END || cmd == C_PIPE)
+		if ((cmd = ((t_token *)(*lptr)->content)->len) == C_END \
+												|| cmd == C_PIPE)
 			return ;
 		*lptr = (*lptr)->next;
 	}
@@ -47,7 +48,7 @@ static void		go_to_cmd_end(t_dlist **lptr)
 static t_dlist	*end_cmd(t_dlist *lptr, t_exec *exec, int cmd)
 {
 	t_dlist	*newlst;
-	t_exec *newexec;
+	t_exec	*newexec;
 
 	newlst = NULL;
 	if (lptr)
@@ -76,7 +77,7 @@ static t_dlist	*exec_arr_fill(t_dlist *lptr, t_exec *exec, char **argv)
 	int		cmd;
 	int		i;
 
-	cmd=C_END;
+	cmd = C_END;
 	i = 0;
 	while (lptr)
 	{
@@ -92,10 +93,8 @@ static t_dlist	*exec_arr_fill(t_dlist *lptr, t_exec *exec, char **argv)
 			continue ;
 		}
 		else if ((cmd = ((t_token *)lptr->content)->len) > 0)
-		{
 			if (!(argv[++i] = ft_strdup(((t_token *)lptr->content)->str)))
 				free_and_exit(ERRNO);
-		}
 		lptr = lptr->next;
 	}
 	return (end_cmd(lptr, exec, cmd));

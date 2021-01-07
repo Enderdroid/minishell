@@ -6,7 +6,7 @@
 /*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/02 23:05:06 by ttamesha          #+#    #+#             */
-/*   Updated: 2021/01/02 23:19:58 by ttamesha         ###   ########.fr       */
+/*   Updated: 2021/01/07 16:09:19 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ static void	set_full_name(t_exec *exec)
 
 	if (!(l_path = find_env_b("PATH")) || !l_path->value || !l_path->value[0])
 	{
-		error_msg_custom(&exec->ret, exec->name, "No such file or directory", 127);
+		error_msg_custom(&exec->ret, exec->name, \
+							"No such file or directory", 127);
 		free_and_null(&exec->name);
 	}
 	else if (!(exec->path = s_in_path(exec->name, l_path)))
