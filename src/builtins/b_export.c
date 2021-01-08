@@ -70,7 +70,7 @@ int			b_export(t_exec *exec)
 	i = 0;
 	while (exec->argv[++i])
 		parse_export(exec->argv[i], &code_buf);
-	if (exec->argv[1] && g_data->pid)
+	if (exec->argv[1] && !(g_data->pid))
 		remake_lenv();
 	return (code_buf);
 }

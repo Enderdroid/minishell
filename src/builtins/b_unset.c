@@ -16,11 +16,11 @@ static int	u_is_env(char *arg)
 {
 	int		ind;
 
-	ind = -1;
-	if (!ft_isalpha(arg[0]) && arg[0] != '_')
+	ind = 0;
+	if (!ft_isalpha(arg[ind]) && arg[ind] != '_')
 		return (-1);
 	while (arg[++ind])
-		if (!ft_isalnum(arg[ind]))
+		if (!ft_isalnum(arg[ind]) && arg[ind] != '_')
 			return (-1);
 	return (0);
 }
@@ -48,7 +48,7 @@ int			b_unset(t_exec *exec)
 				del_env(env);
 		}
 	}
-	if (exec->argv[1] && g_data->pid)
+	if (exec->argv[1] && !(g_data->pid))
 		remake_lenv();
 	return (code_buf);
 }
