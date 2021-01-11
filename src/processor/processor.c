@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   processor.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tkleiner <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: ttamesha <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/07 17:51:36 by tkleiner          #+#    #+#             */
-/*   Updated: 2021/01/07 17:51:36 by tkleiner         ###   ########.fr       */
+/*   Updated: 2021/01/09 02:03:32 by ttamesha         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/libincludes.h"
 #include "../../include/libbuiltins.h"
 #include "../../include/error.h"
-#include <stdio.h>
 
 int			is_builtin(t_exec *exec)
 {
