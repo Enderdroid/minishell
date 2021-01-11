@@ -56,7 +56,7 @@ static int	env_arg(char *key, t_exec *exec)
 		ret = chdir(env->value);
 	if (ret == -1)
 		cd_errno(exec, env->value);
-	if (!ft_strcmp(exec->argv[1], "-"))
+	if (exec->argv[1] && !ft_strcmp(exec->argv[1], "-"))
 		b_pwd(exec);
 	return (0);
 }
